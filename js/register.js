@@ -37,13 +37,14 @@ const db = getDatabase(app)
 document.getElementById('submitData').onclick = function() {
   const firstName = document.getElementById('firstName').value;
   const lastName = document.getElementById('lastName').value;
+  const userSchool = document.getElementById('userSchool').value; 
   const email = document.getElementById('userEmail').value;
 
   // Firebase requires a password of at least 6 characters
   const password = document.getElementById('userPass').value;
 
   // Validate user inputs
-  if(!validation(firstName, lastName, email, password)){
+  if(!validation(firstName, lastName,userSchool, email, password)){
     return;
   };
 
@@ -58,6 +59,7 @@ document.getElementById('submitData').onclick = function() {
     // Each new user will be placed under the 'users' node
     set(ref(db, 'users/' + user.uid + '/accountInfo'), {
       uid: user.uid,    // save userID fo rhome.js reference
+      userSchool: userSchool,
       email: email,
       password: encryptPass(password),
       firstname: firstName,
@@ -86,12 +88,13 @@ function isEmptyorSpaces(str){
 }
 
 // ---------------------- Validate Registration Data -----------------------//
-function validation(firstName, lastName, email, password){
+function validation(firstName, lastName, userSchool, email, password){
   let fNameRegex = /^[a-zA-Z]+$/;
   let lNameRegex = /^[a-zA-Z]+$/;
+  let schoolRegex = /^[a-zA-Z]+$/; 
   let emailRegex = /^[a-zA-Z]+@ctemc\.org$/;
 
-  if(isEmptyorSpaces(firstName) || isEmptyorSpaces(lastName) ||
+  if(isEmptyorSpaces(firstName) || isEmptyorSpaces(lastName) || isEmptyorSpaces(userSchool) ||
   isEmptyorSpaces(email) || isEmptyorSpaces(password)){
     alert("Please complete all fields.");
     return false;
@@ -103,6 +106,9 @@ function validation(firstName, lastName, email, password){
   if(!lNameRegex.test(lastName)){
     alert("The last name should only contain letters.");
     return false;
+  }
+  if(!schoolRegex.test(userSchool)){
+    alert("The school should only contain letters.")
   }
   if(!emailRegex.test(email)){
     alert("Please enter a valid email.");
