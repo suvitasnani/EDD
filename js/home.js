@@ -35,9 +35,9 @@ const db = getDatabase(app)
 
 
 // ---------------------// Get reference values -----------------------------
-let userLink = document.getElementById('userLink');     // User name for navbar
+let selectLevel = document.getElementById('selectLevel');     // User name for navbar
 let signOutLink = document.getElementById('signOut');   // Sign out link
-let welcome = document.getElementById('welcome');       // Welcome header
+let shop = document.getElementById('shop');       // Welcome header
 let currentUser = null;                                 // Initialize current user to null
 
 
@@ -198,25 +198,25 @@ window.onload = function(){
   // ------------------------- Set Welcome Message -------------------------
   getUserName();    // Get current user's first name
   if(currentUser == null){
-    userLink.innerText = "Create New Account";
-    userLink.classList.replace('nav-link', 'btn');
-    userLink.classList.add('btn-primary');
-    userLink.href = 'register.html';
+    selectLevel.innerText = "Create Account";
+    selectLevel.href = 'register.html';
+
+    shop.innerText = "";
+    shop.href = '#';
 
     signOutLink.innerText = 'Sign In';
     signOutLink.classList.replace('nav-link', 'btn');
     signOutLink.classList.add('btn-success');
     signOutLink.href = 'signIn.html';
   } else {
-    userLink.innerText = currentUser.firstname;
-    welcome.innerText = 'Welcome ' + currentUser.firstname;
-    userLink.classList.replace('btn', 'nav-link');
-    userLink.classList.add('btn-primary');
-    userLink.href = '#';
+    selectLevel.innerText = 'Select Level';
+    selectLevel.href = 'selectLevel.html';
+
+    shop.innerText = "Shop";
+    shop.href = 'shop.html';
 
     signOutLink.innerText = 'Sign Out';
     signOutLink.classList.replace('btn', 'nav-link');
-    userLink.classList.add('btn-success');
     document.getElementById('signOut').onclick = function(){
       signOutUser();
     }

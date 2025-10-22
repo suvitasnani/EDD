@@ -70,7 +70,7 @@ table th{
     position: relative;
     /*color: #0087ca;*/
   }
-  
+
 .hover-underline-animation:after {
     content: '';
     position: absolute;
