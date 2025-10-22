@@ -2,25 +2,26 @@
 
 // ----------------- Firebase Setup & Initialization ------------------------//
 // Import the functions you need from the SDKs you need
-import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-app.js";
 import { getAuth, createUserWithEmailAndPassword } 
-  from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
+  from "https://www.gstatic.com/firebasejs/12.4.0/firebase-auth.js";
 
-import { getDatabase, ref, set, update, child, get } 
-  from "https://www.gstatic.com/firebasejs/11.0.2/firebase-database.js";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
+// Import the functions you need from the SDKs you need
+  import { getDatabase, ref, set, update, child, get } 
+    from "https://www.gstatic.com/firebasejs/12.4.0/firebase-database.js";
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
 
-// Your web app's Firebase configuration
-const firebaseConfig = {
-  apiKey: "AIzaSyBMTBvoF079f3sgApCsdKJcpRp7JsbPDSA",
-  authDomain: "cantor-se2425-firebase-demo.firebaseapp.com",
-  databaseURL: "https://cantor-se2425-firebase-demo-default-rtdb.firebaseio.com",
-  projectId: "cantor-se2425-firebase-demo",
-  storageBucket: "cantor-se2425-firebase-demo.firebasestorage.app",
-  messagingSenderId: "75981795996",
-  appId: "1:75981795996:web:20b041c48843d9d1a67359"
-};
+  // Your web app's Firebase configuration
+  const firebaseConfig = {
+    apiKey: "AIzaSyDZ3cLyghX5OnT6h4jDkUgXxwf-5GfWXZY",
+    authDomain: "edd-2025.firebaseapp.com",
+    databaseURL: "https://edd-2025-default-rtdb.firebaseio.com",
+    projectId: "edd-2025",
+    storageBucket: "edd-2025.firebasestorage.app",
+    messagingSenderId: "831903374189",
+    appId: "1:831903374189:web:b7e220228a0c2c51f05864"
+  };
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
@@ -31,7 +32,7 @@ const auth = getAuth();
 // Return an instance of your app's database
 const db = getDatabase(app)
 
-// ---------------- Register New Uswer --------------------------------//
+// ---------------- Register New User --------------------------------//
 
 document.getElementById('submitData').onclick = function() {
   const firstName = document.getElementById('firstName').value;
