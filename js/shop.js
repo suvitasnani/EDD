@@ -47,7 +47,6 @@ let pointVals = [10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10]
 let points = 0
 let currentUser = null;  
 
-
 class BuyListener {
     constructor(num){
         this.num = num
@@ -87,9 +86,65 @@ class BuyListener {
         alert("Not enough points!")
     }
 }}
+
+class AddListener {
+    constructor(num){
+        this.num = num
+    }
+
+    handleEvent(anEvent){
+    getUserName();
+    let number = parseInt(this.num) - 1
+    update(ref(db, 'users/' + currentUser.uid + '/inventoryOn'), {
+        [number]: true
+        })
+        .then(()=> {
+        })
+        .catch((error)=>{
+        alert('There was an error. Error: ' + error);
+        });
+    update(ref(db, 'users/' + currentUser.uid + '/inventoryOff'), {
+        [number]: false
+        })
+        .then(()=> {
+        
+        })
+        .catch((error)=>{
+        alert('There was an error. Error: ' + error);
+        });
+    refresh();
+}}
+class RemoveListener {
+    constructor(num){
+        this.num = num
+    }
+
+    handleEvent(anEvent){
+    getUserName();
+    let number = parseInt(this.num) - 1
+    update(ref(db, 'users/' + currentUser.uid + '/inventoryOn'), {
+        [number]: false
+        })
+        .then(()=> {
+        })
+        .catch((error)=>{
+        alert('There was an error. Error: ' + error);
+        });
+    update(ref(db, 'users/' + currentUser.uid + '/inventoryOff'), {
+        [number]: true
+        })
+        .then(()=> {
+        
+        })
+        .catch((error)=>{
+        alert('There was an error. Error: ' + error);
+        });
+    refresh();
+}}
              
-
-
+const buys = [new BuyListener(1), new BuyListener(2), new BuyListener(3), new BuyListener(4), new BuyListener(5), new BuyListener(6), new BuyListener(7), new BuyListener(8), new BuyListener(9), new BuyListener(10), new BuyListener(11), new BuyListener(12), new BuyListener(13), new BuyListener(14), new BuyListener(15)]
+const adds = [new AddListener(1), new AddListener(2), new AddListener(3), new AddListener(4), new AddListener(5), new AddListener(6), new AddListener(7), new AddListener(8), new AddListener(9), new AddListener(10), new AddListener(11), new AddListener(12), new AddListener(13), new AddListener(14), new AddListener(15)]
+const removes = [new RemoveListener(1), new RemoveListener(2), new RemoveListener(3), new RemoveListener(4), new RemoveListener(5), new RemoveListener(6), new RemoveListener(7), new RemoveListener(8), new RemoveListener(9), new RemoveListener(10), new RemoveListener(11), new RemoveListener(12), new RemoveListener(13), new RemoveListener(14), new RemoveListener(15)]
 // ----------------------- Get User's Name'Name ------------------------------
 function getUserName(){
   // Grab value for the 'keep logged in' switch
@@ -114,10 +169,11 @@ window.onload = async function(){
     pointText.innerText = "Points: " + points
 
     for(let i=0; i<15; i++){
+        // buttons[i].addEventListener('click', new BuyListener(buttons[i].getAttribute("descriptor")))
         // const newButton = buttons[i].cloneNode(true); // 'true' clones all child nodes as well
         // buttons[i].parentNode.replaceChild(newButton, buttons[i]);
         console.log(buttons[i].getAttribute("descriptor"))
-        buttons[i].addEventListener('click', new BuyListener(buttons[i].getAttribute("descriptor")))
+        buttons[i].addEventListener('click', buys[buttons[i].getAttribute("descriptor")-1])
     }
 
     let inventoryOn = await getInventoryOn(currentUser.uid);
@@ -127,13 +183,17 @@ window.onload = async function(){
         identity.classList.replace('buy', 'removeIt');
         identity.classList.replace('add', 'removeIt');
         identity.innerText = "In Inventory. Remove temporarily?";
-        identity.onclick = removeIt(identity.getAttribute("descriptor"));
+        identity.removeEventListener('click', buys[identity.getAttribute("descriptor")-1])
+        identity.removeEventListener('click', adds[identity.getAttribute("descriptor")-1])
+        identity.addEventListener('click', removes[identity.getAttribute("descriptor")-1])
     });
     inventoryOff.forEach((identity) => {
         identity.classList.replace('buy', 'add');
         identity.classList.replace('removeIt', 'add');
-        identity.innerText = "Bought already. Add to Inventory?";
-        identity.onclick = add(identity.getAttribute("descriptor"));
+        identity.innerText = "Bought. Add to Inventory?";
+        identity.removeEventListener('click', buys[identity.getAttribute("descriptor")-1])
+        identity.removeEventListener('click', removes[identity.getAttribute("descriptor")-1])
+        identity.addEventListener('click', adds[identity.getAttribute("descriptor")-1])
     });
   }
 }
@@ -148,13 +208,17 @@ async function refresh() {
         identity.classList.replace('buy', 'removeIt');
         identity.classList.replace('add', 'removeIt');
         identity.innerText = "In Inventory. Remove temporarily?"
-        identity.onclick = removeIt(identity.getAttribute("descriptor"))
+        identity.removeEventListener('click', buys[identity.getAttribute("descriptor")-1])
+        identity.removeEventListener('click', adds[identity.getAttribute("descriptor")-1])
+        identity.addEventListener('click', removes[identity.getAttribute("descriptor")-1])
     });
     inventoryOff.forEach((identity) => {
         identity.classList.replace('buy', 'add');
         identity.classList.replace('removeIt', 'add');
-        identity.innerText = "Bought already. Add to Inventory?"
-        identity.onclick = add(identity.getAttribute("descriptor"))
+        identity.innerText = "Bought. Add to Inventory?"
+        identity.removeEventListener('click', buys[identity.getAttribute("descriptor")-1])
+        identity.removeEventListener('click', removes[identity.getAttribute("descriptor")-1])
+        identity.addEventListener('click', adds[identity.getAttribute("descriptor")-1])
     });
 }
 
@@ -209,49 +273,4 @@ async function getPoints(){
         alert('unsuccessful, error' + error);
     });
     return points
-}
-
-async function add(num){
-    getUserName();
-    let number = parseInt(num) - 1
-    update(ref(db, 'users/' + currentUser.uid + '/inventoryOn'), {
-        [number]: true
-        })
-        .then(()=> {
-        })
-        .catch((error)=>{
-        alert('There was an error. Error: ' + error);
-        });
-    update(ref(db, 'users/' + currentUser.uid + '/inventoryOff'), {
-        [number]: false
-        })
-        .then(()=> {
-        
-        })
-        .catch((error)=>{
-        alert('There was an error. Error: ' + error);
-        });
-    refresh();
-}
-async function removeIt(num){
-    getUserName();
-    let number = parseInt(num) - 1
-    update(ref(db, 'users/' + currentUser.uid + '/inventoryOn'), {
-        [number]: false
-        })
-        .then(()=> {
-        })
-        .catch((error)=>{
-        alert('There was an error. Error: ' + error);
-        });
-    update(ref(db, 'users/' + currentUser.uid + '/inventoryOff'), {
-        [number]: true
-        })
-        .then(()=> {
-        
-        })
-        .catch((error)=>{
-        alert('There was an error. Error: ' + error);
-        });
-    refresh();
 }
