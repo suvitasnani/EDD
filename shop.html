@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Firebase Demo</title>
+    <title>Home</title>
 
     <!-- Bootstrap 5 CSS, Icons and custom CSS file links -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" 
@@ -20,59 +19,79 @@
             integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" 
             crossorigin="anonymous" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js" 
-            integrity="sha512-E8QSvWZ0eCLGk4km3hxSsNmGWbLtSCSUcewDQPQWZF6pEU8GlT8a5fF32wOl1i8ftdMhssTrF/OhyGWwonTcXA==" 
-            crossorigin="anonymous" referrerpolicy="no-referrer" defer></script>
+            defer integrity="sha512-E8QSvWZ0eCLGk4km3hxSsNmGWbLtSCSUcewDQPQWZF6pEU8GlT8a5fF32wOl1i8ftdMhssTrF/OhyGWwonTcXA==" 
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script type="module" src="js/shop.js" defer></script>
 </head>
-
 <body>
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-light headerBG">
-        <!-- lg = large breakpoint, headerBG = custom css BG color -->
-        <div class="container"> <!-- Container will contain content in certain space in middle of page -->
-            <a href="#" class="navbar-brand">
-                <img src="/img/Built_with_Firebase_Logo_LightTP.png" alt="Built wtih Firebase" class="d-inline-block align-text-top">
-            </a>
+    <div class="homeTab">
+        <a class="home hover-underline-animation" href="home.html">Home</a>
+    </div>
+    <div class="pointDisplay">
+        <h3 id="pointVal" class="pointText">Points: 0</h3>
+    </div>
+    <!-- organize into rows and columns -->
+    <div class="item1">
+        <h3 id="description1">item1 - description</h3>
+        <button id="item1" class="buy hover-underline-animation" descriptor="1">Buy!</a>
+    </div>
+    <div class="item2">
+        <h3 id="description1">item2 - description</h3>
+        <button id="item2" class="buy hover-underline-animation" descriptor="2">Buy!</a>
+    </div>
+    <div class="item3">
+        <h3 id="description1">item3 - description</h3>
+        <button id="item3" class="buy hover-underline-animation" descriptor="3">Buy!</a>
+    </div>
+    <div class="item4">
+        <h3 id="description1">item4 - description</h3>
+        <button id="item4" class="buy hover-underline-animation" descriptor="4">Buy!</a>
+    </div>
+    <div class="item5">
+        <h3 id="description1">item5 - description</h3>
+        <button id="item5" class="buy hover-underline-animation" descriptor="5">Buy!</a>
+    </div>
+    
+    <div class="item6">
+        <h3 id="description1">item6 - description</h3>
+        <button id="item6" class="buy hover-underline-animation" descriptor="6">Buy!</a>
+    </div>
+    <div class="item7">
+        <h3 id="description1">item7 - description</h3>
+        <button id="item7" class="buy hover-underline-animation" descriptor="7">Buy!</a>
+    </div>
+    <div class="item8">
+        <h3 id="description1">item8 - description</h3>
+        <button id="item78" class="buy hover-underline-animation" descriptor="8">Buy!</a>
+    </div>
+    <div class="item9">
+        <h3 id="description1">item9 - description</h3>
+        <button id="item9" class="buy hover-underline-animation" descriptor="9">Buy!</a>
+    </div>
+    <div class="item10">
+        <h3 id="description1">item10 - description</h3>
+        <button id="item10" class="buy hover-underline-animation" descriptor="10">Buy!</a>
+    </div>
 
-            <!-- Hamburger Menu Button-->
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navmenu">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <!-- Collapsible navbar menu with custom hover underline CSS animation -->
-            <div class="collapse navbar-collapse" id="navmenu">
-                <!-- Links to hamburger menu button -->
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item nbMenuItem">
-                        <a href="register.html" class="nav-link hover-underline-animation">Sign Up</a>
-                    </li>
-                    <li class="nav-item nbMenuItem">
-                        <a href="signIn.html" class="nav-link hover-underline-animation">Sign In</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-
-    <!--Overview -->
-    <section class="bg-white text-dark p-2 text-left">
-        <div class="container">
-            <br> <!-- Line break -->
-            <h1 class="text-center">Firebase Demo</h1>
-            <p class="overview-font">This site will demonstrate how to:</p>
-            <ol class="list-group list-group-numbered">
-                <li class="list-group-item border-0 ordered-List-item-font">Create users using email and password authentication</li>
-                <li class="list-group-item border-0 ordered-List-item-font">Log a user in to the site</li>
-                <li class="list-group-item border-0 ordered-List-item-font">Create, Read, Update & Delete data</li>
-            </ol>
-            <hr><br> <!-- Horizontal line and line break -->
-        </div>
-    </section>   
-
-    <!--Footer (requires BS icons CSS)-->
-    <footer class="p-5 footerBG text-dark text-center position-relative">
-        <div class="container">
-            <p class="lead">Copyright &copy; SE 2022 Firebase Demo</p>
-        </div>
-    </footer>
+    <div class="item11">
+        <h3 id="description1">item11 - description</h3>
+        <button id="item11" class="buy hover-underline-animation" descriptor="11">Buy!</a>
+    </div>
+    <div class="item12">
+        <h3 id="description1">item12 - description</h3>
+        <button id="item12" class="buy hover-underline-animation" descriptor="12">Buy!</a>
+    </div>
+    <div class="item13">
+        <h3 id="description1">item13 - description</h3>
+        <button id="item13" class="buy hover-underline-animation" descriptor="13">Buy!</a>
+    </div>
+    <div class="item14">
+        <h3 id="description1">item14 - description</h3>
+        <button id="item14" class="buy hover-underline-animation" descriptor="14">Buy!</a>
+    </div>
+    <div class="item15">
+        <h3 id="description1">item15 - description</h3>
+        <button id="item15" class="buy hover-underline-animation" descriptor="15">Buy!</a>
+    </div>
 </body>
 </html>

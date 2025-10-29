@@ -57,6 +57,9 @@ document.getElementById('submitData').onclick = function() {
     // Add user account info to realtime database
     // set - will create a new ref. or completely replace exisitng one
     // Each new user will be placed under the 'users' node
+    set(ref(db, 'users/' + user.uid), {
+      points: 0
+    })
     set(ref(db, 'users/' + user.uid + '/accountInfo'), {
       uid: user.uid,    // save userID fo rhome.js reference
       userSchool: userSchool,
@@ -65,10 +68,51 @@ document.getElementById('submitData').onclick = function() {
       firstname: firstName,
       lastname: lastName
     })
+    set(ref(db, 'users/' + user.uid + '/inventoryOff'), {
+        0: false,
+        1: false,
+        2: false,
+        3: false,
+        4: false,
+        5: false,
+        6: false,
+        7: false,
+        8: false,
+        9: false,
+        10: false,
+        11: false,
+        12: false,
+        13: false,
+        14: false
+      })
+      set(ref(db, 'users/' + user.uid + '/inventoryOn'), {
+        0: false,
+        1: false,
+        2: false,
+        3: false,
+        4: false,
+        5: false,
+        6: false,
+        7: false,
+        8: false,
+        9: false,
+        10: false,
+        11: false,
+        12: false,
+        13: false,
+        14: false
+      })
+      set(ref(db, 'users/' + user.uid + '/levels'), {
+        lvl1: 0,
+        lvl2: 0,
+        lvl3: 0,
+        lvl4: 0,
+        lvl5: 0
+      })
   })
   .then(() => {
     // Data saved successfully!
-    alert('User created successfully!');
+    alert('User created successfully! Please sign in.');
   })
   .catch((error) => {
     // Data write failed...
