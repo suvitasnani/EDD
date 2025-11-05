@@ -154,6 +154,10 @@ table th{
     text-align: center;
 }
 
+.untoggled{
+    opacity: 0;
+}
+
 @media (max-width: 480px){
     .homeContainer{
         min-height: 55vh;
