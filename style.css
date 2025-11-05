@@ -111,6 +111,7 @@ table th{
 }
 .homeButton:active{
     transform: translateY(1px);
+
 }
 .homeButton:focus{
     outline: 3px solid rgba(13,110,253,0.25);
@@ -128,13 +129,12 @@ table th{
     box-shadow: 0 2px 6px rgba(108,117,125,0.12);
 }
 
-/* Center the home container and make overall formatting larger and more spacious */
 .homeContainer{
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    min-height: 60vh; /* keep content vertically centered */
+    min-height: 60vh; 
     text-align: center;
     gap: 1rem;
     padding: 2rem 1rem;
@@ -147,15 +147,13 @@ table th{
     color: #222;
 }
 
-/* Make primary buttons bigger and consistent */
 .homeButton{
-    font-size: 1.125rem; /* larger text */
-    padding: 0.85rem 1.6rem; /* larger tappable area */
-    min-width: 220px; /* consistent width for alignment */
+    font-size: 1.125rem;
+    padding: 0.85rem 1.6rem; 
+    min-width: 220px; 
     text-align: center;
 }
 
-/* On small screens make buttons full width and scale visual sizes down a bit */
 @media (max-width: 480px){
     .homeContainer{
         min-height: 55vh;
@@ -174,7 +172,6 @@ table th{
     }
 }
 
-/* Slightly larger spacing for desktop screens */
 @media (min-width: 1200px){
     .homeContainer h1{
         font-size: 2.6rem;
