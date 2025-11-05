@@ -106,9 +106,9 @@ window.onload = async function(){
 
 
 //taken from cited source online and combined with drawing functionality
-function handleStart(endEvent) {
-    endEvent.preventDefault(); // Prevent default browser scrolling/zooming
-    const touches = endEvent.changedTouches;
+function handleStart(evt) {
+    evt.preventDefault(); // Prevent default browser scrolling/zooming
+    const touches = evt.changedTouches;
     
     for (let i = 0; i < touches.length; i++) {
         const touch = touches[i];
@@ -127,17 +127,17 @@ function handleStart(endEvent) {
     }
 }
 
-function handleMove(endEvent) {
-    endEvent.preventDefault();
+function handleMove(evt) {
+    evt.preventDefault();
     
     if (!drawing) return;
     
-    const touches = endEvent.changedTouches;
+    const touches = evt.changedTouches;
     for (let i = 0; i < touches.length; i++) {
         const touch = touches[i];
-        const prendEventouch = ongoingTouches.get(touch.identifier);
+        const prevtouch = ongoingTouches.get(touch.identifier);
         
-        if (prendEventouch) {
+        if (prevtouch) {
             const pos = getTouchPos(touch);
             
             // Draw on canvas
@@ -153,9 +153,9 @@ function handleMove(endEvent) {
     }
 }
 
-function handleEnd(endEvent) {
-    endEvent.preventDefault();
-    const touches = endEvent.changedTouches;
+function handleEnd(evt) {
+    evt.preventDefault();
+    const touches = evt.changedTouches;
     
     for (let i = 0; i < touches.length; i++) {
         const touch = touches[i];
@@ -185,9 +185,9 @@ function handleEnd(endEvent) {
     setScore(Math.round(trackingScore));
 }
 
-function handleCancel(endEvent) {
-    endEvent.preventDefault();
-    const touches = endEvent.changedTouches;
+function handleCancel(evt) {
+    evt.preventDefault();
+    const touches = evt.changedTouches;
     
     for (let i = 0; i < touches.length; i++) {
         ongoingTouches.delete(touches[i].identifier);
