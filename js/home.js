@@ -4,7 +4,7 @@
 
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-app.js";
-import { getAuth, createUserWithEmailAndPassword } 
+import { getAuth, createUserWithEmailAndPassword, signOut } 
   from "https://www.gstatic.com/firebasejs/12.4.0/firebase-auth.js";
 
 // Import the functions you need from the SDKs you need
@@ -36,9 +36,9 @@ const db = getDatabase(app)
 
 
 // ---------------------// Get reference values -----------------------------
-let selectLevel = document.getElementById('selectLevel');     // User name for navbar
+let selectLevel = document.getElementById('selectLevelLink');     // User name for navbar
 let signOutLink = document.getElementById('signOut');   // Sign out link
-let shop = document.getElementById('shop');       // Welcome header
+let shop = document.getElementById('shopLink');       // Welcome header
 let currentUser = null;                                 // Initialize current user to null
 
 
