@@ -40,10 +40,28 @@ const dbref = ref(db);
 let currentUser = null;                                 // Initialize current user to null
 let trackingScore = 0;
 let letterArray = [];
+let currentStroke = []; // Store points for the current stroke
 
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 let ongoingTouches = new Map(); // Store active touches by their identifier
+let drawing = false;
+
+// Responsive dimensions
+function resizeCanvas() {
+    const rect = canvas.getBoundingClientRect();
+    canvas.width = rect.width;
+    canvas.height = rect.height;
+}
+
+// Get touch position relative to the canvas
+function getTouchPos(touch) {
+    const rect = canvas.getBoundingClientRect();
+    return {
+        x: touch.clientX - rect.left,
+        y: touch.clientY - rect.top
+    };
+}
 
 // ----------------------- Get User's Name'Name ------------------------------
 function getUserName(){
@@ -65,45 +83,119 @@ window.onload = async function(){
   if(currentUser == null){
     window.location="home.html";
   } else {
+    // Initialize canvas
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+    
+    // Set up canvas drawing style
+    ctx.strokeStyle = '#000000';
+    ctx.lineWidth = 2;
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+    
     canvas.addEventListener("touchstart", handleStart);
     canvas.addEventListener("touchmove", handleMove);
     canvas.addEventListener("touchend", handleEnd);
     canvas.addEventListener("touchcancel", handleCancel);
 
-    letterArray.forEach((letter)=>{
-        evaluateLetter(letter);
-    })
-    setScore(Math.round(trackingScore));
+    // Evaluate letters only when user is done drawing
+    // This will be triggered after handleEnd
   }
 }
 
 
 
-//taken from cited source online
-function handleStart(evt) {
-    evt.preventDefault(); // Prevent default browser scrolling/zooming
-    const touches = evt.changedTouches;
+//taken from cited source online and combined with drawing functionality
+function handleStart(endEvent) {
+    endEvent.preventDefault(); // Prevent default browser scrolling/zooming
+    const touches = endEvent.changedTouches;
+    
     for (let i = 0; i < touches.length; i++) {
-        ongoingTouches.set(touches[i].identifier, { x: touches[i].pageX, y: touches[i].pageY });
-        // Start path on canvas, if drawing
+        const touch = touches[i];
+        const pos = getTouchPos(touch);
+        
+        // Store touch for tracking
+        ongoingTouches.set(touch.identifier, pos);
+        
+        // Start drawing
+        drawing = true;
+        currentStroke = []; // Start a new stroke
+        currentStroke.push(pos); // Record the first point
+        
+        ctx.beginPath();
+        ctx.moveTo(pos.x, pos.y);
     }
 }
 
-function handleMove(evt) {
-    evt.preventDefault();
-    const touches = evt.changedTouches;
+function handleMove(endEvent) {
+    endEvent.preventDefault();
+    
+    if (!drawing) return;
+    
+    const touches = endEvent.changedTouches;
     for (let i = 0; i < touches.length; i++) {
         const touch = touches[i];
-        const prevTouch = ongoingTouches.get(touch.identifier);
+        const prendEventouch = ongoingTouches.get(touch.identifier);
         
-        // Example of capturing the path data: store {x, y} points in an array
-        // Here you would also draw on the canvas using prevTouch and touch
-        
-        // Update the stored position
-        ongoingTouches.set(touch.identifier, { x: touch.pageX, y: touch.pageY });
+        if (prendEventouch) {
+            const pos = getTouchPos(touch);
+            
+            // Draw on canvas
+            ctx.lineTo(pos.x, pos.y);
+            ctx.stroke();
+            
+            // Record point 
+            currentStroke.push(pos);
+            
+            // Update stored position
+            ongoingTouches.set(touch.identifier, pos);
+        }
     }
 }
-// Implement handleEnd and handleCancel to remove touches from ongoingTouches map
+
+function handleEnd(endEvent) {
+    endEvent.preventDefault();
+    const touches = endEvent.changedTouches;
+    
+    for (let i = 0; i < touches.length; i++) {
+        const touch = touches[i];
+        const pos = getTouchPos(touch);
+        
+        // Final drawing point
+        if (drawing && currentStroke.length > 0) {
+            ctx.lineTo(pos.x, pos.y);
+            ctx.stroke();
+            currentStroke.push(pos);
+            
+            // Save the completed stroke to letterArray
+            letterArray.push([...currentStroke]);
+            
+            // Evaluate the stroke
+            evaluateLetter(currentStroke);
+        }
+        
+        // Remove from ongoing touches
+        ongoingTouches.delete(touch.identifier);
+    }
+    
+    drawing = false;
+    ctx.closePath();
+    
+    // Update score after each stroke
+    setScore(Math.round(trackingScore));
+}
+
+function handleCancel(endEvent) {
+    endEvent.preventDefault();
+    const touches = endEvent.changedTouches;
+    
+    for (let i = 0; i < touches.length; i++) {
+        ongoingTouches.delete(touches[i].identifier);
+    }
+    
+    drawing = false;
+    ctx.closePath();
+}
 
 
 async function evaluateLetter(pointArray) {
