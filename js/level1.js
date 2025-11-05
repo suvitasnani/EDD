@@ -52,6 +52,23 @@ let alreadyDone = [false, false, false, false, false, false, false, false, false
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 let ongoingTouches = new Map(); // Store active touches by their identifier
+let drawing = false;
+
+// Responsive dimensions
+function resizeCanvas() {
+    const rect = canvas.getBoundingClientRect();
+    canvas.width = rect.width;
+    canvas.height = rect.height;
+}
+
+// Get touch position relative to the canvas
+function getTouchPos(touch) {
+    const rect = canvas.getBoundingClientRect();
+    return {
+        x: touch.clientX - rect.left,
+        y: touch.clientY - rect.top
+    };
+}
 
 // ----------------------- Get User's Name'Name ------------------------------
 function getUserName(){
@@ -73,6 +90,16 @@ window.onload = async function(){
   if(currentUser == null){
     window.location="home.html";
   } else {
+    // Initialize canvas
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+    
+    // Set up canvas drawing style
+    ctx.strokeStyle = '#000000';
+    ctx.lineWidth = 2;
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+    
     canvas.addEventListener("touchstart", handleStart);
     canvas.addEventListener("touchmove", handleMove);
     canvas.addEventListener("touchend", handleEnd);
@@ -81,22 +108,37 @@ window.onload = async function(){
 
 
 
-//taken from cited source online
+//taken from cited source online and combined with drawing functionality
 function handleStart(evt) {
     evt.preventDefault(); // Prevent default browser scrolling/zooming
     const touches = evt.changedTouches;
+    
     for (let i = 0; i < touches.length; i++) {
-        ongoingTouches.set(touches[i].identifier, { x: touches[i].pageX, y: touches[i].pageY });
-        // Start path on canvas, if drawing
+        const touch = touches[i];
+        const pos = getTouchPos(touch);
+        
+        // Store touch for tracking
+        ongoingTouches.set(touch.identifier, pos);
+        
+        // Start drawing
+        drawing = true;
+        currentStroke = []; // Start a new stroke
+        currentStroke.push(pos); // Record the first point
+        
+        ctx.beginPath();
+        ctx.moveTo(pos.x, pos.y);
     }
 }
 
 function handleMove(evt) {
     evt.preventDefault();
+    
+    if (!drawing) return;
+    
     const touches = evt.changedTouches;
     for (let i = 0; i < touches.length; i++) {
         const touch = touches[i];
-        const prevTouch = ongoingTouches.get(touch.identifier);
+        const prevtouch = ongoingTouches.get(touch.identifier);
         
         // Example of capturing the path data: store {x, y} points in an array
         // Here you would also draw on the canvas using prevTouch and touch
