@@ -49,8 +49,8 @@ let gif = document.getElementById('gif')
 let currentLetter = 0;
 let alreadyDone = [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
 
-const canvas = document.getElementById("gameCanvas");
-const ctx = canvas.getContext("2d");
+let canvas;
+let ctx;
 let ongoingTouches = new Map(); // Store active touches by their identifier
 let drawing = false;
 
@@ -90,6 +90,20 @@ window.onload = async function(){
   if(currentUser == null){
     window.location="home.html";
   } else {
+        canvas = document.getElementById("gameCanvas");
+        if (!canvas) {
+            console.error('[level1] gameCanvas element not found');
+            return;
+        }
+        ctx = canvas.getContext("2d");
+                // Background image for tracing
+                const bgUrl = "Cursive Letters/lowercase_a.png";
+                // Gradient for a opacity only way to do it i think 😭😭😭
+                const overlay = 'linear-gradient(rgba(255,255,255,0.9), rgba(255,255,255,0.9))';
+                canvas.style.backgroundImage = `${overlay}, url('${bgUrl}')`;
+                canvas.style.backgroundSize = 'contain';
+                canvas.style.backgroundRepeat = 'no-repeat';
+                canvas.style.backgroundPosition = 'center center';
     // Initialize canvas
     resizeCanvas();
     window.addEventListener('resize', resizeCanvas);
@@ -160,6 +174,14 @@ function handleEnd(evt) {
         evaluateLetter(letterRef, userStroke);
     }
 
+    // Log the recorded points for debugging and also collection of sample letters
+    if (Array.isArray(userStroke) && userStroke.length > 0) {
+        console.log('Recorded letter', currentLetter, 'points:', userStroke);
+        console.log('JSON:', JSON.stringify(userStroke));
+    } else {
+        console.warn('No stroke data recorded for letter index', currentLetter);
+    }
+
     if(currentLetter > 25) {
         setScore(Math.round(trackingScore));
     }
@@ -170,6 +192,30 @@ function handleCancel(evt) {
     evt && evt.preventDefault && evt.preventDefault();
     drawing = false;
     ctx.closePath();
+}
+
+// Utility: Log and return the recorded stroke for a given letter index
+// Shown on window for easy access for DevTools console.
+function getRecordedLetter(index = currentLetter) {
+    if (typeof index !== 'number' || index < 0) {
+        console.warn('getRecordedLetter: invalid index', index);
+        return null;
+    }
+    const data = moveArray[index];
+    if (!Array.isArray(data) || data.length === 0) {
+        console.warn('getRecordedLetter: no recorded stroke data for index', index);
+        return null;
+    }
+    // Log as array of [x, y] pairs and as JSON for copy/paste
+    console.log('Recorded letter', index, 'points:', data);
+    console.log('JSON:', JSON.stringify(data));
+    return data;
+}
+
+// Make available in console even if this file is loaded as a module
+if (typeof window !== 'undefined') {
+    window.getRecordedLetter = getRecordedLetter;
+    console.info('[level1] getRecordedLetter available on window');
 }
 
 async function evaluateLetter(goodArray, userArray) {
