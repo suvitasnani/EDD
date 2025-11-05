@@ -100,64 +100,76 @@ window.onload = async function(){
     ctx.lineCap = 'round';
     ctx.lineJoin = 'round';
     
-    canvas.addEventListener("touchstart", handleStart);
-    canvas.addEventListener("touchmove", handleMove);
-    canvas.addEventListener("touchend", handleEnd);
+        canvas.addEventListener("touchstart", handleStart);
+        canvas.addEventListener("touchmove", handleMove);
+        canvas.addEventListener("touchend", handleEnd);
+        canvas.addEventListener("touchcancel", handleCancel);
   }
 }
 
 
 
-//taken from cited source online and combined with drawing functionality
+// taken from cited source online and combined with drawing functionality
 function handleStart(evt) {
     evt.preventDefault(); // Prevent default browser scrolling/zooming
     const touches = evt.changedTouches;
-    
-    for (let i = 0; i < touches.length; i++) {
-        const touch = touches[i];
-        const pos = getTouchPos(touch);
-        
-        // Store touch for tracking
-        ongoingTouches.set(touch.identifier, pos);
-        
-        // Start drawing
-        drawing = true;
-        currentStroke = []; // Start a new stroke
-        currentStroke.push(pos); // Record the first point
-        
-        ctx.beginPath();
-        ctx.moveTo(pos.x, pos.y);
-    }
+    if (!touches || touches.length === 0) return;
+
+    const touch = touches[0];
+    const pos = getTouchPos(touch);
+
+    drawing = true;
+    // Storage for current letter
+    moveArray[currentLetter] = [];
+    moveArray[currentLetter].push([pos.x, pos.y]);
+
+    ctx.beginPath();
+    ctx.moveTo(pos.x, pos.y);
 }
 
 function handleMove(evt) {
     evt.preventDefault();
-    
     if (!drawing) return;
-    
-    const touches = evt.changedTouches;
-    for (let i = 0; i < touches.length; i++) {
-        const touch = touches[i];
-        const prevtouch = ongoingTouches.get(touch.identifier);
-        
-        // Example of capturing the path data: store {x, y} points in an array
-        // Here you would also draw on the canvas using prevTouch and touch
-        
-        // Update the stored position
-        ongoingTouches.set(touch.identifier, { x: touch.pageX, y: touch.pageY });
 
-        moveArray[currentLetter] = []
+    // Track the primary touch
+    const touches = evt.touches && evt.touches.length ? evt.touches : evt.changedTouches;
+    if (!touches || touches.length === 0) return;
+
+    const touch = touches[0];
+    const pos = getTouchPos(touch);
+
+    // Draw and record
+    ctx.lineTo(pos.x, pos.y);
+    ctx.stroke();
+
+    if (!Array.isArray(moveArray[currentLetter])) {
+        moveArray[currentLetter] = [];
     }
+    moveArray[currentLetter].push([pos.x, pos.y]);
 }
 
-function handleEnd() {
-    //remove the touch on the canvas
+function handleEnd(evt) {
+    evt && evt.preventDefault && evt.preventDefault();
+    drawing = false;
+    ctx.closePath();
 
-    evaluateLetter(letterArray[currentLetter], moveArray[currentLetter]);
+    const userStroke = moveArray[currentLetter];
+    const letterRef = letterArray[currentLetter];
+    // If we have a non-empty stroke and also something to compare it to
+    if (Array.isArray(userStroke) && userStroke.length > 0 && Array.isArray(letterRef) && letterRef.length > 0) {
+        evaluateLetter(letterRef, userStroke);
+    }
 
     if(currentLetter > 25) {
         setScore(Math.round(trackingScore));
     }
+}
+
+// Handle touch cancel event
+function handleCancel(evt) {
+    evt && evt.preventDefault && evt.preventDefault();
+    drawing = false;
+    ctx.closePath();
 }
 
 async function evaluateLetter(goodArray, userArray) {
@@ -182,25 +194,27 @@ async function evaluateLetter(goodArray, userArray) {
     }
 }
 
+// Find the closest matching letter from the reference array
+// MIGHT not need this function anymore IF we are doing it one by one?
 async function getClosestComparison(x, y) {
-    let closestDistance = 100000
-    let closestLetter = letterArray[0]
-    let closestVal = 0
-    for(i=0; i<letterArray.length; i++) {
-        letter = letterArray[i]
-        tempDistance = Math.sqrt((letter[0]-x)*(letter[0]-x)+(letter[1]-y)*(letter[1]-y))
-        if(tempDistance<closestDistance){
-            closestDistance = tempDistance
-            closestLetter = letter
-            closestVal = i
+    let closestDistance = 100000;
+    let closestLetter = letterArray[0];
+    let closestVal = 0;
+    for (let i = 0; i < letterArray.length; i++) {
+        const letter = letterArray[i];
+        const tempDistance = Math.sqrt((letter[0]-x)*(letter[0]-x)+(letter[1]-y)*(letter[1]-y));
+        if (tempDistance < closestDistance) {
+            closestDistance = tempDistance;
+            closestLetter = letter;
+            closestVal = i;
         }
     }
-    return [letter, i]
+    return [closestLetter, closestVal];
 }
 
 async function setScore(score){
     await update(ref(db, 'users/' + currentUser.uid + '/levels'), {
-        levelName: score
+        [levelName]: score
     }).then(()=> {})
     .catch((error)=>{
     alert('There was an error. Error: ' + error);
