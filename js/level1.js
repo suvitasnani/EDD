@@ -40,6 +40,14 @@ const dbref = ref(db);
 let currentUser = null;                                 // Initialize current user to null
 let trackingScore = 0;
 let letterArray = [];
+let moveArray = [];
+const tempMax = 100/26;
+const levelName = 'lvl1'
+let htmlLetters = [document.getElementById('a'), document.getElementById('b'), document.getElementById('c'), document.getElementById('d'), document.getElementById('e'), document.getElementById('f'), document.getElementById('g'), document.getElementById('h'), document.getElementById('i'), 
+    document.getElementById('j'), document.getElementById('k'), document.getElementById('l'), document.getElementById('m'), document.getElementById('n'), document.getElementById('o'), document.getElementById('p'), document.getElementById('q'), document.getElementById('r'), document.getElementById('s'), 
+    document.getElementById('t'), document.getElementById('u'), document.getElementById('v'), document.getElementById('w'), document.getElementById('x'), document.getElementById('y'), document.getElementById('z')];
+let currentLetter = 0;
+let alreadyDone = [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
 
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
@@ -68,12 +76,6 @@ window.onload = async function(){
     canvas.addEventListener("touchstart", handleStart);
     canvas.addEventListener("touchmove", handleMove);
     canvas.addEventListener("touchend", handleEnd);
-    canvas.addEventListener("touchcancel", handleCancel);
-
-    letterArray.forEach((letter)=>{
-        evaluateLetter(letter);
-    })
-    setScore(Math.round(trackingScore));
   }
 }
 
@@ -101,42 +103,92 @@ function handleMove(evt) {
         
         // Update the stored position
         ongoingTouches.set(touch.identifier, { x: touch.pageX, y: touch.pageY });
+
+        moveArray[currentLetter] = []
     }
 }
-// Implement handleEnd and handleCancel to remove touches from ongoingTouches map
 
+function handleEnd() {
+    //remove the touch on the canvas
 
-async function evaluateLetter(pointArray) {
-    let tempScore = 0;
-    const tempMax = 100 / 26;
+    evaluateLetter(letterArray[currentLetter], moveArray[currentLetter]);
 
+    if(currentLetter > 25) {
+        setScore(Math.round(trackingScore));
+    }
+}
 
+async function evaluateLetter(goodArray, userArray) {
+    let tempPoints = 0
+    for(i=0; i < userArray.length; i++) {
+        distance = Math.sqrt((userArray[0]-goodArray[0])*(userArray[0]-goodArray[0])+(userArray[1]-goodArray[1])*(userArray[1]-goodArray[1]));
+        tempPoints += (200 - distance) / 200 / userArray.length;
+    }
+    if(tempPoints > 0.7) {
+        htmlLetters[currentLetter].classList.replace('waiting', 'done')
+        htmlLetters[currentLetter].classList.replace('redo', 'done')
+        if(alreadyDone[currentLetter]) {
+            trackingScore += tempMax * 0.25
+        } else {
+            trackingScore += tempMax * tempPoints
+        }
+        alreadyDone[currentLetter] = true
+        currentLetter += 1
+    } else {
+        htmlLetters[currentLetter].classList.replace('waiting', 'redo')
+        alreadyDone[currentLetter] = true
+    }
+}
 
-    trackingScore += tempScore;
+async function getClosestComparison(x, y) {
+    let closestDistance = 100000
+    let closestLetter = letterArray[0]
+    let closestVal = 0
+    for(i=0; i<letterArray.length; i++) {
+        letter = letterArray[i]
+        tempDistance = Math.sqrt((letter[0]-x)*(letter[0]-x)+(letter[1]-y)*(letter[1]-y))
+        if(tempDistance<closestDistance){
+            closestDistance = tempDistance
+            closestLetter = letter
+            closestVal = i
+        }
+    }
+    return [letter, i]
 }
 
 async function setScore(score){
     await update(ref(db, 'users/' + currentUser.uid + '/levels'), {
-        'lvl1': score
+        levelName: score
     }).then(()=> {})
     .catch((error)=>{
     alert('There was an error. Error: ' + error);
     });
     let points = 0
-    if(score > 95) {points = 10}
-    else if(score > 90) {points = 9}
-    else if(score > 85) {points = 8}
-    else if(score > 80) {points = 7}
-    else if(score > 75) {points = 6}
-    else if(score > 70) {points = 5}
-    else if(score > 65) {points = 4}
-    else if(score > 60) {points = 3}
-    else if(score > 55) {points = 2}
-    else if(score > 50) {points = 1}
+    await get(child(dbref, 'users/' + currentUser.uid + '/points')).then((snapshot)=>{
+        if(snapshot.exists()){
+            points = snapshot.val()
+        } else {
+            alert('No data found.');
+        }
+    })
+    .catch((error) => {
+        alert('unsuccessful, error' + error);
+    });
+    let ogpoints = points
+    if(score > 95) {points += 10}
+    else if(score > 90) {points += 9}
+    else if(score > 85) {points += 8}
+    else if(score > 80) {points += 7}
+    else if(score > 75) {points += 6}
+    else if(score > 70) {points += 5}
+    else if(score > 65) {points += 4}
+    else if(score > 60) {points += 3}
+    else if(score > 55) {points += 2}
+    else if(score > 50) {points += 1}
     await update(ref(db, 'users/' + currentUser.uid), {
         'points': points
     }).then(()=> {
-        alert(`Congragulations! You scored ${score}% and received ${points} points!`);
+        alert(`Congragulations! You scored ${score}% and received ${points-ogpoints} points!`);
         window.location.href='selectLevel.html';
     })
     .catch((error)=>{
