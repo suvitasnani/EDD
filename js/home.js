@@ -81,6 +81,7 @@ window.onload = function(){
 
     shop.innerText = "";
     shop.href = '#';
+    shop.classList.replace('toggled', 'untoggled');
 
     signOutLink.innerText = 'Sign In';
     signOutLink.classList.replace('nav-link', 'btn');
@@ -92,6 +93,7 @@ window.onload = function(){
 
     shop.innerText = "Shop";
     shop.href = 'shop.html';
+    shop.classList.replace('untoggled', 'toggled');
 
     signOutLink.innerText = 'Sign Out';
     signOutLink.classList.replace('btn', 'nav-link');
