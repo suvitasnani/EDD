@@ -40,12 +40,12 @@ const dbref = ref(db);
 let currentUser = null;                                 // Initialize current user to null
 let trackingScore = 0;
 let letterArray = [];
-let moveArray = [];
+let moveArray = [[], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], []];
 const tempMax = 100/26;
-const levelName = 'lvl1'
 let htmlLetters = [document.getElementById('a'), document.getElementById('b'), document.getElementById('c'), document.getElementById('d'), document.getElementById('e'), document.getElementById('f'), document.getElementById('g'), document.getElementById('h'), document.getElementById('i'), 
     document.getElementById('j'), document.getElementById('k'), document.getElementById('l'), document.getElementById('m'), document.getElementById('n'), document.getElementById('o'), document.getElementById('p'), document.getElementById('q'), document.getElementById('r'), document.getElementById('s'), 
     document.getElementById('t'), document.getElementById('u'), document.getElementById('v'), document.getElementById('w'), document.getElementById('x'), document.getElementById('y'), document.getElementById('z')];
+let gif = document.getElementById('gif')
 let currentLetter = 0;
 let alreadyDone = [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
 
@@ -169,6 +169,7 @@ async function evaluateLetter(goodArray, userArray) {
     if(tempPoints > 0.7) {
         htmlLetters[currentLetter].classList.replace('waiting', 'done')
         htmlLetters[currentLetter].classList.replace('redo', 'done')
+        gif.classList.replace(`image${currentLetter-1}`,`image${currentLetter}`)
         if(alreadyDone[currentLetter]) {
             trackingScore += tempMax * 0.25
         } else {
@@ -200,7 +201,7 @@ async function getClosestComparison(x, y) {
 
 async function setScore(score){
     await update(ref(db, 'users/' + currentUser.uid + '/levels'), {
-        levelName: score
+        'lvl1': score
     }).then(()=> {})
     .catch((error)=>{
     alert('There was an error. Error: ' + error);
