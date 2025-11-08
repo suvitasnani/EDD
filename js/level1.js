@@ -224,6 +224,8 @@ if (typeof window !== 'undefined') {
 
 async function evaluateLetter(goodArray, userArray) {
     let tempPoints = 0
+    const maxAcceptableDistance = 50; // Threshold in pixels we can change if needed
+    
     for(let i=0; i < userArray.length; i++) {
         let minDistance = Infinity;
         for(let j=0; j < goodArray.length; j++) {
@@ -232,7 +234,10 @@ async function evaluateLetter(goodArray, userArray) {
                 minDistance = distance;
             }
         }
-        tempPoints += (100000 - minDistance) / 100000 / userArray.length;
+        // Scoring points based on how close the stroke is to the reference (points decrease as distance increases)
+        // Note if I don't fix this only works on the reference array, we should find a way to be able to scale it
+        let pointsForThisPixel = Math.max(0, (maxAcceptableDistance - minDistance) / maxAcceptableDistance);
+        tempPoints += pointsForThisPixel / userArray.length;
     }
     if(tempPoints > 0.7) {
         if(htmlLetters[currentLetter]) {
