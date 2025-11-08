@@ -185,10 +185,6 @@ function handleEnd(evt) {
     } else {
         console.warn('No stroke data recorded for letter index', currentLetter);
     }
-
-    if(currentLetter > 0) {
-        setScore(Math.round(trackingScore));
-    }
 }
 
 // Handle touch cancel event
@@ -240,13 +236,15 @@ async function evaluateLetter(goodArray, userArray) {
         tempPoints += pointsForThisPixel / userArray.length;
     }
     if(tempPoints > 0.7) {
-        if(htmlLetters[currentLetter]) {
-            htmlLetters[currentLetter].classList.replace('waiting', 'done')
-            htmlLetters[currentLetter].classList.replace('redo', 'done')
-        }
-        if(gif && gif.classList) {
-            gif.classList.replace(`image${currentLetter-1}`,`image${currentLetter}`)
-        }
+            // Easiest option: award based on this attempt's actual accuracy
+            await setScore(Math.round(tempPoints * 100));
+            if(htmlLetters[currentLetter]) {
+                htmlLetters[currentLetter].classList.replace('waiting', 'done')
+                htmlLetters[currentLetter].classList.replace('redo', 'done')
+            }
+            if(gif && gif.classList) {
+                gif.classList.replace(`image${currentLetter-1}`,`image${currentLetter}`)
+            }
         if(alreadyDone[currentLetter]) {
             trackingScore += tempMax * 0.25
         } else {
