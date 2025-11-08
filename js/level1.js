@@ -173,7 +173,9 @@ function handleEnd(evt) {
     const letterRef = letterArray[currentLetter];
     // If we have a non-empty stroke and also something to compare it to
     if (Array.isArray(userStroke) && userStroke.length > 0 && Array.isArray(letterRef) && letterRef.length > 0) {
-        evaluateLetter(letterRef, userStroke);
+        evaluateLetter(letterRef, userStroke).then(accuracy => {
+            alert(`Accuracy: ${accuracy}%`);
+        });
     }
 
     // Log the recorded points for debugging and also collection of sample letters
@@ -223,8 +225,14 @@ if (typeof window !== 'undefined') {
 async function evaluateLetter(goodArray, userArray) {
     let tempPoints = 0
     for(let i=0; i < userArray.length; i++) {
-        let distance = Math.sqrt((userArray[0]-goodArray[0])*(userArray[0]-goodArray[0])+(userArray[1]-goodArray[1])*(userArray[1]-goodArray[1]));
-        tempPoints += (100000 - distance) / 100000 / userArray.length;
+        let minDistance = Infinity;
+        for(let j=0; j < goodArray.length; j++) {
+            let distance = Math.sqrt((userArray[i][0]-goodArray[j][0])*(userArray[i][0]-goodArray[j][0])+(userArray[i][1]-goodArray[j][1])*(userArray[i][1]-goodArray[j][1]));
+            if(distance < minDistance) {
+                minDistance = distance;
+            }
+        }
+        tempPoints += (100000 - minDistance) / 100000 / userArray.length;
     }
     if(tempPoints > 0.7) {
         htmlLetters[currentLetter].classList.replace('waiting', 'done')
@@ -243,6 +251,7 @@ async function evaluateLetter(goodArray, userArray) {
         htmlLetters[currentLetter].classList.replace('waiting', 'redo')
         alreadyDone[currentLetter] = true
     }
+    return Math.round(tempPoints * 100);
 }
 
 // Find the closest matching letter from the reference array
