@@ -235,9 +235,13 @@ async function evaluateLetter(goodArray, userArray) {
         tempPoints += (100000 - minDistance) / 100000 / userArray.length;
     }
     if(tempPoints > 0.7) {
-        htmlLetters[currentLetter].classList.replace('waiting', 'done')
-        htmlLetters[currentLetter].classList.replace('redo', 'done')
-        gif.classList.replace(`image${currentLetter-1}`,`image${currentLetter}`)
+        if(htmlLetters[currentLetter]) {
+            htmlLetters[currentLetter].classList.replace('waiting', 'done')
+            htmlLetters[currentLetter].classList.replace('redo', 'done')
+        }
+        if(gif && gif.classList) {
+            gif.classList.replace(`image${currentLetter-1}`,`image${currentLetter}`)
+        }
         if(alreadyDone[currentLetter]) {
             trackingScore += tempMax * 0.25
         } else {
@@ -248,7 +252,9 @@ async function evaluateLetter(goodArray, userArray) {
         currentLetter += 1
     } else {
         console.log('REDO')
-        htmlLetters[currentLetter].classList.replace('waiting', 'redo')
+        if(htmlLetters[currentLetter]) {
+            htmlLetters[currentLetter].classList.replace('waiting', 'redo')
+        }
         alreadyDone[currentLetter] = true
     }
     return Math.round(tempPoints * 100);
