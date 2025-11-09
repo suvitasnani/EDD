@@ -97,14 +97,8 @@ window.onload = async function(){
         }
         
         ctx = canvas.getContext("2d");
-                // Background image for tracing
-                const bgUrl = "Cursive Letters/lowercase_a.png";
-                // Gradient for a opacity only way to do it i think 
-                const overlay = 'linear-gradient(rgba(255,255,255,0.9), rgba(255,255,255,0.9))';
-                canvas.style.backgroundImage = `${overlay}, url('${bgUrl}')`;
-                canvas.style.backgroundSize = 'contain';
-                canvas.style.backgroundRepeat = 'no-repeat';
-                canvas.style.backgroundPosition = 'center center';
+        // Initialize with first letter
+        updateBackgroundImage();
     // Initialize canvas
     resizeCanvas();
     window.addEventListener('resize', resizeCanvas);
@@ -218,6 +212,20 @@ if (typeof window !== 'undefined') {
     console.info('[level1] getRecordedLetter available on window');
 }
 
+// Update background image based on current letter
+function updateBackgroundImage() {
+    const letters = 'abcdefghijklmnopqrstuvwxyz';
+    const currentLetterChar = letters[currentLetter];
+    // Background image for tracing
+    const bgUrl = `Cursive Letters/lowercase_${currentLetterChar}.png`;
+    // Gradient for a opacity only way to do it i think 
+    const overlay = 'linear-gradient(rgba(255,255,255,0.9), rgba(255,255,255,0.9))';
+    canvas.style.backgroundImage = `${overlay}, url('${bgUrl}')`;
+    canvas.style.backgroundSize = 'contain';
+    canvas.style.backgroundRepeat = 'no-repeat';
+    canvas.style.backgroundPosition = 'center center';
+}
+
 async function evaluateLetter(goodArray, userArray) {
     let tempPoints = 0
     const maxAcceptableDistance = 50; // Threshold in pixels we can change if needed
@@ -236,8 +244,6 @@ async function evaluateLetter(goodArray, userArray) {
         tempPoints += pointsForThisPixel / userArray.length;
     }
     if(tempPoints > 0.7) {
-            // Easiest option: award based on this attempt's actual accuracy
-            await setScore(Math.round(tempPoints * 100));
             if(htmlLetters[currentLetter]) {
                 htmlLetters[currentLetter].classList.replace('waiting', 'done')
                 htmlLetters[currentLetter].classList.replace('redo', 'done')
@@ -253,6 +259,20 @@ async function evaluateLetter(goodArray, userArray) {
         console.log('DONE')
         alreadyDone[currentLetter] = true
         currentLetter += 1
+        
+        // Check if we've completed all 26 letters
+        // Do we just want to do all 26 letters on level 1?
+        // Maybe we can do the level 2 for uppercase letters?
+        if(currentLetter >= 26) {
+            alert(`Congratulations! You've completed all letters!`);
+            // Calculate final score and award points
+            await setScore(Math.round(trackingScore));
+            return Math.round(tempPoints * 100);
+        }
+        
+        // Update background for the next letter
+        updateBackgroundImage();
+        alert(`Great! Accuracy: ${Math.round(tempPoints * 100)}%. Moving to the next letter.`);
     } else {
         console.log('REDO')
         if(htmlLetters[currentLetter]) {
