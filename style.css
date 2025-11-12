@@ -342,3 +342,19 @@ section h3{
 @media (max-width: 480px){
     #hero-gear, #sounds, #backgrounds{ grid-template-columns: 1fr; }
 }
+
+.bg-row{
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 0.5rem;
+}
+.bg-row > div{ margin: 0; width: auto; max-width: 250px; flex: 0 1 220px; }
+
+#hero-gear > h2,
+#sounds > h2,
+#backgrounds > h2{
+    grid-column: 1 / -1; 
+    text-align: center;
+    margin-bottom: 0.8rem;
+}
