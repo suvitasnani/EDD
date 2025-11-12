@@ -40,7 +40,7 @@ table th{
 }
 
 .temps-table{
-    max-height: 250px;  /*prevent table from stretching to bottom of screen*/
+    max-height: 250px; 
     overflow: auto;
 }
 
@@ -265,12 +265,11 @@ section h3{
     color: #444;
 }
 
-/* Box each item: card-like with rounded corners and subtle shadow */
 .item1, .item2, .item3, .item4, .item5, .item6, .item7,
 .item8, .item9, .item10, .item11, .item12, .item13, .item14, .item15{
     display: block;
     width: calc(100% - 2rem);
-    max-width: 320px;
+    max-width: 250px;
     margin: 0.6rem auto;
     padding: 0.75rem 0.9rem;
     border-radius: 10px;
@@ -291,4 +290,39 @@ section h3{
 .item6 button, .item7 button, .item8 button, .item9 button, .item10 button,
 .item11 button, .item12 button, .item13 button, .item14 button, .item15 button{
     margin-top: 0.5rem;
+}
+
+#hero-gear{
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0,250px));
+    gap: 1rem;
+    align-items: start;
+    justify-content: center; 
+}
+#hero-gear > div{ margin: 0; width: 100%; max-width: none; }
+
+#sounds{
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0,250px));
+    gap: 1rem;
+    align-items: start;
+    justify-content: center;
+}
+#sounds > div{ margin: 0; width: 100%; max-width: none; }
+
+#backgrounds{
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0,250px));
+    gap: 1rem;
+    align-items: start;
+    justify-content: center;
+}
+#backgrounds > div{ margin: 0; width: 100%; max-width: none; }
+
+@media (max-width: 900px){
+    #hero-gear{ grid-template-columns: repeat(2,1fr); }
+    #sounds, #backgrounds{ grid-template-columns: repeat(2,1fr); }
+}
+@media (max-width: 480px){
+    #hero-gear, #sounds, #backgrounds{ grid-template-columns: 1fr; }
 }
