@@ -292,12 +292,8 @@ section h3{
     margin-top: 0.5rem;
 }
 
-<<<<<<< HEAD
 
 #hero-gear1{
-=======
-#hero-gear{
->>>>>>> f37e865f5816a5c4940ada7a6c5f79b7a58939d2
     display: grid;
     grid-template-columns: repeat(4, minmax(0,250px));
     gap: 1rem;
