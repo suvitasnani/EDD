@@ -25,29 +25,7 @@
 </head>
 
 <body>
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-light headerBG">
-        <!-- lg = large breakpoint, headerBG = custom css BG color -->
-        <div class="container"> <!-- Container will contain content in certain space in middle of page -->
-            <a href="index.html" class="navbar-brand">
-                <img src="/img/Built_with_Firebase_Logo_LightTP.png" alt="Built wtih Firebase" class="d-inline-block align-text-top">
-            </a>
-
-            <!-- Hamburger Menu Button-->
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navmenu">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <!-- Collapsible navbar menu with custom hover underline CSS animation -->
-            <div class="collapse navbar-collapse" id="navmenu">
-                <!-- Links to hamburger menu button -->
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item nbMenuItem">
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+    <div class="homeContainer">
 
     <div class="container">
         <br><h2 class="text-center">Account Registration</h2><br>
@@ -62,8 +40,9 @@
             <input type="email" placeholder="Email" id="userEmail" class="form-control mb-3">
             <input type="password" placeholder="password" id="userPass" class="form-control mb-3">
             <button type = "button" id="submitData" name="submitData" class="btn btn-outline-primary mb-3 w-100">Register</button>
-            <a href="signIn.html" class="badge bg-secondary py-1 w-100">Already have an account?</a>
+            <a href="signIn.html" class="badge bg-primary py-1 w-100">Already have an account?</a>
         </form>
+    </div>
     </div>
     
 </body>

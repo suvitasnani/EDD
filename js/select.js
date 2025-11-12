@@ -75,11 +75,13 @@ window.onload = async function(){
         lvl1Score.innerText = levels[0] + "%";
         level2.href="lvl2.html";
         level2.classList.replace('locked', 'unlocked');
+        level2.innerHTML = "Level 2: Fend off Bandits"
     } else {
         lvl1Score.classList.replace('passed', 'unpassed');
         lvl1Score.innerText = levels[0] + "%";
         level2.href="";
         level2.classList.replace('unlocked', 'locked');
+        level2.innerHTML = "Level 2: LOCKED"
     }
 
     if(levels[1] > 70){
@@ -87,11 +89,13 @@ window.onload = async function(){
         lvl2Score.innerText = levels[1] + "%";
         level3.href="level3.html";
         level3.classList.replace('locked', 'unlocked');
+        level3.innerHTML = "Level 3: Break Into the Castle"
     } else {
         lvl2Score.classList.replace('passed', 'unpassed');
         lvl2Score.innerText = levels[1] + "%";
         level3.href="";
         level3.classList.replace('unlocked', 'locked');
+        level3.innerHTML = "Level 3: LOCKED"
     }
 
     if(levels[2] > 70){
@@ -99,11 +103,13 @@ window.onload = async function(){
         lvl3Score.innerText = levels[2] + "%";
         level4.href="level4.html";
         level4.classList.replace('locked', 'unlocked');
+        level4.innerHTML = "Level 4: Finding the Princess"
     } else {
         lvl3Score.classList.replace('passed', 'unpassed');
         lvl3Score.innerText = levels[2] + "%";
         level4.href="";
         level4.classList.replace('unlocked', 'locked');
+        level4.innerHTML = "Level 4: LOCKED"
     }
 
     if(levels[3] > 70){
@@ -111,11 +117,13 @@ window.onload = async function(){
         lvl4Score.innerText = levels[3] + "%";
         level5.href="level5.html";
         level5.classList.replace('locked', 'unlocked');
+        level5.innerHTML = "Level 5: Save Her!"
     } else {
         lvl4Score.classList.replace('passed', 'unpassed');
         lvl4Score.innerText = levels[3] + "%";
         level5.href="";
         level5.classList.replace('unlocked', 'locked');
+        level5.innerHTML = "Level 5: LOCKED"
     }
 
     if(levels[4] > 70){
