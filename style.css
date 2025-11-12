@@ -188,7 +188,7 @@ table th{
 
 .lvlTab{
     margin: 17.5px;
-    height: 150px;
+    height: 260px;
     border-color: black;
     border-width: 4px;
     border-radius: 20px;
@@ -211,22 +211,6 @@ table th{
     font-style: 'Calibri';
     font-size: 25px;
     color: gray;
-}
-.lvl1Tab{
-    background-color: blue;
-    background-image: url('images/castle.jpg');
-}
-.lvl2Tab{
-    background-image: url('images/castle.jpg');
-}
-.lvl3Tab{
-    background-image: url('images/castle.jpg');
-}
-.lvl4Tab{
-    background-image: url('images/castle.jpg');
-}
-.lvl5Tab{
-    background-image: url('images/castle.jpg');
 }
 
 @media (max-width: 480px){
