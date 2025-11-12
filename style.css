@@ -173,7 +173,7 @@ table th{
 }
 
 .home{
-    font-style: 'Times New Roman';
+    font-family: 'Times New Roman';
     font-size: 30px;
     font-style: bold;
     color: white;
@@ -202,13 +202,13 @@ table th{
 }
 
 .unlocked{
-    font-style: 'Calibri';
+    font-family: 'Calibri';
     font-size: 25px;
     color: black;
     font-style: bold;
 }
 .locked{
-    font-style: 'Calibri';
+    font-family: 'Calibri';
     font-size: 25px;
     color: gray;
 }
@@ -345,4 +345,25 @@ section h3{
     grid-column: 1 / -1; 
     text-align: center;
     margin-bottom: 0.8rem;
+}
+.titleDiv{
+    margin: 20px;
+    text-align: center;
+}
+.welcomeTitle{
+    font-size: 5vw;
+    font-family: 'Calibri';
+    color: black;
+    font-style: bold;
+}
+.writingContainer{
+    max-height: 40vh !important;
+}
+.lvl1image1{
+    height: 35vh;
+    background-color: blue;
+}
+.lvl1image2{
+    height: 35vh;
+    background-color: green;
 }
