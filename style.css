@@ -308,16 +308,24 @@ section h3{
     margin-top: 0.5rem;
 }
 
-.item5{margin-left: 200px;}
 
-#hero-gear{
+#hero-gear1{
     display: grid;
     grid-template-columns: repeat(4, minmax(0,250px));
     gap: 1rem;
     align-items: start;
     justify-content: center; 
 }
-#hero-gear > div{ margin: 0; width: 100%; max-width: none; }
+#hero-gear1 > div{ margin: 0; width: 100%; max-width: none; }
+
+#hero-gear2{
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0,250px));
+    gap: 1rem;
+    align-items: start;
+    justify-content: center; 
+}
+#hero-gear2 > div{ margin: 0; width: 100%; max-width: none; }
 
 #sounds{
     display: grid;
