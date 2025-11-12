@@ -257,3 +257,54 @@ table th{
         min-width: 260px;
     }
 }
+
+section{
+    max-width: 960px;
+    margin: 1.25rem auto;
+    padding: 0.6rem 1rem;
+}
+section h2{
+    text-align: center;
+    margin: 0 0 0.6rem 0;
+    font-size: 1.6rem; 
+}
+/* thin divider between sections */
+section{ border-bottom: 1px solid rgba(0,0,0,0.12); }
+section:last-of-type{ border-bottom: none; }
+
+section > div{ text-align: center; }
+
+section h3{
+    font-size: 0.95rem;
+    font-weight: 500;
+    margin: 0.35rem 0;
+    color: #444;
+}
+
+/* Box each item: card-like with rounded corners and subtle shadow */
+.item1, .item2, .item3, .item4, .item5, .item6, .item7,
+.item8, .item9, .item10, .item11, .item12, .item13, .item14, .item15{
+    display: block;
+    width: calc(100% - 2rem);
+    max-width: 320px;
+    margin: 0.6rem auto;
+    padding: 0.75rem 0.9rem;
+    border-radius: 10px;
+    border: 1px solid rgba(0,0,0,0.08);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.04);
+    background: #ffffff;
+    transition: box-shadow 140ms ease, transform 140ms ease;
+}
+.item1:hover, .item2:hover, .item3:hover, .item4:hover, .item5:hover,
+.item6:hover, .item7:hover, .item8:hover, .item9:hover, .item10:hover,
+.item11:hover, .item12:hover, .item13:hover, .item14:hover, .item15:hover{
+    box-shadow: 0 10px 26px rgba(0,0,0,0.07);
+    transform: translateY(-3px);
+}
+
+/* small spacing for the buy button inside the box */
+.item1 button, .item2 button, .item3 button, .item4 button, .item5 button,
+.item6 button, .item7 button, .item8 button, .item9 button, .item10 button,
+.item11 button, .item12 button, .item13 button, .item14 button, .item15 button{
+    margin-top: 0.5rem;
+}
