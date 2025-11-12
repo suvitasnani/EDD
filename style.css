@@ -1,42 +1,35 @@
-/* Section grids: header spans full row, items centered beneath */
-#hero-gear{
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0,220px));
-    gap: 1rem;
-    justify-content: center; /* center the grid within section */
-    align-items: start;
-}
-#hero-gear > h2{ grid-column: 1 / -1; }
-#hero-gear > div{ margin: 0; width: 100%; max-width: none; }
+table th{
+    /*Keep column headers at the top as table is scrolled*/
+    position: sticky;
+    top: 0px; /* https://www.w3schools.com/cssref/pr_pos_top.php*/
+    overflow-y: auto;
 
-#sounds{
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0,220px));
-    gap: 1rem;
-    justify-content: center;
-    align-items: start;
 }
-#sounds > h2{ grid-column: 1 / -1; }
-#sounds > div{ margin: 0; width: 100%; max-width: none; }
 
-#backgrounds{
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0,220px));
-    gap: 1rem;
-    justify-content: center;
-    align-items: start;
+/* ----------------- Class CSS ----------------- */
+.dataForm{
+    display: flex;
+    justify-content: left;
+    align-items: center;
 }
-#backgrounds > h2{ grid-column: 1 / -1; }
-#backgrounds > div{ margin: 0; width: 100%; max-width: none; }
 
-/* Responsive fallbacks */
-@media (max-width: 900px){
-    #hero-gear{ grid-template-columns: repeat(2, minmax(0,220px)); }
-    #sounds, #backgrounds{ grid-template-columns: repeat(2, minmax(0,220px)); }
+.days{
+    text-align: center;
+    vertical-align: middle;
 }
-@media (max-width: 480px){
-    #hero-gear, #sounds, #backgrounds{ grid-template-columns: 1fr; }
+
+.headerBG{
+    background-color: #e6e6e6;
 }
+
+.footerBG{
+    background-color: #e6e6e6;
+}
+
+.ordered-List-item-font{
+    font-size:22px;
+}
+.overview-font{
     font-size:25px;
 }
 
@@ -47,7 +40,7 @@
 }
 
 .temps-table{
-    max-height: 250px;  /*prevent table from stretching to bottom of screen*/
+    max-height: 250px; 
     overflow: auto;
 }
 
@@ -288,7 +281,6 @@ section h3{
     color: #444;
 }
 
-/* Box each item: card-like with rounded corners and subtle shadow */
 .item1, .item2, .item3, .item4, .item5, .item6, .item7,
 .item8, .item9, .item10, .item11, .item12, .item13, .item14, .item15{
     display: block;
@@ -318,25 +310,28 @@ section h3{
 
 #hero-gear{
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(4, minmax(0,250px));
     gap: 1rem;
     align-items: start;
+    justify-content: center; 
 }
 #hero-gear > div{ margin: 0; width: 100%; max-width: none; }
 
 #sounds{
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(3, minmax(0,250px));
     gap: 1rem;
     align-items: start;
+    justify-content: center;
 }
 #sounds > div{ margin: 0; width: 100%; max-width: none; }
 
 #backgrounds{
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(3, minmax(0,250px));
     gap: 1rem;
     align-items: start;
+    justify-content: center;
 }
 #backgrounds > div{ margin: 0; width: 100%; max-width: none; }
 
