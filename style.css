@@ -1,35 +1,42 @@
-table th{
-    /*Keep column headers at the top as table is scrolled*/
-    position: sticky;
-    top: 0px; /* https://www.w3schools.com/cssref/pr_pos_top.php*/
-    overflow-y: auto;
-
+/* Section grids: header spans full row, items centered beneath */
+#hero-gear{
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0,220px));
+    gap: 1rem;
+    justify-content: center; /* center the grid within section */
+    align-items: start;
 }
+#hero-gear > h2{ grid-column: 1 / -1; }
+#hero-gear > div{ margin: 0; width: 100%; max-width: none; }
 
-/* ----------------- Class CSS ----------------- */
-.dataForm{
-    display: flex;
-    justify-content: left;
-    align-items: center;
+#sounds{
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0,220px));
+    gap: 1rem;
+    justify-content: center;
+    align-items: start;
 }
+#sounds > h2{ grid-column: 1 / -1; }
+#sounds > div{ margin: 0; width: 100%; max-width: none; }
 
-.days{
-    text-align: center;
-    vertical-align: middle;
+#backgrounds{
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0,220px));
+    gap: 1rem;
+    justify-content: center;
+    align-items: start;
 }
+#backgrounds > h2{ grid-column: 1 / -1; }
+#backgrounds > div{ margin: 0; width: 100%; max-width: none; }
 
-.headerBG{
-    background-color: #e6e6e6;
+/* Responsive fallbacks */
+@media (max-width: 900px){
+    #hero-gear{ grid-template-columns: repeat(2, minmax(0,220px)); }
+    #sounds, #backgrounds{ grid-template-columns: repeat(2, minmax(0,220px)); }
 }
-
-.footerBG{
-    background-color: #e6e6e6;
+@media (max-width: 480px){
+    #hero-gear, #sounds, #backgrounds{ grid-template-columns: 1fr; }
 }
-
-.ordered-List-item-font{
-    font-size:22px;
-}
-.overview-font{
     font-size:25px;
 }
 
@@ -215,7 +222,7 @@ section h3{
 .item8, .item9, .item10, .item11, .item12, .item13, .item14, .item15{
     display: block;
     width: calc(100% - 2rem);
-    max-width: 320px;
+    max-width: 250px;
     margin: 0.6rem auto;
     padding: 0.75rem 0.9rem;
     border-radius: 10px;
@@ -236,4 +243,36 @@ section h3{
 .item6 button, .item7 button, .item8 button, .item9 button, .item10 button,
 .item11 button, .item12 button, .item13 button, .item14 button, .item15 button{
     margin-top: 0.5rem;
+}
+
+#hero-gear{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    align-items: start;
+}
+#hero-gear > div{ margin: 0; width: 100%; max-width: none; }
+
+#sounds{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    align-items: start;
+}
+#sounds > div{ margin: 0; width: 100%; max-width: none; }
+
+#backgrounds{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    align-items: start;
+}
+#backgrounds > div{ margin: 0; width: 100%; max-width: none; }
+
+@media (max-width: 900px){
+    #hero-gear{ grid-template-columns: repeat(2,1fr); }
+    #sounds, #backgrounds{ grid-template-columns: repeat(2,1fr); }
+}
+@media (max-width: 480px){
+    #hero-gear, #sounds, #backgrounds{ grid-template-columns: 1fr; }
 }
