@@ -338,6 +338,13 @@ section h3{
     justify-content: center;
 }
 #backgrounds > div{ margin: 0; width: 100%; max-width: none; }
+#backgrounds2{
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0,300px));
+    gap: 1rem;
+    align-items: start;
+    justify-content: center;
+}
 
 @media (max-width: 900px){
     #hero-gear1{ grid-template-columns: repeat(2,1fr); }
