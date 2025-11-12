@@ -154,6 +154,7 @@ table th{
     text-align: center;
 }
 
+
 .untoggled{
     opacity: 0;
 }
@@ -198,11 +199,12 @@ table th{
 }
 
 .pointDisplay{
-    background-color: #1b6bb0;
-    float: right;
-    margin-right: 20px;
-    margin-top: -60px;
+    font-size: 1.125rem;
+    padding: 0.85rem 1.6rem; 
+    min-width: 220px; 
+    text-align: left;
 }
+
 .lvlTab2{
     margin-left: 100px;
 }
