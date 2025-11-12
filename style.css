@@ -340,14 +340,22 @@ section h3{
 }
 #sounds > div{ margin: 0; width: 100%; max-width: none; }
 
-#backgrounds{
+#backgrounds1{
     display: grid;
     grid-template-columns: repeat(3, minmax(0,250px));
     gap: 1rem;
     align-items: start;
     justify-content: center;
 }
-#backgrounds > div{ margin: 0; width: 100%; max-width: none; }
+#backgrounds1 > div{ margin: 0; width: 100%; max-width: none; }
+#backgrounds2{
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0,250px));
+    gap: 1rem;
+    align-items: start;
+    justify-content: center;
+}
+#backgrounds2 > div{ margin: 0; width: 100%; max-width: none; }
 
 @media (max-width: 900px){
     #hero-gear1{ grid-template-columns: repeat(2,1fr); }
