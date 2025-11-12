@@ -350,7 +350,7 @@ section h3{
 #backgrounds1 > div{ margin: 0; width: 100%; max-width: none; }
 #backgrounds2{
     display: grid;
-    grid-template-columns: repeat(3, minmax(0,250px));
+    grid-template-columns: repeat(2, minmax(0,250px));
     gap: 1rem;
     align-items: start;
     justify-content: center;
