@@ -86,7 +86,7 @@
     height: 2px;
     bottom: 0;
     left: 0;
-    background-color: #595959;
+    background-color: white;
     /*transform-origin: bottom right;*/
     transition: transform 0.35s ease-out;
 }
@@ -163,6 +163,77 @@
 
 .untoggled{
     opacity: 0;
+}
+
+.unpassed{
+    color: red;
+    font-style: bold;
+    font-size: 70px;
+    font-family: 'Times New Roman';
+}
+
+.passed{
+    color: green;
+    font-style: bold;
+    font-size: 70px;
+    font-family: 'Times New Roman';
+}
+
+.home{
+    font-style: 'Times New Roman';
+    font-size: 30px;
+    font-style: bold;
+    color: white;
+    text-decoration: none;
+}
+
+.homeTab{
+    width: 200px;
+    height: 50px;
+    border-radius: 20px;
+}
+
+.lvlTab{
+    margin: 17.5px;
+    height: 150px;
+    border-color: black;
+    border-width: 4px;
+    border-radius: 20px;
+    border-style: solid;
+    align-content: center;
+    justify-content: center;
+}
+
+.lvlTab2{
+    margin-left: 100px;
+}
+
+.unlocked{
+    font-style: 'Calibri';
+    font-size: 25px;
+    color: black;
+    font-style: bold;
+}
+.locked{
+    font-style: 'Calibri';
+    font-size: 25px;
+    color: gray;
+}
+.lvl1Tab{
+    background-color: blue;
+    background-image: url('images/castle.jpg');
+}
+.lvl2Tab{
+    background-image: url('images/castle.jpg');
+}
+.lvl3Tab{
+    background-image: url('images/castle.jpg');
+}
+.lvl4Tab{
+    background-image: url('images/castle.jpg');
+}
+.lvl5Tab{
+    background-image: url('images/castle.jpg');
 }
 
 @media (max-width: 480px){
