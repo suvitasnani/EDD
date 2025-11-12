@@ -197,6 +197,12 @@ table th{
     justify-content: center;
 }
 
+.pointDisplay{
+    background-color: #1b6bb0;
+    float: right;
+    margin-right: 20px;
+    margin-top: -60px;
+}
 .lvlTab2{
     margin-left: 100px;
 }
