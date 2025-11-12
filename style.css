@@ -154,6 +154,7 @@ table th{
     text-align: center;
 }
 
+
 .untoggled{
     opacity: 0;
 }
@@ -195,6 +196,13 @@ table th{
     border-style: solid;
     align-content: center;
     justify-content: center;
+}
+
+.pointDisplay{
+    font-size: 1.125rem;
+    padding: 0.85rem 1.6rem; 
+    min-width: 220px; 
+    text-align: left;
 }
 
 .lvlTab2{
@@ -253,8 +261,9 @@ section h2{
     font-size: 1.6rem; 
 }
 /* thin divider between sections */
-section{ border-bottom: 1px solid rgba(0,0,0,0.12); }
+section{ border-top: 1px solid rgba(0,0,0,0.12); }
 section:last-of-type{ border-bottom: none; }
+
 
 section > div{ text-align: center; }
 
@@ -350,7 +359,7 @@ section h3{
     text-align: center;
 }
 .welcomeTitle{
-    font-size: 5vw;
+    font-size: 4vw;
     font-family: 'Calibri';
     color: black;
     font-style: bold;
