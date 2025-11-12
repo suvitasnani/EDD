@@ -253,8 +253,9 @@ section h2{
     font-size: 1.6rem; 
 }
 /* thin divider between sections */
-section{ border-bottom: 1px solid rgba(0,0,0,0.12); }
+section{ border-top: 1px solid rgba(0,0,0,0.12); }
 section:last-of-type{ border-bottom: none; }
+
 
 section > div{ text-align: center; }
 
