@@ -304,12 +304,13 @@ section h3{
 
 #hero-gear2{
     display: grid;
-    grid-template-columns: repeat(4, minmax(0,250px));
+    grid-template-columns: repeat(3, minmax(0,250px));
     gap: 1rem;
     align-items: start;
     justify-content: center; 
 }
 #hero-gear2 > div{ margin: 0; width: 100%; max-width: none; }
+
 
 #sounds{
     display: grid;
@@ -330,14 +331,14 @@ section h3{
 #backgrounds > div{ margin: 0; width: 100%; max-width: none; }
 
 @media (max-width: 900px){
-    #hero-gear{ grid-template-columns: repeat(2,1fr); }
+    #hero-gear1{ grid-template-columns: repeat(2,1fr); }
     #sounds, #backgrounds{ grid-template-columns: repeat(2,1fr); }
 }
 @media (max-width: 480px){
-    #hero-gear, #sounds, #backgrounds{ grid-template-columns: 1fr; }
+    #hero-gear1, #sounds, #backgrounds{ grid-template-columns: 1fr; }
 }
 
-#hero-gear > h2,
+#hero-gear1 > h2,
 #sounds > h2,
 #backgrounds > h2{
     grid-column: 1 / -1; 
