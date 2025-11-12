@@ -188,7 +188,7 @@ table th{
 
 .lvlTab{
     margin: 17.5px;
-    min-height: 250px;
+    height: 150px;
     border-color: black;
     border-width: 4px;
     border-radius: 20px;
@@ -211,6 +211,22 @@ table th{
     font-style: 'Calibri';
     font-size: 25px;
     color: gray;
+}
+.lvl1Tab{
+    background-color: blue;
+    background-image: url('images/castle.jpg');
+}
+.lvl2Tab{
+    background-image: url('images/castle.jpg');
+}
+.lvl3Tab{
+    background-image: url('images/castle.jpg');
+}
+.lvl4Tab{
+    background-image: url('images/castle.jpg');
+}
+.lvl5Tab{
+    background-image: url('images/castle.jpg');
 }
 
 @media (max-width: 480px){
@@ -326,14 +342,6 @@ section h3{
 @media (max-width: 480px){
     #hero-gear, #sounds, #backgrounds{ grid-template-columns: 1fr; }
 }
-
-.bg-row{
-    display: flex;
-    justify-content: center;
-    gap: 1rem;
-    margin-top: 0.5rem;
-}
-.bg-row > div{ margin: 0; width: auto; max-width: 250px; flex: 0 1 220px; }
 
 #hero-gear > h2,
 #sounds > h2,
