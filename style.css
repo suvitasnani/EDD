@@ -199,10 +199,20 @@ table th{
 }
 
 .pointDisplay{
-    font-size: 1.125rem;
-    padding: 0.85rem 1.6rem; 
-    min-width: 220px; 
-    text-align: left;
+    display: inline-block;
+    padding: 0.55rem 1.1rem;
+    margin: 18rem 0.25rem;
+    background-color: #0d6efd; 
+    color: #ffffff;
+    text-decoration: none; 
+    border-radius: 0.375rem;
+    font-weight: 600;
+    font-size: 1rem;
+    line-height: 1;
+    border: 1px solid rgba(0,0,0,0.08);
+    box-shadow: 0 2px 6px rgba(13,110,253,0.12);
+    transition: background-color 150ms ease, transform 60ms ease, box-shadow 150ms ease;
+    cursor: pointer;
 }
 
 .lvlTab2{
