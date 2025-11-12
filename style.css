@@ -308,8 +308,6 @@ section h3{
     margin-top: 0.5rem;
 }
 
-.item5{margin-left: 200px;}
-
 #hero-gear{
     display: grid;
     grid-template-columns: repeat(4, minmax(0,250px));
