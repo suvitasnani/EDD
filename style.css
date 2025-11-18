@@ -147,11 +147,23 @@ table th{
     color: #222;
 }
 
-.homeButton{
-    font-size: 1.125rem;
-    padding: 0.85rem 1.6rem; 
-    min-width: 220px; 
-    text-align: center;
+.shopHomeButton{
+    display: inline-block;
+    padding: 0.7rem 1.1rem;
+    margin: 0.25rem;
+    margin-top: 2rem;
+    margin-left: 2rem;
+    background-color: #0d6efd; 
+    color: #ffffff;
+    text-decoration: none; 
+    border-radius: 0.375rem;
+    font-weight: 600;
+    font-size: 1rem;
+    line-height: 1;
+    border: 1px solid rgba(0,0,0,0.08);
+    box-shadow: 0 2px 6px rgba(13,110,253,0.12);
+    transition: background-color 150ms ease, transform 60ms ease, box-shadow 150ms ease;
+    cursor: pointer;
 }
 
 
@@ -180,6 +192,13 @@ table th{
     color: white;
     text-decoration: none;
 }
+.pointText{
+    font-family: 'Times New Roman';
+    font-size: 30px;
+    font-style: bold;
+    color: white;
+    text-decoration: none;
+}
 
 .homeTab{
     width: 200px;
@@ -201,7 +220,7 @@ table th{
 .pointDisplay{
     display: inline-block;
     padding: 0.55rem 1.1rem;
-    margin: 0.4rem 0.25rem;
+    margin: 2rem 0.25rem;
     background-color: #0d6efd; 
     color: #ffffff;
     text-decoration: none; 
@@ -241,10 +260,12 @@ table th{
         font-size: 1.75rem;
     }
     .homeButton{
+        margin-top: 3rem;
+        margin-left: 3rem;
         width: 100%;
         max-width: 340px;
         font-size: 1rem;
-        padding: 0.65rem 1rem;
+        padding: 0.55rem 1rem;
         min-width: auto;
     }
 }
@@ -340,7 +361,7 @@ section h3{
 }
 #sounds > div{ margin: 0; width: 100%; max-width: none; }
 
-#backgrounds1{
+#backgrounds{
     display: grid;
     grid-template-columns: repeat(3, minmax(0,250px));
     gap: 1rem;
