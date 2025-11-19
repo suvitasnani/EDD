@@ -50,6 +50,7 @@ let htmlLetters = [document.getElementById('a'), document.getElementById('b'), d
     document.getElementById('t'), document.getElementById('u'), document.getElementById('v'), document.getElementById('w'), document.getElementById('x'), document.getElementById('y'), document.getElementById('z')];
 
 let gif = document.getElementById('gif')
+let canvasDiv = document.getElementById('canvasDiv')
 let currentLetter = 0;
 let alreadyDone = [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
 
@@ -120,9 +121,9 @@ window.onload = async function(){
     
     // Set up canvas drawing style
     ctx.strokeStyle = '#000000';
-    if(effectArray[9]){canvas.classList.replace('writingContainer', 'writingContainerNight')}
-    if(effectArray[8]){canvas.classList.replace('writingContainer', 'writingContainerDesert')}
-    if(effectArray[7]){canvas.classList.replace('writingContainer', 'writingContainerOcean')}
+    if(effectArray[9]){canvasDiv.classList.replace('writingContainer', 'writingContainerNight')}
+    if(effectArray[8]){canvasDiv.classList.replace('writingContainer', 'writingContainerDesert')}
+    if(effectArray[7]){canvasDiv.classList.replace('writingContainer', 'writingContainerOcean')}
     if(effectArray[10]) {ctx.strokeStyle = '#89BEFA';}
     if(effectArray[11]) {ctx.strokeStyle = '#54507D';}
     ctx.lineWidth = 5;
@@ -153,6 +154,8 @@ function handleStart(evt) {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     // Reset to black as default
     ctx.strokeStyle = '#000000';
+    if(effectArray[10]) {ctx.strokeStyle = '#89BEFA';}
+    if(effectArray[11]) {ctx.strokeStyle = '#54507D';}
 
     // Storage for current letter
     moveArray[currentLetter] = [];
@@ -251,7 +254,7 @@ function updateBackgroundImage() {
     // Background image for tracing
     const bgUrl = `Cursive Letters/lowercase_${currentLetterChar}.gif`;
     // Gradient for a opacity only way to do it i think 
-    const overlay = 'linear-gradient(rgba(255,255,255,0.9), rgba(255,255,255,0.9))';
+    const overlay = 'linear-gradient(to right, rgba(255,255,255,0), rgba(255,255,255,0.9), rgba(255,255,255,0.9), rgba(255,255,255,0))';
     canvas.style.backgroundImage = `${overlay}, url('${bgUrl}')`;
     canvas.style.backgroundSize = 'contain';
     canvas.style.backgroundRepeat = 'no-repeat';

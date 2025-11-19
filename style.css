@@ -343,6 +343,18 @@ section h3{
 .writingContainer{
     max-height: 40vh !important;
 }
+.writingContainerOcean{
+    max-height: 40vh !important;
+    background-image: 'images/ocean.png'
+}
+.writingContainerDesert{
+    max-height: 40vh !important;
+    background-image: 'images/desert.png'
+}
+.writingContainerNight{
+    max-height: 40vh !important;
+    background-image: 'images/night.png'
+}
 .lvl1image1{
     height: 35vh;
     background-color: blue;
