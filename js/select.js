@@ -82,6 +82,14 @@ window.onload = async function(){
         level2.href="";
         level2.classList.replace('unlocked', 'locked');
         level2.innerHTML = "Level 2: LOCKED"
+        level3.href="";
+        level3.classList.replace('unlocked', 'locked');
+        level3.innerHTML = "Level 3: LOCKED"
+        level4.classList.replace('unlocked', 'locked');
+        level4.innerHTML = "Level 4: LOCKED"
+        level5.href="";
+        level5.classList.replace('unlocked', 'locked');
+        level5.innerHTML = "Level 5: LOCKED"
     }
 
     if(levels[1] > 70){
@@ -96,6 +104,11 @@ window.onload = async function(){
         level3.href="";
         level3.classList.replace('unlocked', 'locked');
         level3.innerHTML = "Level 3: LOCKED"
+        level4.classList.replace('unlocked', 'locked');
+        level4.innerHTML = "Level 4: LOCKED"
+        level5.href="";
+        level5.classList.replace('unlocked', 'locked');
+        level5.innerHTML = "Level 5: LOCKED"
     }
 
     if(levels[2] > 70){
@@ -110,6 +123,9 @@ window.onload = async function(){
         level4.href="";
         level4.classList.replace('unlocked', 'locked');
         level4.innerHTML = "Level 4: LOCKED"
+        level5.href="";
+        level5.classList.replace('unlocked', 'locked');
+        level5.innerHTML = "Level 5: LOCKED"
     }
 
     if(levels[3] > 70){
