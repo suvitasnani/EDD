@@ -43,7 +43,7 @@ const buttons = [document.getElementById('item1'), document.getElementById('item
     document.getElementById('item7'), document.getElementById('item8'), document.getElementById('item9'), 
     document.getElementById('item10'), document.getElementById('item11'), document.getElementById('item12'), 
     document.getElementById('item13'), document.getElementById('item14'), document.getElementById('item15')]
-let pointVals = [5, 10, 15, 20, 10, 5, 15, 20, 30, 15, 20, 25, 30, 25, 30]
+let pointVals = [5, 10, 15, 20, 2, 5, 15, 20, 30, 15, 20, 25, 30, 25, 30]
 let points = 0
 let currentUser = null;  
 
