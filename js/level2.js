@@ -109,8 +109,10 @@ window.onload = async function(){
   if(currentUser == null){
     window.location="home.html";
   } else {
-    effectArray = getEffects();
-
+    effectArray = await getEffects();
+    if(effectArray[9]){canvasDiv.classList.replace('writingContainer', 'writingContainerNight');}
+    if(effectArray[8]){canvasDiv.classList.replace('writingContainer', 'writingContainerDesert')}
+    if(effectArray[7]){canvasDiv.classList.replace('writingContainer', 'writingContainerOcean')}
         canvas = document.getElementById("gameCanvas");
         if (!canvas) {
             console.error('[level2] gameCanvas element not found');
@@ -118,6 +120,8 @@ window.onload = async function(){
         }
         
         ctx = canvas.getContext("2d");
+        if(effectArray[10]) {ctx.strokeStyle = '#89BEFA';}
+        if(effectArray[11]) {ctx.strokeStyle = '#54507D';}
         // Initialize with first letter
         updateBackgroundImage();
     // Initialize canvas
@@ -126,15 +130,13 @@ window.onload = async function(){
     
     // Set up canvas drawing style
     ctx.strokeStyle = '#000000';
-    if(effectArray[9]){canvasDiv.classList.replace('writingContainer', 'writingContainerNight')}
-    if(effectArray[8]){canvasDiv.classList.replace('writingContainer', 'writingContainerDesert')}
-    if(effectArray[7]){canvasDiv.classList.replace('writingContainer', 'writingContainerOcean')}
+    
     if(effectArray[10]) {ctx.strokeStyle = '#89BEFA';}
     if(effectArray[11]) {ctx.strokeStyle = '#54507D';}
     ctx.lineWidth = 5;
     ctx.lineCap = 'round';
     ctx.lineJoin = 'round';
-    
+
         canvas.addEventListener("touchstart", handleStart);
         canvas.addEventListener("touchmove", handleMove);
         canvas.addEventListener("touchend", handleEnd);
@@ -204,7 +206,6 @@ function handleEnd(evt) {
     // If we have a non-empty stroke and also something to compare it to
     if (Array.isArray(userStroke) && userStroke.length > 0 && Array.isArray(letterRef) && letterRef.length > 0) {
         evaluateLetter(letterRef, userStroke).then(accuracy => {
-            alert(`Accuracy: ${accuracy}%`);
         });
     }
 
@@ -335,6 +336,7 @@ function redrawStroke(stroke, color) {
 
 async function evaluateLetter(goodArray, userArray) {
     let tempPoints = 0
+    let pointsOnLine = 0;
     // The acceptable distance threshold is based on the screen size
     const maxAcceptableDistance = Math.max(20, Math.min(canvas.width, canvas.height) * 0.08); // HOW STRICT IT IS, NOTE TO SELF TO TUNE IT 
     
@@ -346,16 +348,26 @@ async function evaluateLetter(goodArray, userArray) {
                 minDistance = distance;
             }
         }
+        if (minDistance <= maxAcceptableDistance) {
+            pointsOnLine++;
+        }
+
         // Scoring points based on how close the stroke is to the reference (points decrease as distance increases)
         // Note if I don't fix this only works on the reference array, we should find a way to be able to scale it
         let pointsForThisPixel = Math.max(0, (maxAcceptableDistance - minDistance) / maxAcceptableDistance);
         tempPoints += pointsForThisPixel / userArray.length;
     }
+
+    // Enforce 399% of points must be on the line
+    // Temp solutions, stop against random circles or lines
+    if (pointsOnLine < userArray.length * 0.99) {
+        tempPoints = 0;
+    }
+
     if(tempPoints > 0.7) {
         // Redraw in green and show alert before moving on
         // NOT WORKING BC ALERTS
         redrawStroke(userArray, '#00FF00');
-        alert(`Great! Accuracy: ${Math.round(tempPoints * 100)}%. Moving to the next letter.`);
         if(effectArray[4] && !effectArray[5] && !effectArray[6]){roar.play()}
         if(effectArray[5] && !effectArray[6]){meow.play()}
         if(effectArray[6]){ding.play()}
@@ -371,7 +383,7 @@ async function evaluateLetter(goodArray, userArray) {
                 }
                 if(!effectArray[0] && !effectArray[1] && !effectArray[2] && effectArray[3]){
                     gif.classList.replace(`lvl2image${currentLetter-1}`, `lvl2.1image${currentLetter}`)
-                    gif.classList.replace(`lvl2.1image${currentLetter-1}`, `lv2.1image${currentLetter}`)
+                    gif.classList.replace(`lvl2.1image${currentLetter-1}`, `lvl2.1image${currentLetter}`)
                 }
                 if(effectArray[0] && !effectArray[1] && !effectArray[2] && !effectArray[3]){
                     gif.classList.replace(`lvl2image${currentLetter-1}`, `lvl2.2image${currentLetter}`)
@@ -411,9 +423,9 @@ async function evaluateLetter(goodArray, userArray) {
         // Do we just want to do all 26 letters on level 1?
         // Maybe we can do the level 2 for uppercase letters?
         if(currentLetter >= 26) {
-            alert(`Congratulations! You've completed all letters!`);
             // Calculate final score and award points
-            await setScore(Math.round(trackingScore));
+            const averageScore = trackingScore / 26;
+            await setScore(Math.round(averageScore));
             return Math.round(tempPoints * 100);
         }
         
