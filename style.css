@@ -39,21 +39,8 @@ table th{
     align-items: center;
 }
 
-.temps-table{
-    max-height: 250px; 
-    overflow: auto;
-}
-
-.temps{
-    text-align: center;
-    vertical-align: middle;
-}
-
-.nbMenuItem{
-    font-size:25px;
-    padding-right: 20px;
-    padding-left: 20px;
-}
+.pointDisplay{position:fixed;top:12px;right:16px;width:200px;height:50px;display:inline-flex;align-items:center;justify-content:center;border-radius:20px;background:#0d6efd;color:#fff;text-align:center;border:1px solid rgba(0,0,0,0.08);box-shadow:0 2px 6px rgba(13,110,253,0.12);font-weight:600;font-size:1rem;line-height:50px}
+.pointDisplay h3{margin:0;line-height:1;font-size:1rem}
 
 .notes{
     font-size:20px;
@@ -191,12 +178,6 @@ table th{
     color: white;
     text-decoration: none;
 }
-.pointText{
-    font-size: 30px;
-    font-style: bold;
-    color: white;
-    text-decoration: none;
-}
 
 .homeTab{
     width: 200px;
@@ -214,60 +195,7 @@ table th{
     align-content: center;
     justify-content: center;
 }
-
-.pointDisplay{
-    display: inline-block;
-    padding: 0.7rem 1.1rem;
-    margin: 0.25rem;
-    margin-top: 2rem;
-    margin-left: 2rem;
-    background-color: #0d6efd; 
-    color: #ffffff;
-    text-decoration: none; 
-    border-radius: 0.375rem;
-    font-weight: 600;
-    font-size: 1rem;
-    line-height: 1;
-    border: 1px solid rgba(0,0,0,0.08);
-    box-shadow: 0 2px 6px rgba(13,110,253,0.12);
-    transition: background-color 150ms ease, transform 60ms ease, box-shadow 150ms ease;
-}
-
-.lvlTab2{
-    margin-left: 100px;
-}
-
-.unlocked{
-    font-family: 'Calibri';
-    font-size: 25px;
-    color: black;
-    font-style: bold;
-}
-.locked{
-    font-family: 'Calibri';
-    font-size: 25px;
-    color: gray;
-}
-
-@media (max-width: 480px){
-    .homeContainer{
-        min-height: 55vh;
-        padding: 1.25rem;
-        gap: 0.75rem;
-    }
-    .homeContainer h1{
-        font-size: 1.75rem;
-    }
-    .homeButton{
-        margin-top: 3rem;
-        margin-left: 3rem;
-        width: 100%;
-        max-width: 340px;
-        font-size: 1rem;
-        padding: 0.55rem 1rem;
-        min-width: auto;
-    }
-}
+ 
 
 @media (min-width: 1200px){
     .homeContainer h1{
@@ -403,6 +331,19 @@ section h3{
 }
 .writingContainer{
     max-height: 40vh !important;
+    background-image: 'images/desert.png'
+}
+.writingContainerOcean{
+    max-height: 40vh !important;
+    background-image: 'images/ocean.png'
+}
+.writingContainerDesert{
+    max-height: 40vh !important;
+    background-image: 'images/desert.png'
+}
+.writingContainerNight{
+    max-height: 40vh !important;
+    background-image: 'images/night.png'
 }
 .lvl1image1{
     height: 35vh;
@@ -412,3 +353,4 @@ section h3{
     height: 35vh;
     background-color: green;
 }
+

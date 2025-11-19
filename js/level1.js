@@ -104,6 +104,7 @@ window.onload = async function(){
     window.location="home.html";
   } else {
     effectArray = getEffects();
+
         canvas = document.getElementById("gameCanvas");
         if (!canvas) {
             console.error('[level1] gameCanvas element not found');
@@ -119,6 +120,11 @@ window.onload = async function(){
     
     // Set up canvas drawing style
     ctx.strokeStyle = '#000000';
+    if(effectArray[9]){canvas.classList.replace('writingContainer', 'writingContainerNight')}
+    if(effectArray[8]){canvas.classList.replace('writingContainer', 'writingContainerDesert')}
+    if(effectArray[7]){canvas.classList.replace('writingContainer', 'writingContainerOcean')}
+    if(effectArray[10]) {ctx.strokeStyle = '#89BEFA';}
+    if(effectArray[11]) {ctx.strokeStyle = '#54507D';}
     ctx.lineWidth = 5;
     ctx.lineCap = 'round';
     ctx.lineJoin = 'round';
@@ -349,7 +355,37 @@ async function evaluateLetter(goodArray, userArray) {
                 htmlLetters[currentLetter].classList.replace('redo', 'done')
             }
             if(gif && gif.classList) {
-                gif.classList.replace(`lvl1image${currentLetter+1}`,`lvl1image${currentLetter+2}`)
+                if(!effectArray[0] && !effectArray[1] && !effectArray[2] && !effectArray[3]){
+                    gif.classList.replace(`lvl1image${currentLetter-1}`,`lvl1image${currentLetter}`)
+                }
+                if(!effectArray[0] && !effectArray[1] && !effectArray[2] && effectArray[3]){
+                    gif.classList.replace(`lvl1image${currentLetter-1}`, `lvl1.1image${currentLetter}`)
+                    gif.classList.replace(`lvl1.1image${currentLetter-1}`, `lvl1.1image${currentLetter}`)
+                }
+                if(effectArray[0] && !effectArray[1] && !effectArray[2] && !effectArray[3]){
+                    gif.classList.replace(`lvl1image${currentLetter-1}`, `lvl1.2image${currentLetter}`)
+                    gif.classList.replace(`lvl1.2image${currentLetter-1}`, `lvl1.2image${currentLetter}`)
+                }
+                if(effectArray[0] && !effectArray[1] && !effectArray[2] && effectArray[3]){
+                    gif.classList.replace(`lvl1image${currentLetter-1}`, `lvl1.3image${currentLetter}`)
+                    gif.classList.replace(`lvl1.3image${currentLetter-1}`, `lvl1.3image${currentLetter}`)
+                }
+                if(effectArray[1] && !effectArray[2] && !effectArray[3]){
+                    gif.classList.replace(`lvl1image${currentLetter-1}`, `lvl1.4image${currentLetter}`)
+                    gif.classList.replace(`lvl1.4image${currentLetter-1}`, `lvl1.4image${currentLetter}`)
+                }
+                if(effectArray[1] && !effectArray[2] && effectArray[3]){
+                    gif.classList.replace(`lvl1image${currentLetter-1}`, `lvl1.5image${currentLetter}`)
+                    gif.classList.replace(`lvl1.5image${currentLetter-1}`, `lvl1.5image${currentLetter}`)
+                }
+                if(effectArray[2] && !effectArray[3]){
+                    gif.classList.replace(`lvl1image${currentLetter-1}`, `lvl1.6image${currentLetter}`)
+                    gif.classList.replace(`lvl1.6image${currentLetter-1}`, `lvl1.6image${currentLetter}`)
+                }
+                if(effectArray[2] && effectArray[3]){
+                    gif.classList.replace(`lvl1image${currentLetter-1}`, `lvl1.7image${currentLetter}`)
+                    gif.classList.replace(`lvl1.7image${currentLetter-1}`, `lvl1.7image${currentLetter}`)
+                }
             }
         if(alreadyDone[currentLetter]) {
             trackingScore += tempMax * 0.25
