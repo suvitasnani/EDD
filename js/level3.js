@@ -255,7 +255,7 @@ if (typeof window !== 'undefined') {
 
 // Update background image based on current letter
 function updateBackgroundImage() {
-    const letters = '0123456789abcdef9876543210';
+    const letters = 'ab0123456789ba9876543210ab';
     const currentLetterChar = letters[currentLetter];
     // Background image for tracing
     const bgUrl = `Cursive Letters/number_${currentLetterChar}.gif`;
@@ -379,7 +379,7 @@ async function evaluateLetter(goodArray, userArray) {
             }
             if(gif && gif.classList) {
                 if(!effectArray[0] && !effectArray[1] && !effectArray[2] && !effectArray[3]){
-                    gif.classList.replace(`lvl3image${currentLetter-1}`,`lvl3${currentLetter}`)
+                    gif.classList.replace(`lvl3image${currentLetter-1}`,`lvl3image${currentLetter}`)
                 }
                 if(!effectArray[0] && !effectArray[1] && !effectArray[2] && effectArray[3]){
                     gif.classList.replace(`lvl3image${currentLetter-1}`, `lvl3-1image${currentLetter}`)
