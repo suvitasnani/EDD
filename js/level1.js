@@ -427,7 +427,8 @@ async function evaluateLetter(goodArray, userArray) {
         if(currentLetter >= 26) {
             alert(`Congratulations! You've completed all letters!`);
             // Calculate final score and award points
-            await setScore(Math.round(trackingScore));
+            const averageScore = trackingScore / 26;
+            await setScore(Math.round(averageScore));
             return Math.round(tempPoints * 100);
         }
         
