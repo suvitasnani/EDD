@@ -371,7 +371,7 @@ async function evaluateLetter(goodArray, userArray) {
         if(effectArray[4] && !effectArray[5] && !effectArray[6]){roar.play()}
         if(effectArray[5] && !effectArray[6]){meow.play()}
         if(effectArray[6]){ding.play()}
-        await sleep(500);
+         await setTimeout(()=>{
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
             if(htmlLetters[currentLetter]) {
@@ -419,7 +419,8 @@ async function evaluateLetter(goodArray, userArray) {
         console.log('DONE')
         alreadyDone[currentLetter] = true
         currentLetter += 1
-        
+        updateBackgroundImage();
+        },500);
         // Check if we've completed all 26 letters
         // Do we just want to do all 26 letters on level 1?
         // Maybe we can do the level 2 for uppercase letters?
@@ -430,8 +431,6 @@ async function evaluateLetter(goodArray, userArray) {
             return Math.round(tempPoints * 100);
         }
         
-        // Update background for the next letter
-        updateBackgroundImage();
     } else {
         redrawStroke(userArray, '#FF0000');
         console.log('REDO')

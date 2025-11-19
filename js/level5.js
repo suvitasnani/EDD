@@ -371,7 +371,7 @@ async function evaluateLetter(goodArray, userArray) {
         if(effectArray[4] && !effectArray[5] && !effectArray[6]){roar.play()}
         if(effectArray[5] && !effectArray[6]){meow.play()}
         if(effectArray[6]){ding.play()}
-        await setTimeout(()=>{;
+        await setTimeout(()=>{
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
             if(htmlLetters[currentLetter]) {
