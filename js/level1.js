@@ -39,7 +39,9 @@ const dbref = ref(db);
 // ---------------------// Get reference values -----------------------------
 let currentUser = null;                                 // Initialize current user to null
 let trackingScore = 0;
-let letterArray = [[[719,128.75],[720,128.75],[719.5,129.25],[719,129.25],[718,130.25],[716.5,130.25],[716,129.75],[715,128.75],[715,127.75],[714.5,126.25],[714,126.25],[713,125.75],[711.5,125.75],[710,125.25],[708,125.25],[705,125.25],[703.5,125.75],[701.5,126.25],[698.5,127.25],[697.5,127.75],[694.5,128.75],[692.5,129.25],[690.5,129.75],[688,130.25],[684.5,131.25],[682.5,131.75],[681,132.25],[679.5,132.25],[678,132.25],[675.5,132.75],[674,134.25],[672.5,135.25],[671,136.25],[669,137.25],[666.5,137.75],[664.5,137.75],[662.5,138.25],[661,138.25],[658.5,139.25],[657,139.75],[656,140.25],[655.5,140.75],[654,141.25],[653,141.75],[652,142.25],[651,142.75],[650,143.25],[647,144.75],[645.5,145.25],[643.5,145.25],[641.5,145.75],[639,146.25],[637,146.25],[635.5,146.75],[634,147.25],[632.5,148.25],[630,149.25],[628.5,150.25],[627,151.75],[625.5,152.75],[623,154.75],[621.5,156.25],[620,157.75],[619,159.25],[617.5,160.25],[616,161.75],[614.5,163.75],[613.5,164.75],[611.5,166.75],[611,167.25],[609,169.25],[607.5,170.75],[606.5,172.25],[605,173.75],[603,175.75],[601,177.75],[599.5,179.75],[598.5,180.75],[597.5,182.25],[596.5,184.25],[595.5,185.75],[595.5,187.25],[594.5,188.25],[594,190.75],[593.5,192.75],[593,194.75],[592.5,196.25],[592,198.25],[591.5,200.75],[591.5,202.25],[591.5,203.75],[591,204.75],[590.5,206.75],[590,207.75],[590,208.75],[589.5,209.75],[589,210.25],[588.5,211.75],[588.5,212.75],[588,214.25],[588,216.25],[588,217.75],[587.5,219.25],[587.5,220.75],[587.5,222.25],[588,223.75],[588.5,225.25],[588.5,226.25],[588.5,227.75],[589,228.75],[589.5,230.25],[590,230.75],[591,231.25],[592,231.75],[593.5,232.75],[594.5,233.25],[596,234.25],[597.5,234.75],[599,235.25],[602,235.75],[604,236.25],[606,236.75],[607.5,236.75],[609.5,236.75],[612,236.75],[614,236.25],[616,235.75],[619,235.25],[622.5,234.25],[628,233.25],[631,232.25],[633.5,230.75],[636.5,228.25],[642,224.75],[647,222.25],[650.5,218.75],[653.5,215.25],[658,210.75],[661.5,208.25],[666,205.25],[670.5,201.75],[673.5,197.25],[677,191.75],[679.5,188.75],[682.5,185.75],[686,182.25],[689.5,178.25],[693,172.25],[695.5,169.25],[697.5,166.25],[700.5,162.75],[706,157.25],[709.5,152.75],[712.5,149.75],[714.5,147.75],[716,145.75],[718,142.25],[719.5,139.75],[720.5,137.75],[721.5,135.75],[722,134.25],[723,132.75],[723.5,131.75],[724,131.25],[724,130.75],[724,130.25],[724,129.75],[724,129.25],[723,129.25],[722.5,129.75],[722,129.75],[721.5,130.25],[721,130.75],[721,131.75],[720,133.25],[719.5,134.75],[719,136.75],[718,138.75],[717,140.75],[715.5,142.75],[714.5,144.25],[714,145.25],[712,147.25],[710.5,148.75],[708.5,150.25],[706.5,151.75],[703.5,155.25],[702,157.75],[700.5,160.25],[699,162.25],[697.5,164.25],[695.5,167.25],[694.5,169.25],[693,171.25],[691.5,173.75],[689.5,176.75],[686.5,181.25],[684.5,183.25],[683,185.25],[681.5,187.25],[681,189.25],[679.5,191.25],[678.5,193.25],[677.5,194.75],[676,198.25],[675,200.25],[674,202.25],[673,204.25],[672.5,205.75],[671.5,207.75],[671,209.25],[670.5,210.75],[670,211.75],[670,213.25],[670,214.75],[670.5,216.25],[671,217.25],[671.5,218.25],[672,219.25],[673,220.75],[673.5,221.75],[674,222.75],[674,223.75],[674.5,225.25],[675,226.25],[675.5,226.75],[676,227.75],[676.5,228.25],[677,229.25],[677.5,230.25],[678,230.75],[678.5,231.25],[679,231.75],[680.5,232.25],[681,232.75],[682,233.25],[683,233.75],[684,233.75],[685.5,234.25],[686.5,234.25],[688,234.75],[689.5,235.25],[691,235.75],[692,235.75],[693,236.25],[694,236.75],[695,237.75],[695.5,238.25],[696.5,239.25],[697.5,239.75],[699,239.75],[700,239.75],[701,239.75],[702,239.75],[703,239.75],[705,238.75],[706,238.25],[707.5,238.25],[709.5,237.75],[710.5,237.25],[712.5,236.75],[714,236.25],[715,235.75],[716,235.25],[716.5,235.25],[718.5,234.25],[719.5,233.75],[720.5,233.25],[722.5,233.25],[725.5,233.25],[727.5,232.25],[730,231.25],[732,230.25],[735,228.25],[736.5,227.25],[738.5,225.75],[740,224.25],[741.5,222.75],[743.5,221.25],[745.5,219.25],[747.5,217.25],[749.5,216.25],[752.5,214.25],[754.5,212.75],[756,211.75],[757.5,211.25],[759.5,210.25],[762,208.75],[763.5,207.25],[765.5,205.75],[768,204.25],[770.5,202.25],[774.5,197.75],[777,195.25],[779,192.75],[781,190.75],[783,188.25],[785.5,185.25],[787.5,183.25],[789.5,180.75],[792,177.75],[796.5,173.25],[799,170.75],[801,168.75],[803.5,165.25],[804.5,163.75],[806,160.75],[807.5,157.25],[809,153.25],[810.5,149.75],[813,146.25],[815,144.25],[817,142.25],[818.5,140.25],[821.5,136.25],[822,134.25],[822.5,132.25],[823,130.75],[823,128.75],[823.5,127.25]]];
+let letterArray = []; // DON'T NEED ARRAYS ANYMORE SINCE DOING IT ON LIKE A DEVICE BY DEVICE BASIS, CAN DELETE LATER WOOO YEAH IDK OK BYE
+let currentLetterPoints = [];
+let currentImage = null;
 let moveArray = [[], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], []];
 const tempMax = 100/1;
 let htmlLetters = [document.getElementById('a'), document.getElementById('b'), document.getElementById('c'), document.getElementById('d'), document.getElementById('e'), document.getElementById('f'), document.getElementById('g'), document.getElementById('h'), document.getElementById('i'), 
@@ -59,6 +61,11 @@ function resizeCanvas() {
     const rect = canvas.getBoundingClientRect();
     canvas.width = rect.width;
     canvas.height = rect.height;
+    
+    // Regenerate points if we have an image
+    if (currentImage) {
+        generateLetterPoints(currentImage);
+    }
 }
 
 // Get touch position relative to the canvas
@@ -164,7 +171,7 @@ function handleEnd(evt) {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     const userStroke = moveArray[currentLetter];
-    const letterRef = letterArray[currentLetter];
+    const letterRef = currentLetterPoints;
     // If we have a non-empty stroke and also something to compare it to
     if (Array.isArray(userStroke) && userStroke.length > 0 && Array.isArray(letterRef) && letterRef.length > 0) {
         evaluateLetter(letterRef, userStroke).then(accuracy => {
@@ -224,11 +231,66 @@ function updateBackgroundImage() {
     canvas.style.backgroundSize = 'contain';
     canvas.style.backgroundRepeat = 'no-repeat';
     canvas.style.backgroundPosition = 'center center';
+
+    // Load image for data generation
+    const img = new Image();
+    img.src = bgUrl;
+    img.onload = () => {
+        currentImage = img;
+        generateLetterPoints(img);
+    };
+}
+
+// Generate reference points for the current letter
+function generateLetterPoints(img) {
+    const offCanvas = document.createElement('canvas');
+    offCanvas.width = canvas.width;
+    offCanvas.height = canvas.height;
+    const offCtx = offCanvas.getContext('2d');
+
+    // Clear canvas
+    offCtx.clearRect(0, 0, canvas.width, canvas.height);
+    
+    // Calculate contain dimensions
+    const hRatio = canvas.width / img.width;
+    const vRatio = canvas.height / img.height;
+    const ratio = Math.min(hRatio, vRatio);
+    const centerShift_x = (canvas.width - img.width * ratio) / 2;
+    const centerShift_y = (canvas.height - img.height * ratio) / 2;
+    
+    // Draw image
+    offCtx.drawImage(img, 0, 0, img.width, img.height, centerShift_x, centerShift_y, img.width * ratio, img.height * ratio);
+    
+    const imageData = offCtx.getImageData(0, 0, canvas.width, canvas.height);
+    const data = imageData.data;
+    
+    currentLetterPoints = [];
+    // Step size based on screen size
+    const step = Math.max(2, Math.floor(Math.min(canvas.width, canvas.height) / 200));
+    
+    for (let y = 0; y < canvas.height; y += step) {
+        for (let x = 0; x < canvas.width; x += step) {
+            const i = (y * canvas.width + x) * 4;
+            const r = data[i];
+            const g = data[i+1];
+            const b = data[i+2];
+            const a = data[i+3];
+            
+            // Check for dark pixels (on a lighter bg)
+            // If alpha is high and color is dark
+            // Allows us the prorgram to makes its own reference points MEANING should working regardless of device YIPPEE!
+            if (a > 50 && (r < 200 || g < 200 || b < 200)) {
+                 currentLetterPoints.push([x, y]);
+            }
+        }
+    }
+    console.log(`Generated ${currentLetterPoints.length} reference points for letter.`);
 }
 
 async function evaluateLetter(goodArray, userArray) {
     let tempPoints = 0
-    const maxAcceptableDistance = 50; // Threshold in pixels we can change if needed
+    // The acceptable distance threshold is based on the screen size
+    const maxAcceptableDistance = Math.max(20, Math.min(canvas.width, canvas.height) * 0.08); // HOW STRICT IT IS, NOTE TO SELF TO TUNE IT 
     
     for(let i=0; i < userArray.length; i++) {
         let minDistance = Infinity;
@@ -285,6 +347,9 @@ async function evaluateLetter(goodArray, userArray) {
 
 // Find the closest matching letter from the reference array
 // MIGHT not need this function anymore IF we are doing it one by one?
+
+// Temp commenting this out for now, might comment out other stuff we aren't using as well
+/*
 async function getClosestComparison(x, y) {
     let closestDistance = 100000;
     let closestLetter = letterArray[0];
@@ -300,6 +365,7 @@ async function getClosestComparison(x, y) {
     }
     return [closestLetter, closestVal];
 }
+*/
 
 async function setScore(score){
     await update(ref(db, 'users/' + currentUser.uid + '/levels'), {
