@@ -87,7 +87,7 @@ window.onload = async function(){
     if(levels[1] > 70){
         lvl2Score.classList.replace('unpassed', 'passed');
         lvl2Score.innerText = levels[1] + "%";
-        level3.href="level3.html";
+        level3.href="lvl3.html";
         level3.classList.replace('locked', 'unlocked');
         level3.innerHTML = "Level 3: Break Into the Castle"
     } else {
@@ -101,7 +101,7 @@ window.onload = async function(){
     if(levels[2] > 70){
         lvl3Score.classList.replace('unpassed', 'passed');
         lvl3Score.innerText = levels[2] + "%";
-        level4.href="level4.html";
+        level4.href="lvl4.html";
         level4.classList.replace('locked', 'unlocked');
         level4.innerHTML = "Level 4: Finding the Princess"
     } else {
@@ -115,7 +115,7 @@ window.onload = async function(){
     if(levels[3] > 70){
         lvl4Score.classList.replace('unpassed', 'passed');
         lvl4Score.innerText = levels[3] + "%";
-        level5.href="level5.html";
+        level5.href="lvl5.html";
         level5.classList.replace('locked', 'unlocked');
         level5.innerHTML = "Level 5: Save Her!"
     } else {
