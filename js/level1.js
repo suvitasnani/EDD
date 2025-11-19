@@ -424,7 +424,8 @@ async function evaluateLetter(goodArray, userArray) {
         // Maybe we can do the level 2 for uppercase letters?
         if(currentLetter >= 26) {
             // Calculate final score and award points
-            await setScore(Math.round(trackingScore));
+            const averageScore = trackingScore / 26;
+            await setScore(Math.round(averageScore));
             return Math.round(tempPoints * 100);
         }
         
