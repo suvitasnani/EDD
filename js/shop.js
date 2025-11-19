@@ -41,9 +41,8 @@ let pointText = document.getElementById('pointVal')
 const buttons = [document.getElementById('item1'), document.getElementById('item2'), document.getElementById('item3'), 
     document.getElementById('item4'), document.getElementById('item5'), document.getElementById('item6'),
     document.getElementById('item7'), document.getElementById('item8'), document.getElementById('item9'), 
-    document.getElementById('item10'), document.getElementById('item11'), document.getElementById('item12'), 
-    document.getElementById('item13'), document.getElementById('item14'), document.getElementById('item15')]
-let pointVals = [5, 10, 15, 20, 2, 5, 15, 20, 30, 15, 20, 25, 30, 25, 30]
+    document.getElementById('item10'), document.getElementById('item11'), document.getElementById('item12')]
+let pointVals = [5, 10, 15, 20, 20, 30, 15, 20, 25, 30, 25, 30]
 let points = 0
 let currentUser = null;  
 
@@ -142,9 +141,9 @@ class RemoveListener {
     refresh();
 }}
              
-const buys = [new BuyListener(1), new BuyListener(2), new BuyListener(3), new BuyListener(4), new BuyListener(5), new BuyListener(6), new BuyListener(7), new BuyListener(8), new BuyListener(9), new BuyListener(10), new BuyListener(11), new BuyListener(12), new BuyListener(13), new BuyListener(14), new BuyListener(15)]
-const adds = [new AddListener(1), new AddListener(2), new AddListener(3), new AddListener(4), new AddListener(5), new AddListener(6), new AddListener(7), new AddListener(8), new AddListener(9), new AddListener(10), new AddListener(11), new AddListener(12), new AddListener(13), new AddListener(14), new AddListener(15)]
-const removes = [new RemoveListener(1), new RemoveListener(2), new RemoveListener(3), new RemoveListener(4), new RemoveListener(5), new RemoveListener(6), new RemoveListener(7), new RemoveListener(8), new RemoveListener(9), new RemoveListener(10), new RemoveListener(11), new RemoveListener(12), new RemoveListener(13), new RemoveListener(14), new RemoveListener(15)]
+const buys = [new BuyListener(1), new BuyListener(2), new BuyListener(3), new BuyListener(4), new BuyListener(5), new BuyListener(6), new BuyListener(7), new BuyListener(8), new BuyListener(9), new BuyListener(10), new BuyListener(11), new BuyListener(12)]
+const adds = [new AddListener(1), new AddListener(2), new AddListener(3), new AddListener(4), new AddListener(5), new AddListener(6), new AddListener(7), new AddListener(8), new AddListener(9), new AddListener(10), new AddListener(11), new AddListener(12)]
+const removes = [new RemoveListener(1), new RemoveListener(2), new RemoveListener(3), new RemoveListener(4), new RemoveListener(5), new RemoveListener(6), new RemoveListener(7), new RemoveListener(8), new RemoveListener(9), new RemoveListener(10), new RemoveListener(11), new RemoveListener(12), new RemoveListener(13)]
 // ----------------------- Get User's Name'Name ------------------------------
 function getUserName(){
   // Grab value for the 'keep logged in' switch
@@ -168,7 +167,7 @@ window.onload = async function(){
     points = await getPoints();
     pointText.innerText = "Points: " + points
 
-    for(let i=0; i<15; i++){
+    for(let i=0; i<12; i++){
         // buttons[i].addEventListener('click', new BuyListener(buttons[i].getAttribute("descriptor")))
         // const newButton = buttons[i].cloneNode(true); // 'true' clones all child nodes as well
         // buttons[i].parentNode.replaceChild(newButton, buttons[i]);
