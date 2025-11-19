@@ -92,7 +92,7 @@ window.onload = async function(){
         level5.innerHTML = "Level 5: LOCKED"
     }
 
-    if(levels[1] > 70){
+    if(levels[1] > 70 && levels[0] > 70){
         lvl2Score.classList.replace('unpassed', 'passed');
         lvl2Score.innerText = levels[1] + "%";
         level3.href="lvl3.html";
@@ -111,7 +111,7 @@ window.onload = async function(){
         level5.innerHTML = "Level 5: LOCKED"
     }
 
-    if(levels[2] > 70 && levels[1] > 70){
+    if(levels[2] > 70 && levels[1] > 70 && levels[0] > 70){
         lvl3Score.classList.replace('unpassed', 'passed');
         lvl3Score.innerText = levels[2] + "%";
         level4.href="lvl4.html";
@@ -128,7 +128,7 @@ window.onload = async function(){
         level5.innerHTML = "Level 5: LOCKED"
     }
 
-    if(levels[3] > 70 && levels[2] > 70 && levels[1] > 70){
+    if(levels[3] > 70 && levels[2] > 70 && levels[1] > 70 && levels[0] > 70){
         lvl4Score.classList.replace('unpassed', 'passed');
         lvl4Score.innerText = levels[3] + "%";
         level5.href="lvl5.html";
@@ -142,7 +142,7 @@ window.onload = async function(){
         level5.innerHTML = "Level 5: LOCKED"
     }
 
-    if(levels[4] > 70 && levels[3] > 70 && levels[2] > 70 && levels[1] > 70){
+    if(levels[4] > 70 && levels[3] > 70 && levels[2] > 70 && levels[1] > 70 && levels[0] > 70){
         lvl5Score.classList.replace('unpassed', 'passed');
         lvl5Score.innerText = levels[4] + "%";
     } else {
