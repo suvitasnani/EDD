@@ -142,6 +142,12 @@ function handleStart(evt) {
     const pos = getTouchPos(touch);
 
     drawing = true;
+    
+    // Clear any previous stroke
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    // Reset to black as default
+    ctx.strokeStyle = '#000000';
+
     // Storage for current letter
     moveArray[currentLetter] = [];
     moveArray[currentLetter].push([pos.x, pos.y]);
@@ -301,6 +307,17 @@ function generateLetterPoints(img) {
     console.log(`Generated ${currentLetterPoints.length} reference points for letter.`);
 }
 
+// Redraw the stroke with a specific color
+function redrawStroke(stroke, color) {
+    if (!stroke || stroke.length === 0) return;
+    ctx.strokeStyle = color;
+    ctx.beginPath();
+    ctx.moveTo(stroke[0][0], stroke[0][1]);
+    for (let i = 1; i < stroke.length; i++) {
+        ctx.lineTo(stroke[i][0], stroke[i][1]);
+    }
+    ctx.stroke();
+}
 
 async function evaluateLetter(goodArray, userArray) {
     let tempPoints = 0
@@ -321,6 +338,12 @@ async function evaluateLetter(goodArray, userArray) {
         tempPoints += pointsForThisPixel / userArray.length;
     }
     if(tempPoints > 0.7) {
+        // Redraw in green and show alert before moving on
+        // NOT WORKING BC ALERTS
+        redrawStroke(userArray, '#00FF00');
+        alert(`Great! Accuracy: ${Math.round(tempPoints * 100)}%. Moving to the next letter.`);
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
             if(htmlLetters[currentLetter]) {
                 htmlLetters[currentLetter].classList.replace('waiting', 'done')
                 htmlLetters[currentLetter].classList.replace('redo', 'done')
@@ -349,8 +372,8 @@ async function evaluateLetter(goodArray, userArray) {
         
         // Update background for the next letter
         updateBackgroundImage();
-        alert(`Great! Accuracy: ${Math.round(tempPoints * 100)}%. Moving to the next letter.`);
     } else {
+        redrawStroke(userArray, '#FF0000');
         console.log('REDO')
         if(htmlLetters[currentLetter]) {
             htmlLetters[currentLetter].classList.replace('waiting', 'redo')
