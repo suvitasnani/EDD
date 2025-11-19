@@ -262,7 +262,6 @@ section h3{
     margin-top: 0.5rem;
 }
 
-/* make images stack vertically above buttons */
 .item1 img, .item2 img, .item3 img, .item4 img, .item5 img, .item6 img, .item7 img,
 .item8 img, .item9 img, .item10 img, .item11 img, .item12 img, .item13 img, .item14 img, .item15 img{
     display: block;

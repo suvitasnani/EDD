@@ -104,6 +104,7 @@ window.onload = async function(){
     window.location="home.html";
   } else {
     effectArray = getEffects();
+
         canvas = document.getElementById("gameCanvas");
         if (!canvas) {
             console.error('[level1] gameCanvas element not found');
@@ -119,6 +120,11 @@ window.onload = async function(){
     
     // Set up canvas drawing style
     ctx.strokeStyle = '#000000';
+    if(effectArray[9]){canvas.classList.replace('writingContainer', 'writingContainerNight')}
+    if(effectArray[8]){canvas.classList.replace('writingContainer', 'writingContainerDesert')}
+    if(effectArray[7]){canvas.classList.replace('writingContainer', 'writingContainerOcean')}
+    if(effectArray[10]) {ctx.strokeStyle = '#89BEFA';}
+    if(effectArray[11]) {ctx.strokeStyle = '#54507D';}
     ctx.lineWidth = 5;
     ctx.lineCap = 'round';
     ctx.lineJoin = 'round';
@@ -142,6 +148,12 @@ function handleStart(evt) {
     const pos = getTouchPos(touch);
 
     drawing = true;
+    
+    // Clear any previous stroke
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    // Reset to black as default
+    ctx.strokeStyle = '#000000';
+
     // Storage for current letter
     moveArray[currentLetter] = [];
     moveArray[currentLetter].push([pos.x, pos.y]);
@@ -301,6 +313,17 @@ function generateLetterPoints(img) {
     console.log(`Generated ${currentLetterPoints.length} reference points for letter.`);
 }
 
+// Redraw the stroke with a specific color
+function redrawStroke(stroke, color) {
+    if (!stroke || stroke.length === 0) return;
+    ctx.strokeStyle = color;
+    ctx.beginPath();
+    ctx.moveTo(stroke[0][0], stroke[0][1]);
+    for (let i = 1; i < stroke.length; i++) {
+        ctx.lineTo(stroke[i][0], stroke[i][1]);
+    }
+    ctx.stroke();
+}
 
 async function evaluateLetter(goodArray, userArray) {
     let tempPoints = 0
@@ -321,12 +344,48 @@ async function evaluateLetter(goodArray, userArray) {
         tempPoints += pointsForThisPixel / userArray.length;
     }
     if(tempPoints > 0.7) {
+        // Redraw in green and show alert before moving on
+        // NOT WORKING BC ALERTS
+        redrawStroke(userArray, '#00FF00');
+        alert(`Great! Accuracy: ${Math.round(tempPoints * 100)}%. Moving to the next letter.`);
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
             if(htmlLetters[currentLetter]) {
                 htmlLetters[currentLetter].classList.replace('waiting', 'done')
                 htmlLetters[currentLetter].classList.replace('redo', 'done')
             }
             if(gif && gif.classList) {
-                gif.classList.replace(`lvl1image${currentLetter+1}`,`lvl1image${currentLetter+2}`)
+                if(!effectArray[0] && !effectArray[1] && !effectArray[2] && !effectArray[3]){
+                    gif.classList.replace(`lvl1image${currentLetter-1}`,`lvl1image${currentLetter}`)
+                }
+                if(!effectArray[0] && !effectArray[1] && !effectArray[2] && effectArray[3]){
+                    gif.classList.replace(`lvl1image${currentLetter-1}`, `lvl1.1image${currentLetter}`)
+                    gif.classList.replace(`lvl1.1image${currentLetter-1}`, `lvl1.1image${currentLetter}`)
+                }
+                if(effectArray[0] && !effectArray[1] && !effectArray[2] && !effectArray[3]){
+                    gif.classList.replace(`lvl1image${currentLetter-1}`, `lvl1.2image${currentLetter}`)
+                    gif.classList.replace(`lvl1.2image${currentLetter-1}`, `lvl1.2image${currentLetter}`)
+                }
+                if(effectArray[0] && !effectArray[1] && !effectArray[2] && effectArray[3]){
+                    gif.classList.replace(`lvl1image${currentLetter-1}`, `lvl1.3image${currentLetter}`)
+                    gif.classList.replace(`lvl1.3image${currentLetter-1}`, `lvl1.3image${currentLetter}`)
+                }
+                if(effectArray[1] && !effectArray[2] && !effectArray[3]){
+                    gif.classList.replace(`lvl1image${currentLetter-1}`, `lvl1.4image${currentLetter}`)
+                    gif.classList.replace(`lvl1.4image${currentLetter-1}`, `lvl1.4image${currentLetter}`)
+                }
+                if(effectArray[1] && !effectArray[2] && effectArray[3]){
+                    gif.classList.replace(`lvl1image${currentLetter-1}`, `lvl1.5image${currentLetter}`)
+                    gif.classList.replace(`lvl1.5image${currentLetter-1}`, `lvl1.5image${currentLetter}`)
+                }
+                if(effectArray[2] && !effectArray[3]){
+                    gif.classList.replace(`lvl1image${currentLetter-1}`, `lvl1.6image${currentLetter}`)
+                    gif.classList.replace(`lvl1.6image${currentLetter-1}`, `lvl1.6image${currentLetter}`)
+                }
+                if(effectArray[2] && effectArray[3]){
+                    gif.classList.replace(`lvl1image${currentLetter-1}`, `lvl1.7image${currentLetter}`)
+                    gif.classList.replace(`lvl1.7image${currentLetter-1}`, `lvl1.7image${currentLetter}`)
+                }
             }
         if(alreadyDone[currentLetter]) {
             trackingScore += tempMax * 0.25
@@ -349,8 +408,8 @@ async function evaluateLetter(goodArray, userArray) {
         
         // Update background for the next letter
         updateBackgroundImage();
-        alert(`Great! Accuracy: ${Math.round(tempPoints * 100)}%. Moving to the next letter.`);
     } else {
+        redrawStroke(userArray, '#FF0000');
         console.log('REDO')
         if(htmlLetters[currentLetter]) {
             htmlLetters[currentLetter].classList.replace('waiting', 'redo')
