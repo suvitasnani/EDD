@@ -359,10 +359,10 @@ async function evaluateLetter(goodArray, userArray) {
     }
 
     // Enforce 399% of points must be on the line
-    // Temp solutions, stop against random circles or lines
-    if (pointsOnLine < userArray.length * 0.99) {
-        tempPoints = 0;
-    }
+    // // Temp solutions, stop against random circles or lines
+    // if (pointsOnLine < userArray.length * 0.99) {
+    //     tempPoints = 0;
+    // }
 
     if(tempPoints > 0.7) {
         // Redraw in green and show alert before moving on
