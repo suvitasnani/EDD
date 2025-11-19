@@ -195,7 +195,7 @@ function handleMove(evt) {
 }
 
 
-function handleEnd(evt) {
+async function handleEnd(evt) {
     evt && evt.preventDefault && evt.preventDefault();
     drawing = false;
     ctx.closePath();
@@ -205,7 +205,7 @@ function handleEnd(evt) {
     const letterRef = currentLetterPoints;
     // If we have a non-empty stroke and also something to compare it to
     if (Array.isArray(userStroke) && userStroke.length > 0 && Array.isArray(letterRef) && letterRef.length > 0) {
-        evaluateLetter(letterRef, userStroke).then(accuracy => {
+        await evaluateLetter(letterRef, userStroke).then(accuracy => {
         });
     }
 
@@ -371,7 +371,7 @@ async function evaluateLetter(goodArray, userArray) {
         if(effectArray[4] && !effectArray[5] && !effectArray[6]){roar.play()}
         if(effectArray[5] && !effectArray[6]){meow.play()}
         if(effectArray[6]){ding.play()}
-        await setTimeout(()=>{},500);
+        await setTimeout(()=>{;
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
             if(htmlLetters[currentLetter]) {
@@ -419,7 +419,8 @@ async function evaluateLetter(goodArray, userArray) {
         console.log('DONE')
         alreadyDone[currentLetter] = true
         currentLetter += 1
-        
+        updateBackgroundImage();
+        },500);
         // Check if we've completed all 26 letters
         // Do we just want to do all 26 letters on level 1?
         // Maybe we can do the level 2 for uppercase letters?
@@ -431,7 +432,7 @@ async function evaluateLetter(goodArray, userArray) {
         }
         
         // Update background for the next letter
-        updateBackgroundImage();
+        
     } else {
         redrawStroke(userArray, '#FF0000');
         console.log('REDO')
