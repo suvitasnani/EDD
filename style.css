@@ -342,6 +342,8 @@ section h3{
 }
 .writingContainer{
     max-height: 40vh !important;
+    background-image: 'images/ocean.png'
+
 }
 .writingContainerOcean{
     max-height: 40vh !important;

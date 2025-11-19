@@ -120,6 +120,8 @@ window.onload = async function(){
         }
         
         ctx = canvas.getContext("2d");
+        if(effectArray[10]) {ctx.strokeStyle = '#89BEFA';}
+        if(effectArray[11]) {ctx.strokeStyle = '#54507D';}
         // Initialize with first letter
         updateBackgroundImage();
     // Initialize canvas
@@ -335,6 +337,7 @@ function redrawStroke(stroke, color) {
 
 async function evaluateLetter(goodArray, userArray) {
     let tempPoints = 0
+    let pointsOnLine = 0;
     // The acceptable distance threshold is based on the screen size
     const maxAcceptableDistance = Math.max(20, Math.min(canvas.width, canvas.height) * 0.08); // HOW STRICT IT IS, NOTE TO SELF TO TUNE IT 
     
@@ -346,11 +349,22 @@ async function evaluateLetter(goodArray, userArray) {
                 minDistance = distance;
             }
         }
+        if (minDistance <= maxAcceptableDistance) {
+            pointsOnLine++;
+        }
+
         // Scoring points based on how close the stroke is to the reference (points decrease as distance increases)
         // Note if I don't fix this only works on the reference array, we should find a way to be able to scale it
         let pointsForThisPixel = Math.max(0, (maxAcceptableDistance - minDistance) / maxAcceptableDistance);
         tempPoints += pointsForThisPixel / userArray.length;
     }
+
+    // Enforce 399% of points must be on the line
+    // Temp solutions, stop against random circles or lines
+    if (pointsOnLine < userArray.length * 0.99) {
+        tempPoints = 0;
+    }
+
     if(tempPoints > 0.7) {
         // Redraw in green and show alert before moving on
         // NOT WORKING BC ALERTS
