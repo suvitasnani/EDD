@@ -109,8 +109,10 @@ window.onload = async function(){
   if(currentUser == null){
     window.location="home.html";
   } else {
-    effectArray = getEffects();
-
+    effectArray = await getEffects();
+    if(effectArray[9]){canvasDiv.classList.replace('writingContainer', 'writingContainerNight');}
+    if(effectArray[8]){canvasDiv.classList.replace('writingContainer', 'writingContainerDesert')}
+    if(effectArray[7]){canvasDiv.classList.replace('writingContainer', 'writingContainerOcean')}
         canvas = document.getElementById("gameCanvas");
         if (!canvas) {
             console.error('[level1] gameCanvas element not found');
@@ -126,15 +128,13 @@ window.onload = async function(){
     
     // Set up canvas drawing style
     ctx.strokeStyle = '#000000';
-    if(effectArray[9]){canvasDiv.classList.replace('writingContainer', 'writingContainerNight')}
-    if(effectArray[8]){canvasDiv.classList.replace('writingContainer', 'writingContainerDesert')}
-    if(effectArray[7]){canvasDiv.classList.replace('writingContainer', 'writingContainerOcean')}
+    
     if(effectArray[10]) {ctx.strokeStyle = '#89BEFA';}
     if(effectArray[11]) {ctx.strokeStyle = '#54507D';}
     ctx.lineWidth = 5;
     ctx.lineCap = 'round';
     ctx.lineJoin = 'round';
-    
+
         canvas.addEventListener("touchstart", handleStart);
         canvas.addEventListener("touchmove", handleMove);
         canvas.addEventListener("touchend", handleEnd);
