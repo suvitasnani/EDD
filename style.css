@@ -204,7 +204,6 @@ table th{
     border-radius: 20px;
 }
 
-/* Points display: match the size and color of the return Home tab */
 .pointDisplay{
     position: fixed;
     top: 12px;
