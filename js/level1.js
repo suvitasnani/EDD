@@ -324,7 +324,7 @@ async function evaluateLetter(goodArray, userArray) {
                 htmlLetters[currentLetter].classList.replace('redo', 'done')
             }
             if(gif && gif.classList) {
-                gif.classList.replace(`lvl1image${currentLetter-1}`,`lvl1image${currentLetter}`)
+                gif.classList.replace(`lvl1image${currentLetter+1}`,`lvl1image${currentLetter+2}`)
             }
         if(alreadyDone[currentLetter]) {
             trackingScore += tempMax * 0.25
