@@ -40,6 +40,7 @@ table th{
 }
 
 .pointDisplay{position:fixed;top:12px;right:16px;width:200px;height:50px;display:inline-flex;align-items:center;justify-content:center;border-radius:20px;background:#0d6efd;color:#fff;text-align:center;border:1px solid rgba(0,0,0,0.08);box-shadow:0 2px 6px rgba(13,110,253,0.12);font-weight:600;font-size:1rem;line-height:50px}
+.pointDisplay h3{margin:0;line-height:1;font-size:1rem}
 
 .notes{
     font-size:20px;
