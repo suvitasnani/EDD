@@ -419,7 +419,8 @@ async function evaluateLetter(goodArray, userArray) {
         console.log('DONE')
         alreadyDone[currentLetter] = true
         currentLetter += 1
-        updateBackgroundImage();
+        if(currentLetter < 26) {
+        updateBackgroundImage();}
         },500);
         // Check if we've completed all 26 letters
         // Do we just want to do all 26 letters on level 1?
