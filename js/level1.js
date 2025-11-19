@@ -54,6 +54,11 @@ let canvasDiv = document.getElementById('canvasDiv')
 let currentLetter = 0;
 let alreadyDone = [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
 
+let roar = new Audio('sounds/roar.mp3')
+let meow = new Audio('sounds/meow.mp3')
+let ding = new Audio('sounds/ding.mp3')
+
+
 let canvas;
 let ctx;
 // let ongoingTouches = new Map(); // Store active touches by their identifier
@@ -351,6 +356,9 @@ async function evaluateLetter(goodArray, userArray) {
         // NOT WORKING BC ALERTS
         redrawStroke(userArray, '#00FF00');
         alert(`Great! Accuracy: ${Math.round(tempPoints * 100)}%. Moving to the next letter.`);
+        if(effectArray[4] && !effectArray[5] && !effectArray[6]){roar.play()}
+        if(effectArray[5] && !effectArray[6]){meow.play()}
+        if(effectArray[6]){ding.play()}
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
             if(htmlLetters[currentLetter]) {
