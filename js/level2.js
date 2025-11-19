@@ -382,32 +382,32 @@ async function evaluateLetter(goodArray, userArray) {
                     gif.classList.replace(`lvl2image${currentLetter-1}`,`lvl2image${currentLetter}`)
                 }
                 if(!effectArray[0] && !effectArray[1] && !effectArray[2] && effectArray[3]){
-                    gif.classList.replace(`lvl2image${currentLetter-1}`, `lvl2.1image${currentLetter}`)
-                    gif.classList.replace(`lvl2.1image${currentLetter-1}`, `lvl2.1image${currentLetter}`)
+                    gif.classList.replace(`lvl2image${currentLetter-1}`, `lvl2-1image${currentLetter}`)
+                    gif.classList.replace(`lvl2-1image${currentLetter-1}`, `lvl2-1image${currentLetter}`)
                 }
                 if(effectArray[0] && !effectArray[1] && !effectArray[2] && !effectArray[3]){
-                    gif.classList.replace(`lvl2image${currentLetter-1}`, `lvl2.2image${currentLetter}`)
-                    gif.classList.replace(`lvl2.2image${currentLetter-1}`, `lvl2.2image${currentLetter}`)
+                    gif.classList.replace(`lvl2image${currentLetter-1}`, `lvl2-2image${currentLetter}`)
+                    gif.classList.replace(`lvl2-2image${currentLetter-1}`, `lvl2-2image${currentLetter}`)
                 }
                 if(effectArray[0] && !effectArray[1] && !effectArray[2] && effectArray[3]){
-                    gif.classList.replace(`lvl2image${currentLetter-1}`, `lvl2.3image${currentLetter}`)
-                    gif.classList.replace(`lvl2.3image${currentLetter-1}`, `lvl2.3image${currentLetter}`)
+                    gif.classList.replace(`lvl2image${currentLetter-1}`, `lvl2-3image${currentLetter}`)
+                    gif.classList.replace(`lvl2-3image${currentLetter-1}`, `lvl2-3image${currentLetter}`)
                 }
                 if(effectArray[1] && !effectArray[2] && !effectArray[3]){
-                    gif.classList.replace(`lvl2image${currentLetter-1}`, `lvl2.4image${currentLetter}`)
-                    gif.classList.replace(`lvl2.4image${currentLetter-1}`, `lvl2.4image${currentLetter}`)
+                    gif.classList.replace(`lvl2image${currentLetter-1}`, `lvl2-4image${currentLetter}`)
+                    gif.classList.replace(`lvl2-4image${currentLetter-1}`, `lvl2-4image${currentLetter}`)
                 }
                 if(effectArray[1] && !effectArray[2] && effectArray[3]){
-                    gif.classList.replace(`lvl2image${currentLetter-1}`, `lvl2.5image${currentLetter}`)
-                    gif.classList.replace(`lvl2.5image${currentLetter-1}`, `lvl2.5image${currentLetter}`)
+                    gif.classList.replace(`lvl2image${currentLetter-1}`, `lvl2-5image${currentLetter}`)
+                    gif.classList.replace(`lvl2-5image${currentLetter-1}`, `lvl2-5image${currentLetter}`)
                 }
                 if(effectArray[2] && !effectArray[3]){
-                    gif.classList.replace(`lvl2image${currentLetter-1}`, `lvl2.6image${currentLetter}`)
-                    gif.classList.replace(`lvl2.6image${currentLetter-1}`, `lvl2.6image${currentLetter}`)
+                    gif.classList.replace(`lvl2image${currentLetter-1}`, `lvl2-6image${currentLetter}`)
+                    gif.classList.replace(`lvl2-6image${currentLetter-1}`, `lvl2-6image${currentLetter}`)
                 }
                 if(effectArray[2] && effectArray[3]){
-                    gif.classList.replace(`lvl2image${currentLetter-1}`, `lvl2.7image${currentLetter}`)
-                    gif.classList.replace(`lvl2.7image${currentLetter-1}`, `lvl2.7image${currentLetter}`)
+                    gif.classList.replace(`lvl2image${currentLetter-1}`, `lvl2-7image${currentLetter}`)
+                    gif.classList.replace(`lvl2-7image${currentLetter-1}`, `lvl2-7image${currentLetter}`)
                 }
             }
         if(alreadyDone[currentLetter]) {
