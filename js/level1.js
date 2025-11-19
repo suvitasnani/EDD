@@ -39,21 +39,23 @@ const dbref = ref(db);
 // ---------------------// Get reference values -----------------------------
 let currentUser = null;                                 // Initialize current user to null
 let trackingScore = 0;
-let letterArray = []; // DON'T NEED ARRAYS ANYMORE SINCE DOING IT ON LIKE A DEVICE BY DEVICE BASIS, CAN DELETE LATER WOOO YEAH IDK OK BYE
+// let letterArray = []; // DON'T NEED ARRAYS ANYMORE SINCE DOING IT ON LIKE A DEVICE BY DEVICE BASIS, CAN DELETE LATER WOOO YEAH IDK OK BYE
 let currentLetterPoints = [];
 let currentImage = null;
 let moveArray = [[], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], []];
 const tempMax = 100/1;
+
 let htmlLetters = [document.getElementById('a'), document.getElementById('b'), document.getElementById('c'), document.getElementById('d'), document.getElementById('e'), document.getElementById('f'), document.getElementById('g'), document.getElementById('h'), document.getElementById('i'), 
     document.getElementById('j'), document.getElementById('k'), document.getElementById('l'), document.getElementById('m'), document.getElementById('n'), document.getElementById('o'), document.getElementById('p'), document.getElementById('q'), document.getElementById('r'), document.getElementById('s'), 
     document.getElementById('t'), document.getElementById('u'), document.getElementById('v'), document.getElementById('w'), document.getElementById('x'), document.getElementById('y'), document.getElementById('z')];
+
 let gif = document.getElementById('gif')
 let currentLetter = 0;
 let alreadyDone = [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
 
 let canvas;
 let ctx;
-let ongoingTouches = new Map(); // Store active touches by their identifier
+// let ongoingTouches = new Map(); // Store active touches by their identifier
 let drawing = false;
 
 // Responsive dimensions
@@ -68,6 +70,7 @@ function resizeCanvas() {
     }
 }
 
+
 // Get touch position relative to the canvas
 function getTouchPos(touch) {
     const rect = canvas.getBoundingClientRect();
@@ -76,6 +79,7 @@ function getTouchPos(touch) {
         y: touch.clientY - rect.top
     };
 }
+
 
 // ----------------------- Get User's Name'Name ------------------------------
 function getUserName(){
@@ -89,6 +93,7 @@ function getUserName(){
     currentUser = JSON.parse(sessionStorage.getItem('user'));
   }
 }
+
 
 // --------------------------- Home Page Loading -----------------------------
 window.onload = async function(){
@@ -143,6 +148,7 @@ function handleStart(evt) {
     ctx.moveTo(pos.x, pos.y);
 }
 
+
 function handleMove(evt) {
     evt.preventDefault();
     if (!drawing) return;
@@ -163,6 +169,7 @@ function handleMove(evt) {
     }
     moveArray[currentLetter].push([pos.x, pos.y]);
 }
+
 
 function handleEnd(evt) {
     evt && evt.preventDefault && evt.preventDefault();
@@ -188,12 +195,14 @@ function handleEnd(evt) {
     }
 }
 
+
 // Handle touch cancel event
 function handleCancel(evt) {
     evt && evt.preventDefault && evt.preventDefault();
     drawing = false;
     ctx.closePath();
 }
+
 
 // Utility: Log and return the recorded stroke for a given letter index
 // Shown on window for easy access for DevTools console.
@@ -213,11 +222,13 @@ function getRecordedLetter(index = currentLetter) {
     return data;
 }
 
+
 // Make available in console even if this file is loaded as a module
 if (typeof window !== 'undefined') {
     window.getRecordedLetter = getRecordedLetter;
     console.info('[level1] getRecordedLetter available on window');
 }
+
 
 // Update background image based on current letter
 function updateBackgroundImage() {
@@ -240,6 +251,7 @@ function updateBackgroundImage() {
         generateLetterPoints(img);
     };
 }
+
 
 // Generate reference points for the current letter
 function generateLetterPoints(img) {
@@ -286,6 +298,7 @@ function generateLetterPoints(img) {
     }
     console.log(`Generated ${currentLetterPoints.length} reference points for letter.`);
 }
+
 
 async function evaluateLetter(goodArray, userArray) {
     let tempPoints = 0
@@ -345,6 +358,7 @@ async function evaluateLetter(goodArray, userArray) {
     return Math.round(tempPoints * 100);
 }
 
+
 // Find the closest matching letter from the reference array
 // MIGHT not need this function anymore IF we are doing it one by one?
 
@@ -366,6 +380,7 @@ async function getClosestComparison(x, y) {
     return [closestLetter, closestVal];
 }
 */
+
 
 async function setScore(score){
     await update(ref(db, 'users/' + currentUser.uid + '/levels'), {
