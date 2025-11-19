@@ -255,7 +255,7 @@ if (typeof window !== 'undefined') {
 
 // Update background image based on current letter
 function updateBackgroundImage() {
-    const letters = 'ab0123456789ba9876543210ab';
+    const letters = '0123456789abcdef9876543210';
     const currentLetterChar = letters[currentLetter];
     // Background image for tracing
     const bgUrl = `Cursive Letters/number_${currentLetterChar}.gif`;

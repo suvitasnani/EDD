@@ -258,7 +258,7 @@ function updateBackgroundImage() {
     const letters = 'abcdefghijklmnopqrstuvwxyz';
     const currentLetterChar = letters[currentLetter];
     // Background image for tracing
-    const bgUrl = `Cursive Letters/lowercase_${currentLetterChar}.gif`;
+    const bgUrl = `Cursive Letters/word1_${currentLetterChar}.png`;
     // Gradient for a opacity only way to do it i think 
     const overlay = 'linear-gradient(to right, rgba(255,255,255,0), rgba(255,255,255,0.9), rgba(255,255,255,0.9), rgba(255,255,255,0))';
     canvas.style.backgroundImage = `${overlay}, url('${bgUrl}')`;
