@@ -172,6 +172,14 @@ table th{
     font-size: 70px;
     font-family: 'Times New Roman';
 }
+.unlocked{
+    font-size: 30px;
+    color: black;
+}
+.locked{
+    font-size: 30px;
+    color: black;
+}
 
 .home{
     font-size: 30px;
@@ -196,6 +204,12 @@ table th{
     align-content: center;
     justify-content: center;
 }
+.lvl1Tab{
+    margin-left: 1.8vw !important;
+}
+.lvlTab2{
+    margin-left: 7.3vw;
+}
  
 
 @media (min-width: 1200px){
@@ -206,6 +220,23 @@ table th{
         font-size: 1.2rem;
         padding: 1rem 1.8rem;
         min-width: 260px;
+    }
+}
+@media (max-width: 1200px){
+    .unlocked{
+        font-size: 20px;
+    }
+    .locked{
+        font-size: 20px;
+    }
+    .passed{
+        font-size: 50px;
+    }
+    .unpassed{
+        font-size: 50px;
+    }
+    .lvl1Tab{
+        margin-left: -5vw;
     }
 }
 
