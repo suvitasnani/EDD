@@ -57,6 +57,7 @@ let canvas;
 let ctx;
 // let ongoingTouches = new Map(); // Store active touches by their identifier
 let drawing = false;
+let effectArray = [];
 
 // Responsive dimensions
 function resizeCanvas() {
@@ -102,6 +103,7 @@ window.onload = async function(){
   if(currentUser == null){
     window.location="home.html";
   } else {
+    effectArray = getEffects();
         canvas = document.getElementById("gameCanvas");
         if (!canvas) {
             console.error('[level1] gameCanvas element not found');
@@ -324,7 +326,7 @@ async function evaluateLetter(goodArray, userArray) {
                 htmlLetters[currentLetter].classList.replace('redo', 'done')
             }
             if(gif && gif.classList) {
-                gif.classList.replace(`lvl1image${currentLetter-1}`,`lvl1image${currentLetter}`)
+                gif.classList.replace(`lvl1image${currentLetter+1}`,`lvl1image${currentLetter+2}`)
             }
         if(alreadyDone[currentLetter]) {
             trackingScore += tempMax * 0.25
@@ -420,4 +422,21 @@ async function setScore(score){
     .catch((error)=>{
         alert("There was an error. Error: " + error);
     });
+}
+
+async function getEffects(){
+    let effects = [];
+    await get(child(dbref, 'users/' + currentUser.uid + '/inventoryOn')).then((snapshot)=>{
+    if(snapshot.exists()){
+        snapshot.forEach(child=>{
+            effects.push(child.val());
+        });
+    } else {
+        alert('No data found.');
+    }
+    })
+    .catch((error) => {
+    alert('unsuccessful, error' + error);
+    });
+    return effects;
 }
