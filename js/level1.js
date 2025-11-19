@@ -206,7 +206,6 @@ function handleEnd(evt) {
     // If we have a non-empty stroke and also something to compare it to
     if (Array.isArray(userStroke) && userStroke.length > 0 && Array.isArray(letterRef) && letterRef.length > 0) {
         evaluateLetter(letterRef, userStroke).then(accuracy => {
-            alert(`Accuracy: ${accuracy}%`);
         });
     }
 
@@ -369,7 +368,6 @@ async function evaluateLetter(goodArray, userArray) {
         // Redraw in green and show alert before moving on
         // NOT WORKING BC ALERTS
         redrawStroke(userArray, '#00FF00');
-        alert(`Great! Accuracy: ${Math.round(tempPoints * 100)}%. Moving to the next letter.`);
         if(effectArray[4] && !effectArray[5] && !effectArray[6]){roar.play()}
         if(effectArray[5] && !effectArray[6]){meow.play()}
         if(effectArray[6]){ding.play()}
@@ -425,7 +423,6 @@ async function evaluateLetter(goodArray, userArray) {
         // Do we just want to do all 26 letters on level 1?
         // Maybe we can do the level 2 for uppercase letters?
         if(currentLetter >= 26) {
-            alert(`Congratulations! You've completed all letters!`);
             // Calculate final score and award points
             await setScore(Math.round(trackingScore));
             return Math.round(tempPoints * 100);
