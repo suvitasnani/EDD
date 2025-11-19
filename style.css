@@ -218,7 +218,9 @@ table th{
 .pointDisplay{
     display: inline-block;
     padding: 0.7rem 1.1rem;
-    margin: 10rem 0.25rem;
+    margin: 0.25rem;
+    margin-top: 2rem;
+    margin-left: 2rem;
     background-color: #0d6efd; 
     color: #ffffff;
     text-decoration: none; 
