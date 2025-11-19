@@ -255,10 +255,10 @@ if (typeof window !== 'undefined') {
 
 // Update background image based on current letter
 function updateBackgroundImage() {
-    const letters = 'abcdefghijklmnopqrstuvwxyz';
+    const letters = '0123456789abcdef9876543210';
     const currentLetterChar = letters[currentLetter];
     // Background image for tracing
-    const bgUrl = `Cursive Letters/lowercase_${currentLetterChar}.gif`;
+    const bgUrl = `Cursive Letters/number_${currentLetterChar}.gif`;
     // Gradient for a opacity only way to do it i think 
     const overlay = 'linear-gradient(to right, rgba(255,255,255,0), rgba(255,255,255,0.9), rgba(255,255,255,0.9), rgba(255,255,255,0))';
     canvas.style.backgroundImage = `${overlay}, url('${bgUrl}')`;
