@@ -115,7 +115,7 @@ window.onload = async function(){
     if(effectArray[7]){canvasDiv.classList.replace('writingContainer', 'writingContainerOcean')}
         canvas = document.getElementById("gameCanvas");
         if (!canvas) {
-            console.error('[level1] gameCanvas element not found');
+            console.error('[level5] gameCanvas element not found');
             return;
         }
         
@@ -249,7 +249,7 @@ function getRecordedLetter(index = currentLetter) {
 // Make available in console even if this file is loaded as a module
 if (typeof window !== 'undefined') {
     window.getRecordedLetter = getRecordedLetter;
-    console.info('[level1] getRecordedLetter available on window');
+    console.info('[level5] getRecordedLetter available on window');
 }
 
 
@@ -379,35 +379,35 @@ async function evaluateLetter(goodArray, userArray) {
             }
             if(gif && gif.classList) {
                 if(!effectArray[0] && !effectArray[1] && !effectArray[2] && !effectArray[3]){
-                    gif.classList.replace(`lvl1image${currentLetter-1}`,`lvl1image${currentLetter}`)
+                    gif.classList.replace(`lvl5image${currentLetter-1}`,`lvl5image${currentLetter}`)
                 }
                 if(!effectArray[0] && !effectArray[1] && !effectArray[2] && effectArray[3]){
-                    gif.classList.replace(`lvl1image${currentLetter-1}`, `lvl1.1image${currentLetter}`)
-                    gif.classList.replace(`lvl1.1image${currentLetter-1}`, `lvl1.1image${currentLetter}`)
+                    gif.classList.replace(`lvl5image${currentLetter-1}`, `lvl5.1image${currentLetter}`)
+                    gif.classList.replace(`lvl5.1image${currentLetter-1}`, `lvl5.1image${currentLetter}`)
                 }
                 if(effectArray[0] && !effectArray[1] && !effectArray[2] && !effectArray[3]){
-                    gif.classList.replace(`lvl1image${currentLetter-1}`, `lvl1.2image${currentLetter}`)
-                    gif.classList.replace(`lvl1.2image${currentLetter-1}`, `lvl1.2image${currentLetter}`)
+                    gif.classList.replace(`lvl5image${currentLetter-1}`, `lvl5.2image${currentLetter}`)
+                    gif.classList.replace(`lvl5.2image${currentLetter-1}`, `lvl5.2image${currentLetter}`)
                 }
                 if(effectArray[0] && !effectArray[1] && !effectArray[2] && effectArray[3]){
-                    gif.classList.replace(`lvl1image${currentLetter-1}`, `lvl1.3image${currentLetter}`)
-                    gif.classList.replace(`lvl1.3image${currentLetter-1}`, `lvl1.3image${currentLetter}`)
+                    gif.classList.replace(`lvl5image${currentLetter-1}`, `lvl5.3image${currentLetter}`)
+                    gif.classList.replace(`lvl5.3image${currentLetter-1}`, `lvl5.3image${currentLetter}`)
                 }
                 if(effectArray[1] && !effectArray[2] && !effectArray[3]){
-                    gif.classList.replace(`lvl1image${currentLetter-1}`, `lvl1.4image${currentLetter}`)
-                    gif.classList.replace(`lvl1.4image${currentLetter-1}`, `lvl1.4image${currentLetter}`)
+                    gif.classList.replace(`lvl5image${currentLetter-1}`, `lvl5.4image${currentLetter}`)
+                    gif.classList.replace(`lvl5.4image${currentLetter-1}`, `lvl5.4image${currentLetter}`)
                 }
                 if(effectArray[1] && !effectArray[2] && effectArray[3]){
-                    gif.classList.replace(`lvl1image${currentLetter-1}`, `lvl1.5image${currentLetter}`)
-                    gif.classList.replace(`lvl1.5image${currentLetter-1}`, `lvl1.5image${currentLetter}`)
+                    gif.classList.replace(`lvl5image${currentLetter-1}`, `lvl5.5image${currentLetter}`)
+                    gif.classList.replace(`lvl5.5image${currentLetter-1}`, `lvl5.5image${currentLetter}`)
                 }
                 if(effectArray[2] && !effectArray[3]){
-                    gif.classList.replace(`lvl1image${currentLetter-1}`, `lvl1.6image${currentLetter}`)
-                    gif.classList.replace(`lvl1.6image${currentLetter-1}`, `lvl1.6image${currentLetter}`)
+                    gif.classList.replace(`lvl5image${currentLetter-1}`, `lvl5.6image${currentLetter}`)
+                    gif.classList.replace(`lvl5.6image${currentLetter-1}`, `lvl5.6image${currentLetter}`)
                 }
                 if(effectArray[2] && effectArray[3]){
-                    gif.classList.replace(`lvl1image${currentLetter-1}`, `lvl1.7image${currentLetter}`)
-                    gif.classList.replace(`lvl1.7image${currentLetter-1}`, `lvl1.7image${currentLetter}`)
+                    gif.classList.replace(`lvl5image${currentLetter-1}`, `lvl5.7image${currentLetter}`)
+                    gif.classList.replace(`lvl5.7image${currentLetter-1}`, `lvl5.7image${currentLetter}`)
                 }
             }
         if(alreadyDone[currentLetter]) {
@@ -468,7 +468,7 @@ async function getClosestComparison(x, y) {
 
 async function setScore(score){
     await update(ref(db, 'users/' + currentUser.uid + '/levels'), {
-        'lvl1': score
+        'lvl5': score
     }).then(()=> {})
     .catch((error)=>{
     alert('There was an error. Error: ' + error);
