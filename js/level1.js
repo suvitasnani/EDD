@@ -392,11 +392,18 @@ async function evaluateLetter(goodArray, userArray) {
         tempPoints += pointsForThisPixel / userArray.length;
     }
 
-    // Enforce 399% of points must be on the line
-    // // Temp solutions, stop against random circles or lines
-    // if (pointsOnLine < userArray.length * 0.99) {
-    //     tempPoints = 0;
-    // }
+    // Require minimum stroke length (prevents dots/short lines from passing, can comment out if needed for testing)
+    const minStrokePoints = 50; // User must draw at least this many points
+    if (userArray.length < minStrokePoints) {
+        console.log(`Stroke too short: ${userArray.length} points (need ${minStrokePoints})`); // debugging
+        tempPoints = 0;
+    }
+
+    // Require 75% of user's points to be on the reference letter, we can adjust if too low/high
+    if (pointsOnLine < userArray.length * 0.75) {
+        console.log(`Not enough points on line: ${pointsOnLine}/${userArray.length} (${Math.round(pointsOnLine/userArray.length*100)}%)`);
+        tempPoints = 0;
+    }
 
     if(tempPoints > 0.7) {
         // Redraw all strokes in green before moving on
