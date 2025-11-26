@@ -399,8 +399,8 @@ async function evaluateLetter(goodArray, userArray) {
         tempPoints = 0;
     }
 
-    // Require 75% of user's points to be on the reference letter, we can adjust if too low/high
-    if (pointsOnLine < userArray.length * 0.75) {
+    // Require 90% of user's points to be on the reference letter, we can adjust if too low/high
+    if (pointsOnLine < userArray.length * 0.90) {
         console.log(`Not enough points on line: ${pointsOnLine}/${userArray.length} (${Math.round(pointsOnLine/userArray.length*100)}%)`);
         tempPoints = 0;
     }
