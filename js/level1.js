@@ -43,6 +43,8 @@ let trackingScore = 0;
 let currentLetterPoints = [];
 let currentImage = null;
 let moveArray = [[], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], []];
+let allStrokes = []; // Store all strokes for the current letter (we need for the letters with multiple strokes or dots or crosses etc)
+let needsClear = false; // Used to clear canvas on next stroke start (after failed attempt)
 const tempMax = 100/1;
 
 let htmlLetters = [document.getElementById('a'), document.getElementById('b'), document.getElementById('c'), document.getElementById('d'), document.getElementById('e'), document.getElementById('f'), document.getElementById('g'), document.getElementById('h'), document.getElementById('i'), 
@@ -141,6 +143,12 @@ window.onload = async function(){
         canvas.addEventListener("touchmove", handleMove);
         canvas.addEventListener("touchend", handleEnd);
         canvas.addEventListener("touchcancel", handleCancel);
+
+        // Submit button
+        const submitBtn = document.getElementById('submitBtn');
+        if (submitBtn) {
+            submitBtn.addEventListener('click', submitLetter);
+        }
   }
 }
 
@@ -157,14 +165,19 @@ function handleStart(evt) {
 
     drawing = true;
     
-    // Clear any previous stroke
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    // Reset to black as default
+    // Clear canvas if previous attempt failed atttempt
+    if (needsClear) {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        allStrokes = []; // Clear stored strokes for fresh attempt
+        needsClear = false;
+    }
+    
+    // Set stroke color
     ctx.strokeStyle = '#000000';
     if(effectArray[10]) {ctx.strokeStyle = '#89BEFA';}
     if(effectArray[11]) {ctx.strokeStyle = '#54507D';}
 
-    // Storage for current letter
+    // Start a new stroke
     moveArray[currentLetter] = [];
     moveArray[currentLetter].push([pos.x, pos.y]);
 
@@ -199,22 +212,12 @@ function handleEnd(evt) {
     evt && evt.preventDefault && evt.preventDefault();
     drawing = false;
     ctx.closePath();
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     const userStroke = moveArray[currentLetter];
-    const letterRef = currentLetterPoints;
-    // If we have a non-empty stroke and also something to compare it to
-    if (Array.isArray(userStroke) && userStroke.length > 0 && Array.isArray(letterRef) && letterRef.length > 0) {
-        evaluateLetter(letterRef, userStroke).then(accuracy => {
-        });
-    }
-
-    // Log the recorded points for debugging and also collection of sample letters
+    // Save current stroke to allStrokes array (we need for the letters with multiple strokes or dots or crosses etc)
     if (Array.isArray(userStroke) && userStroke.length > 0) {
-        console.log('Recorded letter', currentLetter, 'points:', userStroke);
-        console.log('JSON:', JSON.stringify(userStroke));
-    } else {
-        console.warn('No stroke data recorded for letter index', currentLetter);
+        allStrokes.push([...userStroke]);
+        console.log('Stroke saved. Total strokes:', allStrokes.length); // debugging reasons
     }
 }
 
@@ -334,6 +337,37 @@ function redrawStroke(stroke, color) {
     ctx.stroke();
 }
 
+// Redraw all strokes with a specific color
+function redrawAllStrokes(color) {
+    for (let stroke of allStrokes) {
+        redrawStroke(stroke, color);
+    }
+}
+
+// Submit the letter for evaluation when submit button is pressed
+function submitLetter() {
+    if (allStrokes.length === 0) {
+        console.warn('No strokes to submit');
+        return;
+    }
+
+    // Combine all strokes into one array for evaluation
+    const combinedStrokes = allStrokes.flat();
+    const letterRef = currentLetterPoints;
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    if (Array.isArray(combinedStrokes) && combinedStrokes.length > 0 && Array.isArray(letterRef) && letterRef.length > 0) {
+        evaluateLetter(letterRef, combinedStrokes).then(accuracy => {
+            console.log('Letter evaluated with accuracy:', accuracy); // for debugging
+        });
+    }
+
+    // Log for debugging
+    console.log('Submitted letter', currentLetter, 'with', allStrokes.length, 'strokes');
+    console.log('Combined points:', combinedStrokes.length);
+}
+
 async function evaluateLetter(goodArray, userArray) {
     let tempPoints = 0
     let pointsOnLine = 0;
@@ -365,9 +399,8 @@ async function evaluateLetter(goodArray, userArray) {
     // }
 
     if(tempPoints > 0.7) {
-        // Redraw in green and show alert before moving on
-        // NOT WORKING BC ALERTS
-        redrawStroke(userArray, '#00FF00');
+        // Redraw all strokes in green before moving on
+        redrawAllStrokes('#00FF00');
         if(effectArray[4] && !effectArray[5] && !effectArray[6]){roar.play()}
         if(effectArray[5] && !effectArray[6]){meow.play()}
         if(effectArray[6]){ding.play()}
@@ -419,6 +452,7 @@ async function evaluateLetter(goodArray, userArray) {
         console.log('DONE')
         alreadyDone[currentLetter] = true
         currentLetter += 1
+        allStrokes = []; // Clear strokes for next letter
         if(currentLetter < 26) {
         updateBackgroundImage();}
         },500);
@@ -433,12 +467,14 @@ async function evaluateLetter(goodArray, userArray) {
         }
         
     } else {
-        redrawStroke(userArray, '#FF0000');
+        // Redraw all strokes in red
+        redrawAllStrokes('#FF0000');
         console.log('REDO')
         if(htmlLetters[currentLetter]) {
             htmlLetters[currentLetter].classList.replace('waiting', 'redo')
         }
         alreadyDone[currentLetter] = true
+        needsClear = true; // Shows that next stroke start should clear
     }
     return Math.round(tempPoints * 100);
 }
