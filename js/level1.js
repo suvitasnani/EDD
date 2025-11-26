@@ -260,7 +260,7 @@ if (typeof window !== 'undefined') {
 function updateBackgroundImage() {
     const letters = 'abcdefghijklmnopqrstuvwxyz';
     const currentLetterChar = letters[currentLetter];
-    // Background image for tracing
+    // Background image for tracing (with arrows and lines to make easier for user to learn)
     const bgUrl = `Cursive Letters/lowercase_${currentLetterChar}.gif`;
     // Gradient for a opacity only way to do it i think 
     const overlay = 'linear-gradient(to right, rgba(255,255,255,0), rgba(255,255,255,0.9), rgba(255,255,255,0.9), rgba(255,255,255,0))';
@@ -269,12 +269,12 @@ function updateBackgroundImage() {
     canvas.style.backgroundRepeat = 'no-repeat';
     canvas.style.backgroundPosition = 'center center';
 
-    // Load image for data generation
-    const img = new Image();
-    img.src = bgUrl;
-    img.onload = () => {
-        currentImage = img;
-        generateLetterPoints(img);
+    // Load transparent image (no background) for grading/reference points
+    const gradingImg = new Image();
+    gradingImg.src = `Cusrive Letters No BG/lowercase_${currentLetterChar}.png`;
+    gradingImg.onload = () => {
+        currentImage = gradingImg;
+        generateLetterPoints(gradingImg);
     };
 }
 
