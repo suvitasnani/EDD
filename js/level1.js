@@ -45,6 +45,7 @@ let currentImage = null;
 let moveArray = [[], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], []];
 let allStrokes = []; // Store all strokes for the current letter (we need for the letters with multiple strokes or dots or crosses etc)
 let needsClear = false; // Used to clear canvas on next stroke start (after failed attempt)
+let backgroundOffset = 0; // For tracking how much the background has shifted
 const tempMax = 100/1;
 
 let htmlLetters = [document.getElementById('a'), document.getElementById('b'), document.getElementById('c'), document.getElementById('d'), document.getElementById('e'), document.getElementById('f'), document.getElementById('g'), document.getElementById('h'), document.getElementById('i'), 
@@ -149,7 +150,40 @@ window.onload = async function(){
         if (submitBtn) {
             submitBtn.addEventListener('click', submitLetter);
         }
+
+        // Clear button
+        const clearBtn = document.getElementById('clearBtn');
+        if (clearBtn) {
+            clearBtn.addEventListener('click', clearStrokes);
+        }
+
+        // Initialize background position
+        updateBackgroundPosition();
   }
+}
+
+// Shift the background image by 10 pixels when the letter is correct
+function shiftBackground() {
+    backgroundOffset += 10;
+    updateBackgroundPosition();
+}
+
+// Update the background image position
+function updateBackgroundPosition() {
+    const bgImage = document.getElementById('bgImage');
+    if (bgImage) {
+        bgImage.style.transform = `translateX(-${backgroundOffset}px)`;
+        console.log('Background shifted to:', backgroundOffset, 'px');
+    }
+}
+
+// Clear all strokes and reset the canvas
+function clearStrokes() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    allStrokes = [];
+    moveArray[currentLetter] = [];
+    needsClear = false;
+    console.log('Strokes cleared');
 }
 
 
@@ -460,6 +494,7 @@ async function evaluateLetter(goodArray, userArray) {
         alreadyDone[currentLetter] = true
         currentLetter += 1
         allStrokes = []; // Clear strokes for next letter
+        shiftBackground(); // Shift background by 10px
         if(currentLetter < 26) {
         updateBackgroundImage();}
         },500);
