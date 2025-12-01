@@ -32,11 +32,19 @@
     <h1 class="welcomeTitle">Welcome to Level 2. Defend yourself against bandits!</h1>
     </div>
 
-    <div id="gif" class="lvl2image1 container-fluid px-0"></div>
+    <!-- Shifting background image in top section -->
+    <div id="gif" class="container-fluid px-0" style="position: relative; overflow: hidden; height: 400px;">
+        <img id="bgImage" src="levelBGs/level1.png" style="position: absolute; top: 0; left: 0; width: calc(100% + 260px); height: 100%; object-fit: cover; transition: transform 0.5s ease;">
+    </div>
 
     <div id="canvasDiv" class="writingContainer container-fluid px-0 mt-4">
         <canvas id="gameCanvas" class="writingContainer w-100 border" style="max-height: 400px; height: 400px; background-color: transparent;"></canvas>
         <div id="a" class="waiting"></div>
+    </div>
+
+    <div class="text-center mt-3">
+        <button id="submitBtn" class="btn btn-primary btn-lg">Submit Letter</button>
+        <button id="clearBtn" class="btn btn-danger btn-lg me-2">Clear</button>
     </div>
 </body>
 </html>
