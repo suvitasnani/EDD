@@ -10,6 +10,9 @@ import { getAuth, createUserWithEmailAndPassword }
 // Import the functions you need from the SDKs you need
   import { getDatabase, ref, set, update, child, get, remove } 
     from "https://www.gstatic.com/firebasejs/12.4.0/firebase-database.js";
+
+// Import knight image selector
+import { getKnightImagePath } from './knightImage.js';
   // TODO: Add SDKs for Firebase products that you want to use
   // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -113,6 +116,13 @@ window.onload = async function(){
     window.location="home.html";
   } else {
     effectArray = await getEffects();
+    
+    // Update knight image based on equipped items
+    const knightImg = document.getElementById('knightImage');
+    if (knightImg) {
+        knightImg.src = getKnightImagePath(effectArray);
+    }
+    
     if(effectArray[9]){canvasDiv.classList.replace('writingContainer', 'writingContainerNight');}
     if(effectArray[8]){canvasDiv.classList.replace('writingContainer', 'writingContainerDesert')}
     if(effectArray[7]){canvasDiv.classList.replace('writingContainer', 'writingContainerOcean')}
