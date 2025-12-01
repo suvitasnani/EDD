@@ -449,7 +449,7 @@ async function evaluateLetter(goodArray, userArray) {
         tempPoints = 0;
     }
 
-    if(tempPoints > 0.7) {
+    if(tempPoints > 0.5) {
         // Redraw all strokes in green before moving on
         redrawAllStrokes('#00FF00');
         if(effectArray[4] && !effectArray[5] && !effectArray[6]){roar.play()}
