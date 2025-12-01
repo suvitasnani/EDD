@@ -506,19 +506,13 @@ async function evaluateLetter(goodArray, userArray) {
         allStrokes = []; // Clear strokes for next letter
         shiftBackground(); // Shift background by 10px
         if(currentLetter < 26) {
-        updateBackgroundImage();}
-        },500);
-        // Check if we've completed all 26 letters
-        // Do we just want to do all 26 letters on level 1?
-        // Maybe we can do the level 2 for uppercase letters?
-        if(currentLetter >= 26) {
-            // Calculate final score and award points
+            updateBackgroundImage();
+        } else {
+            // Completed all 26 letters - calculate final score
             const averageScore = trackingScore / 26;
-            await setScore(Math.round(averageScore));
-            return Math.round(tempPoints * 100);
+            setScore(Math.round(averageScore));
         }
-        
-        // Update background for the next letter
+        },500);
         
     } else {
         // Redraw all strokes in red
