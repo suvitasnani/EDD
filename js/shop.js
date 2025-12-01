@@ -51,7 +51,7 @@ class BuyListener {
         this.num = num
     }
 
-    handleEvent(anEvent){
+    async handleEvent(anEvent){
     console.log(this.num)
     getUserName();
     let number = parseInt(this.num) - 1
@@ -59,9 +59,25 @@ class BuyListener {
     console.log("buying: " + number)
     if(points > pointVals[number]) {
         points = points - pointVals[number];
-        update(ref(db, 'users/' + currentUser.uid), {
+        await update(ref(db, 'users/' + currentUser.uid), {
             points: points
         })
+        
+        // Check if this item belongs to a category and unequip others
+        const category = getItemCategory(number);
+        if (category) {
+            const updates = {};
+            const updatesOff = {};
+            for (const itemNum of category.items) {
+                if (itemNum !== number) {
+                    updates[itemNum] = false;
+                    updatesOff[itemNum] = true;
+                }
+            }
+            // Set other items in category to off (only if they were bought)
+            await update(ref(db, 'users/' + currentUser.uid + '/inventoryOn'), updates);
+        }
+        
         update(ref(db, 'users/' + currentUser.uid + '/inventoryOn'), {
             [number]: true
           })
@@ -86,14 +102,57 @@ class BuyListener {
     }
 }}
 
+// Define item categories
+// Helmets: items 0, 1, 2 (Bronze, Gold, Diamond)
+// Shield: item 3 (Rainbow Shield) (WHY IS MAKING AN IMAGE FOR THIS SO HARD AHHHH)
+// Sounds: items 4, 5, 6 (Dragon Roar, Cat's Meow, Ding)
+// Backgrounds: items 7, 8, 9 (Ocean, Desert, Night)
+// Text colors: items 10, 11 (Bright Blue, Purple)
+const itemCategories = {
+    helmets: [0, 1, 2],
+    sounds: [4, 5, 6],
+    backgrounds: [7, 8, 9],
+    textColors: [10, 11]
+};
+
+// Get the category for an item number
+function getItemCategory(itemNum) {
+    for (const [category, items] of Object.entries(itemCategories)) {
+        if (items.includes(itemNum)) {
+            return { name: category, items: items };
+        }
+    }
+    return null; // if item has no category 
+}
+
 class AddListener {
     constructor(num){
         this.num = num
     }
 
-    handleEvent(anEvent){
+    async handleEvent(anEvent){
     getUserName();
-    let number = parseInt(this.num) - 1
+    let number = parseInt(this.num) - 1;
+    
+    // Check if this item belongs to a category
+    const category = getItemCategory(number);
+    
+    if (category) {
+        // Unequip all other items in the same category
+        const updates = {};
+        const updatesOff = {};
+        for (const itemNum of category.items) {
+            if (itemNum !== number) {
+                updates[itemNum] = false;
+                updatesOff[itemNum] = true;
+            }
+        }
+        // Set other items in category to off
+        await update(ref(db, 'users/' + currentUser.uid + '/inventoryOn'), updates);
+        await update(ref(db, 'users/' + currentUser.uid + '/inventoryOff'), updatesOff);
+    }
+    
+    // Now equip the selected item
     update(ref(db, 'users/' + currentUser.uid + '/inventoryOn'), {
         [number]: true
         })
