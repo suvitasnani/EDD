@@ -70,6 +70,7 @@ let ctx;
 // let ongoingTouches = new Map(); // Store active touches by their identifier
 let drawing = false;
 let effectArray = [];
+let isSubmitting = false; // Stop people from spamming submit button and getitng past multiple submissions
 
 // Responsive dimensions
 function resizeCanvas() {
@@ -401,10 +402,18 @@ function redrawAllStrokes(color) {
 
 // Submit the letter for evaluation when submit button is pressed
 function submitLetter() {
+    // Prevent multiple submissions
+    if (isSubmitting) {
+        console.log('Already submitting, please wait...'); // For testing purposes
+        return;
+    }
+    
     if (allStrokes.length === 0) {
         console.warn('No strokes to submit');
         return;
     }
+
+    isSubmitting = true; // Lock submitting
 
     // Combine all strokes into one array for evaluation
     const combinedStrokes = allStrokes.flat();
@@ -523,6 +532,7 @@ async function evaluateLetter(goodArray, userArray) {
             const averageScore = trackingScore / 26;
             setScore(Math.round(averageScore));
         }
+        isSubmitting = false; // Unlock submitting
         },500);
         
     } else {
@@ -534,6 +544,7 @@ async function evaluateLetter(goodArray, userArray) {
         }
         alreadyDone[currentLetter] = true
         needsClear = true; // Shows that next stroke start should clear
+        isSubmitting = false; // Unlock submitting
     }
     return Math.round(tempPoints * 100);
 }
