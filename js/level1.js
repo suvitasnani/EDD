@@ -304,6 +304,17 @@ if (typeof window !== 'undefined') {
 function updateBackgroundImage() {
     const letters = 'abcdefghijklmnopqrstuvwxyz';
     const currentLetterChar = letters[currentLetter];
+    
+    // Update the letter display
+    const letterCharEl = document.getElementById('currentLetterChar');
+    const letterProgressEl = document.getElementById('letterProgress');
+    if (letterCharEl) {
+        letterCharEl.textContent = currentLetterChar;
+    }
+    if (letterProgressEl) {
+        letterProgressEl.textContent = `${currentLetter + 1} / 26`;
+    }
+    
     // Background image for tracing (with arrows and lines to make easier for user to learn)
     const bgUrl = `Cursive Letters/lowercase_${currentLetterChar}.gif`;
     // Gradient for a opacity only way to do it i think 

@@ -39,14 +39,29 @@
         <img id="bgImage" src="levelBGs/level1.png" style="position: absolute; top: 0; left: 0; width: calc(100% + 260px); height: 100%; object-fit: cover; transition: transform 0.5s ease;">
     </div>
 
-    <div id="canvasDiv" class="writingContainer container-fluid px-0 mt-4">
-        <canvas id="gameCanvas" class="writingContainer w-100 border" style="max-height: 400px; height: 400px; background-color: transparent;"></canvas>
-        <div id="a" class="waiting"></div>
-    </div>
-
-    <div class="text-center mt-3">
-        <button id="submitBtn" class="btn btn-primary btn-lg">Submit Letter</button>
-        <button id="clearBtn" class="btn btn-danger btn-lg me-2">Clear</button>
+    <!-- Canvas and Buttons Row -->
+    <div class="container-fluid px-3 mt-4">
+        <div class="d-flex align-items-center justify-content-center gap-3">
+            <!-- Putting the letters on the left -->
+            <div class="letter-display-container" style="margin: 0;">
+                <div class="letter-circle">
+                    <span id="currentLetterChar">a</span>
+                </div>
+                <div class="letter-progress" id="letterProgress">1 / 26</div>
+            </div>
+            
+            <!-- Canvas -->
+            <div id="canvasDiv" class="writingContainer" style="flex: 1; max-width: 600px;">
+                <canvas id="gameCanvas" class="writingContainer w-100 border" style="max-height: 400px; height: 400px; background-color: transparent;"></canvas>
+                <div id="a" class="waiting"></div>
+            </div>
+            
+            <!-- Putting the buttons on the right -->
+            <div class="d-flex flex-column gap-2">
+                <button id="submitBtn" class="btn btn-primary btn-lg">Submit</button>
+                <button id="clearBtn" class="btn btn-danger btn-lg">Clear</button>
+            </div>
+        </div>
     </div>
 </body>
 </html>
