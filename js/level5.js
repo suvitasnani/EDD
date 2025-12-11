@@ -39,22 +39,25 @@ const dbref = ref(db);
 
 
 
-// ---------------------// Get reference values -----------------------------
+// --------------------- Get reference values -----------------------------
 let currentUser = null;                                 // Initialize current user to null
-let trackingScore = 0;
-// let letterArray = []; // DON'T NEED ARRAYS ANYMORE SINCE DOING IT ON LIKE A DEVICE BY DEVICE BASIS, CAN DELETE LATER WOOO YEAH IDK OK BYE
-let currentLetterPoints = [];
-let currentImage = null;
+let trackingScore = 0;                                  // Track total score across letters  
+let currentLetterPoints = [];                           // Reference points for the current letter
+let currentImage = null;                                // Current letter image for generating points
 let moveArray = [[], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], []];
-let allStrokes = []; // Store all strokes for the current letter (we need for the letters with multiple strokes or dots or crosses etc)
-let needsClear = false; // Used to clear canvas on next stroke start (after failed attempt)
-let backgroundOffset = 0; // For tracking how much the background has shifted
-const tempMax = 100/1;
+let allStrokes = [];                                    // Store all strokes for the current letter (we need for the letters with multiple strokes or dots or crosses etc)
+let needsClear = false;                                 // Used to clear canvas on next stroke start (after failed attempt)
+let backgroundOffset = 0;                               // For tracking how much the background has shifted
+const tempMax = 100/1;                                  // Max score per letter, can be adjusted                      
 
+// Get HTML Elements
+
+// Array of letter elements for updating status
 let htmlLetters = [document.getElementById('a'), document.getElementById('b'), document.getElementById('c'), document.getElementById('d'), document.getElementById('e'), document.getElementById('f'), document.getElementById('g'), document.getElementById('h'), document.getElementById('i'), 
     document.getElementById('j'), document.getElementById('k'), document.getElementById('l'), document.getElementById('m'), document.getElementById('n'), document.getElementById('o'), document.getElementById('p'), document.getElementById('q'), document.getElementById('r'), document.getElementById('s'), 
     document.getElementById('t'), document.getElementById('u'), document.getElementById('v'), document.getElementById('w'), document.getElementById('x'), document.getElementById('y'), document.getElementById('z')];
 
+// Other HTML elements
 let gif = document.getElementById('gif')
 let canvasDiv = document.getElementById('canvasDiv')
 let currentLetter = 0;
@@ -67,9 +70,9 @@ let ding = new Audio('sounds/ding.mp3')
 
 let canvas;
 let ctx;
-// let ongoingTouches = new Map(); // Store active touches by their identifier
 let drawing = false;
 let effectArray = [];
+let isSubmitting = false; // Stop people from spamming submit button and getting past multiple submissions
 
 // Responsive dimensions
 function resizeCanvas() {
@@ -196,9 +199,9 @@ function clearStrokes() {
     console.log('Strokes cleared');
 }
 
+// Canvas Drawing Handlers
 
-
-// taken from cited source online and combined with drawing functionality
+// Taken from cited source online and combined with drawing functionality
 function handleStart(evt) {
     evt.preventDefault(); // Prevent default browser scrolling/zooming
     const touches = evt.changedTouches;
@@ -209,7 +212,7 @@ function handleStart(evt) {
 
     drawing = true;
     
-    // Clear canvas if previous attempt failed atttempt
+    // Clear canvas if previous attempt failed attempt
     if (needsClear) {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         allStrokes = []; // Clear stored strokes for fresh attempt
@@ -229,7 +232,7 @@ function handleStart(evt) {
     ctx.moveTo(pos.x, pos.y);
 }
 
-
+// Handle touch move event
 function handleMove(evt) {
     evt.preventDefault();
     if (!drawing) return;
@@ -261,7 +264,7 @@ function handleEnd(evt) {
     // Save current stroke to allStrokes array (we need for the letters with multiple strokes or dots or crosses etc)
     if (Array.isArray(userStroke) && userStroke.length > 0) {
         allStrokes.push([...userStroke]);
-        console.log('Stroke saved. Total strokes:', allStrokes.length); // debugging reasons
+        console.log('Stroke saved. Total strokes:', allStrokes.length); // For debugging, logs total number of strokes
     }
 }
 
@@ -274,19 +277,20 @@ function handleCancel(evt) {
 }
 
 
-// Utility: Log and return the recorded stroke for a given letter index
-// Shown on window for easy access for DevTools console.
+// Log and return the recorded stroke for a given letter index
+// Also allows for easy access for in developer console.
 function getRecordedLetter(index = currentLetter) {
     if (typeof index !== 'number' || index < 0) {
-        console.warn('getRecordedLetter: invalid index', index);
+        console.warn('getRecordedLetter: invalid index', index); // For debugging, warns if index is invalid
         return null;
     }
     const data = moveArray[index];
     if (!Array.isArray(data) || data.length === 0) {
-        console.warn('getRecordedLetter: no recorded stroke data for index', index);
+        console.warn('getRecordedLetter: no recorded stroke data for index', index); // For debugging, warns if no data found
         return null;
     }
     // Log as array of [x, y] pairs and as JSON for copy/paste
+    // For debugging purposes
     console.log('Recorded letter', index, 'points:', data);
     console.log('JSON:', JSON.stringify(data));
     return data;
@@ -304,9 +308,9 @@ if (typeof window !== 'undefined') {
 function updateBackgroundImage() {
     const letters = 'abcdefghijklmnopqrstuvwxyz';
     const currentLetterChar = letters[currentLetter];
-    // Background image for tracing
+    // Background image for tracing (with arrows and lines to make easier for user to learn)
     const bgUrl = `Cursive Letters/word1_${currentLetterChar}.png`;
-    // Gradient for a opacity only way to do it i think 
+    // Gradient for a opacity
     const overlay = 'linear-gradient(to right, rgba(255,255,255,0), rgba(255,255,255,0.9), rgba(255,255,255,0.9), rgba(255,255,255,0))';
     canvas.style.backgroundImage = `${overlay}, url('${bgUrl}')`;
     canvas.style.backgroundSize = 'contain';
@@ -324,6 +328,8 @@ function updateBackgroundImage() {
 
 
 // Generate reference points for the current letter
+// Allows for grading against user strokes, based on dark pixels in the letter image
+// Also allows for grading no matter the size of the screen
 function generateLetterPoints(img) {
     const offCanvas = document.createElement('canvas');
     offCanvas.width = canvas.width;
@@ -360,7 +366,7 @@ function generateLetterPoints(img) {
             
             // Check for dark pixels (on a lighter bg)
             // If alpha is high and color is dark
-            // Allows us the prorgram to makes its own reference points MEANING should working regardless of device YIPPEE!
+            // Allows  the program to make its own reference points meaning it should work regardless of device
             if (a > 50 && (r < 200 || g < 200 || b < 200)) {
                  currentLetterPoints.push([x, y]);
             }
@@ -369,9 +375,11 @@ function generateLetterPoints(img) {
     console.log(`Generated ${currentLetterPoints.length} reference points for letter.`);
 }
 
-// Redraw the stroke with a specific color
+// Redraw the stroke with a specific color for feedback
 function redrawStroke(stroke, color) {
-    if (!stroke || stroke.length === 0) return;
+    if (!stroke || stroke.length === 0) {
+        return;
+    }
     ctx.strokeStyle = color;
     ctx.beginPath();
     ctx.moveTo(stroke[0][0], stroke[0][1]);
@@ -381,7 +389,7 @@ function redrawStroke(stroke, color) {
     ctx.stroke();
 }
 
-// Redraw all strokes with a specific color
+// Redraw all strokes with a specific color for feedback
 function redrawAllStrokes(color) {
     for (let stroke of allStrokes) {
         redrawStroke(stroke, color);
@@ -390,10 +398,19 @@ function redrawAllStrokes(color) {
 
 // Submit the letter for evaluation when submit button is pressed
 function submitLetter() {
-    if (allStrokes.length === 0) {
-        console.warn('No strokes to submit');
+    // Prevent multiple submissions
+    if (isSubmitting) {
+        console.log('Already submitting, please wait...'); // For debugging purposes
         return;
     }
+    
+    // Ensure there are strokes to submit
+    if (allStrokes.length === 0) {
+        console.warn('No strokes to submit'); // For debugging purposes
+        return;
+    }
+
+    isSubmitting = true; // Lock submitting
 
     // Combine all strokes into one array for evaluation
     const combinedStrokes = allStrokes.flat();
@@ -412,12 +429,14 @@ function submitLetter() {
     console.log('Combined points:', combinedStrokes.length);
 }
 
+// Function to evaluate the user's drawn letter against the reference points
 async function evaluateLetter(goodArray, userArray) {
-    let tempPoints = 0
+    let tempPoints = 0;
     let pointsOnLine = 0;
     // The acceptable distance threshold is based on the screen size
-    const maxAcceptableDistance = Math.max(20, Math.min(canvas.width, canvas.height) * 0.08); // HOW STRICT IT IS, NOTE TO SELF TO TUNE IT 
+    const maxAcceptableDistance = Math.max(20, Math.min(canvas.width, canvas.height) * 0.08); // How strict grading is, can be tuned
     
+    // For each user point, find the closest reference point
     for(let i=0; i < userArray.length; i++) {
         let minDistance = Infinity;
         for(let j=0; j < goodArray.length; j++) {
@@ -426,30 +445,30 @@ async function evaluateLetter(goodArray, userArray) {
                 minDistance = distance;
             }
         }
-        if (minDistance <= maxAcceptableDistance) {
+        if (minDistance <= maxAcceptableDistance) { // Count points that are close enough
             pointsOnLine++;
         }
 
         // Scoring points based on how close the stroke is to the reference (points decrease as distance increases)
-        // Note if I don't fix this only works on the reference array, we should find a way to be able to scale it
         let pointsForThisPixel = Math.max(0, (maxAcceptableDistance - minDistance) / maxAcceptableDistance);
         tempPoints += pointsForThisPixel / userArray.length;
     }
 
-    // Require minimum stroke length (prevents dots/short lines from passing, can comment out if needed for testing)
+    // Require minimum stroke length (prevents dots/short lines from passing)
     const minStrokePoints = 50; // User must draw at least this many points
     if (userArray.length < minStrokePoints) {
-        console.log(`Stroke too short: ${userArray.length} points (need ${minStrokePoints})`); // debugging
+        console.log(`Stroke too short: ${userArray.length} points (need ${minStrokePoints})`); // For debugging purposes
         tempPoints = 0;
     }
 
-    // Require 90% of user's points to be on the reference letter, we can adjust if too low/high
+    // Require 90% of user's points to be on the reference letter, can be adjusted if too low/high
     if (pointsOnLine < userArray.length * 0.90) {
-        console.log(`Not enough points on line: ${pointsOnLine}/${userArray.length} (${Math.round(pointsOnLine/userArray.length*100)}%)`);
+        console.log(`Not enough points on line: ${pointsOnLine}/${userArray.length} (${Math.round(pointsOnLine/userArray.length*100)}%)`); // For debugging purposes
         tempPoints = 0;
     }
 
-    if(tempPoints > 0.7) {
+    // Determine if letter is passed or needs redo
+    if(tempPoints > 0.5) { // Passed threshold
         // Redraw all strokes in green before moving on
         redrawAllStrokes('#00FF00');
         if(effectArray[4] && !effectArray[5] && !effectArray[6]){roar.play()}
@@ -457,7 +476,7 @@ async function evaluateLetter(goodArray, userArray) {
         if(effectArray[6]){ding.play()}
         await setTimeout(()=>{
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-
+            // Update HTML status and classes, move to next letter
             if(htmlLetters[currentLetter]) {
                 htmlLetters[currentLetter].classList.replace('waiting', 'done')
                 htmlLetters[currentLetter].classList.replace('redo', 'done')
@@ -495,14 +514,15 @@ async function evaluateLetter(goodArray, userArray) {
                     gif.classList.replace(`lvl5-7image${currentLetter-1}`, `lvl5-7image${currentLetter}`)
                 }
             }
+        // Update score
         if(alreadyDone[currentLetter]) {
             trackingScore += tempMax * 0.25
         } else {
             trackingScore += tempMax * tempPoints
         }
-        console.log('DONE')
+        console.log('DONE') // For debugging purposes
         alreadyDone[currentLetter] = true
-        currentLetter += 1
+        currentLetter += 1 // Move to next letter
         allStrokes = []; // Clear strokes for next letter
         shiftBackground(); // Shift background by 10px
         if(currentLetter < 26) {
@@ -512,45 +532,25 @@ async function evaluateLetter(goodArray, userArray) {
             const averageScore = trackingScore / 26;
             setScore(Math.round(averageScore));
         }
+        isSubmitting = false; // Unlock submitting
         },500);
         
-    } else {
+    } else { // Needs redo
         // Redraw all strokes in red
         redrawAllStrokes('#FF0000');
-        console.log('REDO')
+        console.log('REDO') // For debugging purposes
         if(htmlLetters[currentLetter]) {
             htmlLetters[currentLetter].classList.replace('waiting', 'redo')
         }
         alreadyDone[currentLetter] = true
         needsClear = true; // Shows that next stroke start should clear
+        isSubmitting = false; // Unlock submitting
     }
     return Math.round(tempPoints * 100);
 }
 
 
-// Find the closest matching letter from the reference array
-// MIGHT not need this function anymore IF we are doing it one by one?
-
-// Temp commenting this out for now, might comment out other stuff we aren't using as well
-/*
-async function getClosestComparison(x, y) {
-    let closestDistance = 100000;
-    let closestLetter = letterArray[0];
-    let closestVal = 0;
-    for (let i = 0; i < letterArray.length; i++) {
-        const letter = letterArray[i];
-        const tempDistance = Math.sqrt((letter[0]-x)*(letter[0]-x)+(letter[1]-y)*(letter[1]-y));
-        if (tempDistance < closestDistance) {
-            closestDistance = tempDistance;
-            closestLetter = letter;
-            closestVal = i;
-        }
-    }
-    return [closestLetter, closestVal];
-}
-*/
-
-
+// Update user's score in the database
 async function setScore(score){
     await update(ref(db, 'users/' + currentUser.uid + '/levels'), {
         'lvl5': score
@@ -570,6 +570,7 @@ async function setScore(score){
         alert('unsuccessful, error' + error);
     });
     let ogpoints = points
+    // Assign points based on the user's score
     if(score > 95) {points += 10}
     else if(score > 90) {points += 9}
     else if(score > 85) {points += 8}
@@ -583,7 +584,7 @@ async function setScore(score){
     await update(ref(db, 'users/' + currentUser.uid), {
         'points': points
     }).then(()=> {
-        alert(`Congragulations! You scored ${score}% and received ${points-ogpoints} points!`);
+        alert(`Congratulations! You scored ${score}% and received ${points-ogpoints} points!`);
         window.location.href='selectLevel.html';
     })
     .catch((error)=>{
@@ -591,6 +592,7 @@ async function setScore(score){
     });
 }
 
+// Retrieve user's equipped effects from the database
 async function getEffects(){
     let effects = [];
     await get(child(dbref, 'users/' + currentUser.uid + '/inventoryOn')).then((snapshot)=>{

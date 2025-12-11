@@ -46,6 +46,7 @@ let pointVals = [5, 10, 15, 20, 20, 30, 15, 20, 25, 30, 25, 30]
 let points = 0
 let currentUser = null;  
 
+// Buy Listener Class, handles buying items
 class BuyListener {
     constructor(num){
         this.num = num
@@ -78,6 +79,7 @@ class BuyListener {
             await update(ref(db, 'users/' + currentUser.uid + '/inventoryOn'), updates);
         }
         
+        // Now equip the purchased item
         update(ref(db, 'users/' + currentUser.uid + '/inventoryOn'), {
             [number]: true
           })
@@ -125,6 +127,7 @@ function getItemCategory(itemNum) {
     return null; // if item has no category 
 }
 
+// Add Listener Class, handles adding items to inventory
 class AddListener {
     constructor(num){
         this.num = num
@@ -172,6 +175,8 @@ class AddListener {
         });
     refresh();
 }}
+
+// Remove Listener Class, handles removing items from inventory
 class RemoveListener {
     constructor(num){
         this.num = num
@@ -199,7 +204,8 @@ class RemoveListener {
         });
     refresh();
 }}
-             
+     
+// Create listener instances for each item
 const buys = [new BuyListener(1), new BuyListener(2), new BuyListener(3), new BuyListener(4), new BuyListener(5), new BuyListener(6), new BuyListener(7), new BuyListener(8), new BuyListener(9), new BuyListener(10), new BuyListener(11), new BuyListener(12)]
 const adds = [new AddListener(1), new AddListener(2), new AddListener(3), new AddListener(4), new AddListener(5), new AddListener(6), new AddListener(7), new AddListener(8), new AddListener(9), new AddListener(10), new AddListener(11), new AddListener(12)]
 const removes = [new RemoveListener(1), new RemoveListener(2), new RemoveListener(3), new RemoveListener(4), new RemoveListener(5), new RemoveListener(6), new RemoveListener(7), new RemoveListener(8), new RemoveListener(9), new RemoveListener(10), new RemoveListener(11), new RemoveListener(12), new RemoveListener(13)]
@@ -237,6 +243,7 @@ window.onload = async function(){
     let inventoryOn = await getInventoryOn(currentUser.uid);
     let inventoryOff = await getInventoryOff(currentUser.uid);
 
+    // Set button states based on inventory
     inventoryOn.forEach((identity) => {
         identity.classList.replace('buy', 'removeIt');
         identity.classList.replace('add', 'removeIt');
@@ -256,6 +263,7 @@ window.onload = async function(){
   }
 }
 
+// Refresh function to update points and button states
 async function refresh() {
     points = await getPoints();
     pointText.innerText = "Points: " + points
@@ -280,6 +288,7 @@ async function refresh() {
     });
 }
 
+// Function to get inventoryOn items
 async function getInventoryOn(userID){
     let iOn = [];
     await get(child(dbref, 'users/' + userID + '/inventoryOn')).then((snapshot)=>{
@@ -299,6 +308,7 @@ async function getInventoryOn(userID){
   return iOn;
 }
 
+// Function to get inventoryOff items
 async function getInventoryOff(userID){
     let iOff = [];
     await get(child(dbref, 'users/' + userID + '/inventoryOff')).then((snapshot)=>{
@@ -318,6 +328,7 @@ async function getInventoryOff(userID){
   return iOff;
 }
 
+// Function to get user points
 async function getPoints(){
     getUserName();
     await get(child(dbref, 'users/' + currentUser.uid + '/points')).then((snapshot)=>{

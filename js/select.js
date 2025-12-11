@@ -70,6 +70,7 @@ window.onload = async function(){
   } else {
     let levels = [];
     levels = await getLevels(currentUser.uid);
+    // Set level 1 score and lock/unlock levels based on scores
     if(levels[0] > 60){
         lvl1Score.classList.replace('unpassed', 'passed');
         lvl1Score.innerText = levels[0] + "%";
@@ -152,6 +153,7 @@ window.onload = async function(){
   }
 }
 
+// Get levels scores from database
 async function getLevels(userID){
     let levels = [];
     await get(child(dbref, 'users/' + userID + '/levels')).then((snapshot)=>{

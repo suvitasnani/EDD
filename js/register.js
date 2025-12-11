@@ -60,6 +60,7 @@ document.getElementById('submitData').onclick = function() {
     set(ref(db, 'users/' + user.uid), {
       points: 0
     })
+    // Add additional user info under their uid
     set(ref(db, 'users/' + user.uid + '/accountInfo'), {
       uid: user.uid,    // save userID fo rhome.js reference
       userSchool: userSchool,
@@ -68,6 +69,7 @@ document.getElementById('submitData').onclick = function() {
       firstname: firstName,
       lastname: lastName
     })
+    // Initialize user inventory
     set(ref(db, 'users/' + user.uid + '/inventoryOff'), {
         0: false,
         1: false,
@@ -102,6 +104,7 @@ document.getElementById('submitData').onclick = function() {
         13: false,
         14: false
       })
+      // Initialize levels
       set(ref(db, 'users/' + user.uid + '/levels'), {
         lvl1: 0,
         lvl2: 0,

@@ -1,4 +1,6 @@
 // Get knight image path based on equipped items
+// First checks for highest tier armor, then checks for rainbow effect
+// Returns the path to the appropriate knight image
 
 export function getKnightImagePath(effectArray) {
     let name = 'knight';
