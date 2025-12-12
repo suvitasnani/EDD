@@ -334,7 +334,7 @@ function updateBackgroundImage() {
 
     // Load transparent image (no background) for grading/reference points
     const gradingImg = new Image();
-    gradingImg.src = `Cusrive Letters No BG/lowercase_${currentLetterChar}.png`;
+    gradingImg.src = `Cursive Letters no BG/lowercase_${currentLetterChar}.png`;
     gradingImg.onload = () => {
         currentImage = gradingImg;
         generateLetterPoints(gradingImg);
