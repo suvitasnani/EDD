@@ -364,10 +364,10 @@ function generateLetterPoints(img) {
             const b = data[i+2];
             const a = data[i+3];
             
-            // Check for dark pixels (on a lighter bg)
-            // If alpha is high and color is dark
-            // Allows  the program to make its own reference points meaning it should work regardless of device
-            if (a > 50 && (r < 200 || g < 200 || b < 200)) {
+            // Check for dark pixels (black/near-black only)
+            // If alpha is high and ALL color channels are dark (excludes blue/red guide lines)
+            // Allows the program to make its own reference points meaning it should work regardless of device
+            if (a > 50 && r < 100 && g < 100 && b < 100) {
                  currentLetterPoints.push([x, y]);
             }
         }

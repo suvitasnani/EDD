@@ -306,8 +306,19 @@ if (typeof window !== 'undefined') {
 
 // Update background image based on current letter
 function updateBackgroundImage() {
-    const letters = '0123456789abcdef9876543210';
+    const letters = '0123456789.,?!()9876543210';
     const currentLetterChar = letters[currentLetter];
+    
+    // Update the letter display
+    const letterCharEl = document.getElementById('currentLetterChar');
+    const letterProgressEl = document.getElementById('letterProgress');
+    if (letterCharEl) {                                                 // If element exists
+        letterCharEl.textContent = currentLetterChar;                   // Update to current character
+    }
+    if (letterProgressEl) {                                            // If element exists
+        letterProgressEl.textContent = `${currentLetter + 1} / 26`;    // Add one for user-friendly display
+    }
+    
     // Background image for tracing (with arrows and lines to make easier for user to learn)
     const bgUrl = `Cursive Letters/number_${currentLetterChar}.gif`;
     // Gradient for a opacity
@@ -364,10 +375,10 @@ function generateLetterPoints(img) {
             const b = data[i+2];
             const a = data[i+3];
             
-            // Check for dark pixels (on a lighter bg)
-            // If alpha is high and color is dark
-            // Allows  the program to make its own reference points meaning it should work regardless of device
-            if (a > 50 && (r < 200 || g < 200 || b < 200)) {
+            // Check for dark pixels (black/near-black only)
+            // If alpha is high and ALL color channels are dark (excludes blue/red guide lines)
+            // Allows the program to make its own reference points meaning it should work regardless of device
+            if (a > 50 && r < 100 && g < 100 && b < 100) {
                  currentLetterPoints.push([x, y]);
             }
         }
