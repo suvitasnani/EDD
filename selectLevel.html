@@ -24,24 +24,35 @@
     <script type="module" src="js/select.js" defer></script>
 </head>
 <body>
+<!-- Main container for level selection -->
 <div class="homeContainer">
+
+<!-- Navigation back to home -->
 <div class="homeTab bg-primary">
     <a class="home hover-underline-animation" href="home.html">Return Home</a>
 </div>
+
+<!-- Level selection grid -->
 <div class="row">
     <div class="col-sm-1"></div>
+
+    <!-- Level 1: Lowercase letters -->
     <div class="lvlTab lvl1Tab col-sm-3 text-center">
         <div style="background-image: url('images/cat.png'); background-size: cover; min-height: 230px; align-content: center;">
         <a id="level1" class="unlocked hover-underline-animation" href="lvl1.html">Level 1: Good Samaritan</a>
         <h3 id="lvl1Score" class="unpassed">0%</h3>
         </div>
     </div>
+
+    <!-- Level 2: Uppercase letters -->
     <div id="lvl2Tab" class="lvlTab col-sm-3 text-center">
         <div style="background-image: url('images/jungle.png'); background-size: cover; min-height: 230px; align-content: center;">
         <a id="level2" class="locked hover-underline-animation" href="">Level 2: Fend off Bandits</a>
         <h3 id="lvl2Score" class="unpassed">0%</h3>
         </div>
     </div>
+
+    <!-- Level 3: Numbers and Punctuation-->
     <div id="lvl3Tab" class="lvlTab col-sm-3 text-center">
         <div style="background-image: url('images/castle.png'); background-size: cover; min-height: 230px; align-content: center;">
         <a id="level3" class="locked hover-underline-animation" href="">Level 3: Break Into the Castle</a>
@@ -49,12 +60,16 @@
         </div>
     </div>
     <div class="col-sm-2"></div>
+
+    <!-- Level 4: Words/Phrases -->
     <div id="lvl4Tab" class="lvlTab lvlTab2 col-sm-3 text-center">
         <div style="background-image: url('images/princess.png'); background-size: cover; min-height: 230px; align-content: center;">
         <a id="level4" class="locked hover-underline-animation" href="">Level 4: Finding the Princess</a>
         <h3 id="lvl4Score" class="unpassed">0%</h3>
         </div>
     </div>
+
+    <!-- Level 5: Words/Phrases -->
     <div id="lvl5Tab" class="lvlTab col-sm-3 text-center">
         <div style="background-image: url('images/dragon.png'); background-size: cover; min-height: 230px; align-content: center;">
         <a id="level5" class="locked hover-underline-animation" href="">Level 5: Save Her!</a>
