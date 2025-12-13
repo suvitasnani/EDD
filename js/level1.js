@@ -452,6 +452,12 @@ async function evaluateLetter(goodArray, userArray) {
     // The acceptable distance threshold is based on the screen size
     const maxAcceptableDistance = Math.max(20, Math.min(canvas.width, canvas.height) * 0.08); // How strict grading is, can be tuned
     
+    // Use smaller radius for checking (meaning user must draw close to reference points)
+    const coverageRadius = Math.max(10, Math.min(canvas.width, canvas.height) * 0.025);
+    
+    // Track which reference points have been covered by user strokes
+    const coveredReferencePoints = new Set();
+    
     // For each user point, find the closest reference point
     for(let i=0; i < userArray.length; i++) {
         let minDistance = Infinity;
@@ -459,6 +465,10 @@ async function evaluateLetter(goodArray, userArray) {
             let distance = Math.sqrt((userArray[i][0]-goodArray[j][0])*(userArray[i][0]-goodArray[j][0])+(userArray[i][1]-goodArray[j][1])*(userArray[i][1]-goodArray[j][1]));
             if(distance < minDistance) {
                 minDistance = distance;
+            }
+            // Mark reference points as covered ONLY if user drew ON or VERY close to them
+            if (distance <= coverageRadius) {
+                coveredReferencePoints.add(j);
             }
         }
         if (minDistance <= maxAcceptableDistance) { // Count points that are close enough
@@ -481,6 +491,16 @@ async function evaluateLetter(goodArray, userArray) {
     if (pointsOnLine < userArray.length * 0.90) {
         console.log(`Not enough points on line: ${pointsOnLine}/${userArray.length} (${Math.round(pointsOnLine/userArray.length*100)}%)`); // For debugging purposes
         tempPoints = 0;
+    }
+    
+    // Coverage check where user has to cover a certain percentage of the letter to prevent scribbling 
+    const coverageRatio = coveredReferencePoints.size / goodArray.length;
+    const minCoverageRequired = 0.88; // User must cover at least 88% of the letter, can be adjusted based on testing
+    if (coverageRatio < minCoverageRequired) {
+        console.log(`Letter coverage not fine: ${coveredReferencePoints.size}/${goodArray.length} reference points covered (${Math.round(coverageRatio*100)}%, user needs ${minCoverageRequired*100}%)`); // For debugging purposes
+        tempPoints = 0;
+    } else {
+        console.log(`Letter coverage fine: ${coveredReferencePoints.size}/${goodArray.length} reference points covered (${Math.round(coverageRatio*100)}%)`); // For debugging purposes
     }
 
     // Determine if letter is passed or needs redo

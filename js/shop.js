@@ -58,7 +58,7 @@ class BuyListener {
     let number = parseInt(this.num) - 1
     console.log("points: " + points)
     console.log("buying: " + number)
-    if(points > pointVals[number]) {
+    if(points >= pointVals[number]) {
         points = points - pointVals[number];
         await update(ref(db, 'users/' + currentUser.uid), {
             points: points
