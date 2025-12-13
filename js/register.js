@@ -138,8 +138,8 @@ function isEmptyorSpaces(str){
 function validation(firstName, lastName, userSchool, email, password){
   let fNameRegex = /^[a-zA-Z]+$/;
   let lNameRegex = /^[a-zA-Z]+$/;
-  let schoolRegex = /^[a-zA-Z]+$/; 
-  let emailRegex = /^[a-zA-Z]+@ctemc\.org$/;
+  let schoolRegex = /^[a-zA-Z][a-zA-Z ]*$/; 
+  let emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
   if(isEmptyorSpaces(firstName) || isEmptyorSpaces(lastName) || isEmptyorSpaces(userSchool) ||
   isEmptyorSpaces(email) || isEmptyorSpaces(password)){
@@ -155,7 +155,8 @@ function validation(firstName, lastName, userSchool, email, password){
     return false;
   }
   if(!schoolRegex.test(userSchool)){
-    alert("The school should only contain letters.")
+    alert("The school name should only contain letters and spaces.")
+    return false;
   }
   if(!emailRegex.test(email)){
     alert("Please enter a valid email.");
