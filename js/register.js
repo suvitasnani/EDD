@@ -32,6 +32,9 @@ const auth = getAuth();
 // Return an instance of your app's database
 const db = getDatabase(app)
 
+// Initialize EmailJS with Public Key
+emailjs.init("VwbU0QP2H2zIlt4yY");
+
 // ---------------- Register New User --------------------------------//
 
 document.getElementById('submitData').onclick = function() {
@@ -112,19 +115,30 @@ document.getElementById('submitData').onclick = function() {
         lvl4: 0,
         lvl5: 0
       })
+
+    // Send welcome email using EmailJS
+    const templateParams = {
+      name: firstName,
+      to_email: email
+    };
+
+    return emailjs.send('service_1entyph', 'template_s0fkgrt', templateParams);
   })
-  .then(() => {
-    // Data saved successfully!
-    alert('User created successfully! Please sign in.');
+  .then((response) => {
+    // Email sent successfully
+    console.log('Welcome email sent!', response.status, response.text);
+    
+    // Hide the registration form
+    document.getElementById('signUpForm').style.display = 'none';
+    
+    // Show the success message
+    document.getElementById('successMessage').style.display = 'block';
   })
   .catch((error) => {
-    // Data write failed...
-    alert(error);
-  })
-  .catch((error) => {
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    alert(errorMessage);
+    // Handle errors (Firebase or EmailJS)
+    console.error('Registration/Email error:', error);
+    const errorMessage = error.message || error.text || error;
+    alert('Error: ' + errorMessage);
   });
 }
 

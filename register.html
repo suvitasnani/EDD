@@ -21,6 +21,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js" 
             defer integrity="sha512-E8QSvWZ0eCLGk4km3hxSsNmGWbLtSCSUcewDQPQWZF6pEU8GlT8a5fF32wOl1i8ftdMhssTrF/OhyGWwonTcXA==" 
             crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <!-- EmailJS  -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    
     <script type="module" src="js/register.js" defer></script>
 </head>
 
@@ -32,7 +35,7 @@
     </div>
 
     <!--Sign Up -->
-    <div class="signUpForm mb-5">     
+    <div class="signUpForm mb-5" id="signUpForm">     
         <form>
             <input type="text" placeholder="First Name" id="firstName" class="form-control mb-3">
             <input type="text" placeholder="Last Name" id="lastName" class="form-control mb-3">
@@ -42,6 +45,17 @@
             <button type = "button" id="submitData" name="submitData" class="btn btn-outline-primary mb-3 w-100">Register</button>
             <a href="signIn.html" class="badge bg-primary py-1 w-100">Already have an account?</a>
         </form>
+    </div>
+
+    <!-- Success Message after successful registration -->
+    <div class="successMessage mb-5 text-center" id="successMessage" style="display: none;">
+        <div class="p-4">
+            <img src="images/logo.png" alt="ReCursive Logo" style="height: 80px; margin-bottom: 1rem;">
+            <h3 class="mt-3 text-success">Welcome Email Sent!</h3>
+            <p class="mt-3">Check your email to get started on your quest.</p>
+            <p class="text-muted">Don't forget to check your spam folder.</p>
+            <a href="signIn.html" class="btn btn-primary mt-3">Sign In Now</a>
+        </div>
     </div>
     </div>
     
