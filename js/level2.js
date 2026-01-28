@@ -490,7 +490,7 @@ async function evaluateLetter(goodArray, userArray) {
     
     // Coverage check where user has to cover a certain percentage of the letter to prevent scribbling 
     const coverageRatio = coveredReferencePoints.size / goodArray.length;
-    const minCoverageRequired = 0.88; // User must cover at least 88% of the letter, can be adjusted based on testing
+    const minCoverageRequired = 0.78; // User must cover at least 78% of the letter, can be adjusted based on testing
     if (coverageRatio < minCoverageRequired) {
         console.log(`Letter coverage not fine: ${coveredReferencePoints.size}/${goodArray.length} reference points covered (${Math.round(coverageRatio*100)}%, user needs ${minCoverageRequired*100}%)`); // For debugging purposes
         tempPoints = 0;
